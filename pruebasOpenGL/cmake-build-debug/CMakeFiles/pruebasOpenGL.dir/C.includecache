@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/salva/Escritorio/pruebasOpenGL/main.c
+/home/salva/InfoGrafica/pruebasOpenGL/main.c
 GL/gl.h
 -
 GL/glu.h

@@ -1,3 +1,3 @@
-/home/salva/Escritorio/pruebasOpenGL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/salva/Escritorio/pruebasOpenGL/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/salva/Escritorio/pruebasOpenGL/cmake-build-debug/CMakeFiles/pruebasOpenGL.dir
+/home/salva/InfoGrafica/pruebasOpenGL/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/salva/InfoGrafica/pruebasOpenGL/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/salva/InfoGrafica/pruebasOpenGL/cmake-build-debug/CMakeFiles/pruebasOpenGL.dir
