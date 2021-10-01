@@ -13,7 +13,7 @@ GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid * puntero_ram){
     glBindBuffer(tipo_vbo,id_vbo);
 
     glBufferData(tipo_vbo,tamanio_bytes,puntero_ram,GL_STATIC_DRAW);
-    glBindBuffer(tipo_vbo,0);
+//    glBindBuffer(tipo_vbo,0);
     return id_vbo;
 }
 
@@ -36,19 +36,18 @@ void Malla3D::draw_ModoInmediato()
 void Malla3D::draw_ModoDiferido()
 {
     if (id_vbo_vertices == 0){
-        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER,v.size()*3,v.data());
+        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER,sizeof(float)*3*v.size(),v.data());
     }
 
     if (id_vbo_tri == 0){
-        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER,f.size()*3,v.data());
+        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER,sizeof(float)*3*f.size(),f.data());
     }
-
     glBindBuffer(GL_ARRAY_BUFFER,id_vbo_vertices);
     glVertexPointer(3,GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
-    glDrawElements(GL_TRIANGLES, 3*f.size(), GL_UNSIGNED_INT,0);
+    glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -59,8 +58,8 @@ void Malla3D::draw_ModoDiferido()
 
 void Malla3D::draw()
 {
-//    draw_ModoDiferido();
-draw_ModoInmediato();
+    draw_ModoDiferido();
+//draw_ModoInmediato();
    // completar .....(práctica 1)
 
 }
