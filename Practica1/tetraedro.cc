@@ -4,14 +4,16 @@
 
 Tetraedro::Tetraedro(float arista)
 {
-    float radio = sqrt(6) / 4.0 * arista;
-    float angulo = 2*M_PI / 3;
-   // inicializar la tabla de vértices
-
-    v.push_back(Tupla3f(arista,arista,arista));
-    v.push_back(Tupla3f(arista,-arista,-arista));
-    v.push_back(Tupla3f(-arista,arista,-arista));
-    v.push_back(Tupla3f(-arista,-arista,arista));
+    float base1 = ((1/sqrt(2)) / 2) * arista;
+    float arista_med = arista*0.5;
+    v.push_back(Tupla3f(arista_med,0,-base1));
+    v.push_back(Tupla3f(-arista_med,0,-base1));
+    v.push_back(Tupla3f(0,arista_med,base1));
+    v.push_back(Tupla3f(0,-arista_med,base1));
+//    v.push_back(Tupla3f(arista,arista,arista));
+//    v.push_back(Tupla3f(arista,-arista,-arista));
+//    v.push_back(Tupla3f(-arista,arista,-arista));
+//    v.push_back(Tupla3f(-arista,-arista,arista));
 
     f.push_back(Tupla3i(0,3,1));
     f.push_back(Tupla3i(2,0,1));
