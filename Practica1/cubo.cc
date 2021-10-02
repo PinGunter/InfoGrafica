@@ -39,6 +39,7 @@ Cubo::Cubo(float lado)
        c.push_back(Tupla3f(0,1,0));
    }
 
+   modo_dibujado = GL_LINE;
    // (es importante en cada cara ordenar los vértices en sentido contrario
    //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
 

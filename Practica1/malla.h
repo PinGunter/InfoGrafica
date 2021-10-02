@@ -45,6 +45,8 @@ class Malla3D
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
 
+   GLenum modo_dibujado;
+
    // completar: tabla de colores, tabla de normales de vértices
 } ;
 

@@ -26,7 +26,7 @@ void Malla3D::draw_ModoInmediato()
     glColorPointer(3,GL_FLOAT,0,c.data());
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3,GL_FLOAT,0,v.data());
-    glPolygonMode(GL_FRONT,GL_LINE);
+    glPolygonMode(GL_FRONT, modo_dibujado);
     glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
     glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -47,6 +47,9 @@ void Malla3D::draw_ModoDiferido()
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3,GL_FLOAT,0,c.data());
+    glPolygonMode(GL_FRONT, modo_dibujado);
     glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
 
