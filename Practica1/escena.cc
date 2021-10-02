@@ -18,6 +18,7 @@ Escena::Escena()
 
     ejes.changeAxisSize( 5000 );
     cubo = new Cubo(100);
+    tetraedro = new Tetraedro(50);
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
@@ -56,7 +57,7 @@ void Escena::dibujar()
 {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
-    cubo->draw();
+    tetraedro->draw();
     ejes.draw();
 
     // COMPLETAR
