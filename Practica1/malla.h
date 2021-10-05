@@ -20,35 +20,36 @@
 
 class Malla3D
 {
-   public:
-
+public:
    // dibuja el objeto en modo inmediato
-   void draw_ModoInmediato();
+   void draw_ModoInmediato(GLenum modo_visual);
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido();
+   void draw_ModoDiferido(GLenum modo_visual);
+   void draw_AjedrezDiferido();
+   void draw_AjedrezInmediato();
 
-   // función que redibuja el objeto
+
+    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw() ;
+   void draw(int modo_visualizacion, bool modo_dibujado);
 
-   protected:
 
-   void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
+protected:
+   void calcular_normales(); // calcula tabla de normales de vértices (práctica 3)
 
-   std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
-   std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
+   std::vector<Tupla3f> v; // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
+   std::vector<Tupla3i> f; // una terna de 3 enteros por cada cara o triángulo
 
-   std::vector<Tupla3f> c ; // vector con los colores a dibujar
+   std::vector<Tupla3f> c; // vector con los colores a dibujar
 
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
+   GLuint id_vbo_color;
 
-   GLenum modo_dibujado;
 
    // completar: tabla de colores, tabla de normales de vértices
-} ;
-
+};
 
 #endif
