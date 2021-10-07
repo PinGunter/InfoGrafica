@@ -54,6 +54,7 @@ void Malla3D::draw_ModoInmediato(bool puntos, bool alambre, bool solido)
 
 void Malla3D::draw_ModoDiferido(bool puntos, bool alambre, bool solido)
 {
+    //Creacion de VBOs
     if (id_vbo_vertices == 0)
     {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -64,25 +65,51 @@ void Malla3D::draw_ModoDiferido(bool puntos, bool alambre, bool solido)
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
 
-    if (id_vbo_color == 0)
+    if (id_vbo_color_v == 0)
     {
-        id_vbo_color = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
+        id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
     }
+    if (id_vbo_color_a== 0)
+    {
+        id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
+    }
+    if (id_vbo_color_c == 0)
+    {
+        id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
+    }
+
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
-
+    glPointSize(8);
+    glLineWidth(5);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
-
     glEnableClientState(GL_COLOR_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color);
-    glColorPointer(3, GL_FLOAT, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    glPolygonMode(GL_FRONT, GL_LINE);
-    glPointSize(5);
-    glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
+    if (puntos){
+        glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color_v);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glPolygonMode(GL_FRONT, GL_POINT);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
+    }
+    if (alambre){
+        glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color_a);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glPolygonMode(GL_FRONT, GL_LINE);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
+    }
+    if (solido){
+        glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color_c);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glPolygonMode(GL_FRONT, GL_FILL);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
+    }
+
+    glLineWidth(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
 }

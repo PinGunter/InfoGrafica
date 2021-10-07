@@ -4,7 +4,7 @@
 
 Tetraedro::Tetraedro(float arista)
 {
-    id_vbo_color = id_vbo_tri = id_vbo_vertices = 0;
+    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = 0;
     float base1 = ((1 / sqrt(2)) / 2) * arista;
     float arista_med = arista * 0.5;
     //    v.push_back(Tupla3f(arista_med,0,-base1));
@@ -22,7 +22,7 @@ Tetraedro::Tetraedro(float arista)
     f.push_back(Tupla3i(3, 0, 2));
 
     for (int i = 0; i < v.size(); i++) {
-        c_vert.push_back(Tupla3f(1, 1, 0));
+        c_vert.push_back(Tupla3f(1, 0, 0));
         c_aris.push_back(Tupla3f(0, 1, 1));
         c_cara.push_back(Tupla3f(0, 0, 0));
     }

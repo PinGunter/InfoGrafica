@@ -48,7 +48,7 @@ protected:
 
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
-   GLuint id_vbo_color;
+   GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c;
 
 
    // completar: tabla de colores, tabla de normales de vértices

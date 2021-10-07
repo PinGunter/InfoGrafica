@@ -4,7 +4,7 @@
 
 Cubo::Cubo(float lado)
 {
-    id_vbo_tri = id_vbo_vertices = id_vbo_color = 0;
+    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = 0;
 
     // inicializar la tabla de vértices
 
