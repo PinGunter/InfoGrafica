@@ -46,6 +46,7 @@ void Malla3D::draw_ModoInmediato(bool puntos, bool alambre, bool solido)
         glPolygonMode(GL_FRONT, GL_FILL);
         glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     }
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
@@ -64,7 +65,7 @@ void Malla3D::draw_ModoDiferido(bool puntos, bool alambre, bool solido)
     {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
-
+    //VBOs de los vectores de colores
     if (id_vbo_color_v == 0)
     {
         id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
@@ -108,7 +109,7 @@ void Malla3D::draw_ModoDiferido(bool puntos, bool alambre, bool solido)
         glPolygonMode(GL_FRONT, GL_FILL);
         glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
     }
-
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
     glLineWidth(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -141,7 +142,7 @@ void Malla3D::draw_AjedrezDiferido(bool puntos, bool alambre, bool solido) {
     {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
-    // vbos de los vertices de colores
+    // vbos de los vectores de colores
     if (id_vbo_color_v == 0)
     {
         id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
@@ -167,6 +168,7 @@ void Malla3D::draw_AjedrezDiferido(bool puntos, bool alambre, bool solido) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
+    // dibujado segun los modos de visualizacion
     if (puntos){
         glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color_v);
         glColorPointer(3, GL_FLOAT, 0, 0);
@@ -181,6 +183,9 @@ void Malla3D::draw_AjedrezDiferido(bool puntos, bool alambre, bool solido) {
         glPolygonMode(GL_FRONT, GL_LINE);
         glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
     }
+    // como es el modo ajedrez, en el modo solido dibujamos 2 veces
+    // una con las caras pares (la primera mitad) y otra vez
+    // con las caras impares (la segunda mitad)
     if (solido){
         //un color
         glBindBuffer(GL_ARRAY_BUFFER, id_vbo_color_c);
@@ -197,6 +202,7 @@ void Malla3D::draw_AjedrezDiferido(bool puntos, bool alambre, bool solido) {
         glDrawElements(GL_TRIANGLES, (f.size()/2) * 3, GL_UNSIGNED_INT, (void *) (sizeof(float) * 3 * (f.size()/2)));
     }
 
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
     glLineWidth(1);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -221,6 +227,9 @@ void Malla3D::draw_AjedrezInmediato(bool puntos, bool alambre, bool solido) {
         glPolygonMode(GL_FRONT, GL_LINE);
         glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     }
+    // como es el modo ajedrez, en el modo solido dibujamos 2 veces
+    // una con las caras pares (la primera mitad) y otra vez
+    // con las caras impares (la segunda mitad)
     if (solido)
     {
         //un color
@@ -233,6 +242,7 @@ void Malla3D::draw_AjedrezInmediato(bool puntos, bool alambre, bool solido) {
         glPolygonMode(GL_FRONT, GL_FILL);
         glDrawElements(GL_TRIANGLES, (f.size()/2) * 3, GL_UNSIGNED_INT, f[f.size()/2]);
     }
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
 }

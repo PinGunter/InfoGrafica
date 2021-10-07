@@ -41,6 +41,13 @@ protected:
 
    std::vector<Tupla3f> v; // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f; // una terna de 3 enteros por cada cara o triángulo
+
+   // necesitamos varios vectores de colores para
+   // poder diferencias los modos de visualizacion
+   // de esta forma tendremos colores distintos
+   // para puntos, aristas y las caras
+   // ademas se incluye otro color que se usa
+   // para el modo ajedrez en conjunto con el de caras
    std::vector<Tupla3f> c_vert; // vector con los colores a dibujar (vertices)
    std::vector<Tupla3f> c_aris; // vector con los colores a dibujar (aristas)
    std::vector<Tupla3f> c_cara; // vector con los colores a dibujar (caras)

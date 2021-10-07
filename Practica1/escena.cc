@@ -181,6 +181,9 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
         case 'A':
             if (modoMenu == SELVISUALIZACION){
                 ajedrez ^= 1;
+                // en este caso queremos que siempre
+                // que este activado el modo ajedrez lo esté el modo solido
+                // para que no ocurra que se pulse la tecla a y no se vea nada
                 solido = (ajedrez) ? true : solido;
             }
             break;

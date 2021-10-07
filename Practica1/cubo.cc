@@ -18,6 +18,11 @@ Cubo::Cubo(float lado)
     this->v.push_back(Tupla3f(-arista, arista, -arista));  // 7
 
     // inicializar la tabla de caras o triángulos:
+    // en el vector insertamos primero las caras pares
+    // y luego las impares, de esta manera, al dibujar en
+    // modo ajedrez, podemos usar el mismo vbo y el mismo vector
+    // basta con indicarle la posición donde empieza el siguiente
+    // grupo (las caras impares)
 
     this->f.push_back(Tupla3i(0, 1, 2)); // 0
     this->f.push_back(Tupla3i(0, 4, 1)); // 2
