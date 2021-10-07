@@ -20,22 +20,39 @@ GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram)
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-void Malla3D::draw_ModoInmediato(GLenum modo_dibujado)
+void Malla3D::draw_ModoInmediato(bool puntos, bool alambre, bool solido)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(3, GL_FLOAT, 0, c.data());
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
-    glPolygonMode(GL_FRONT, modo_dibujado);
-    glPointSize(5);
-    glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
+    glPointSize(8);
+    glLineWidth(5);
+    if (puntos)
+    {
+        glColorPointer(3, GL_FLOAT, 0, c_vert.data());
+        glPolygonMode(GL_FRONT, GL_POINT);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
+    }
+    if (alambre)
+    {
+        glColorPointer(3, GL_FLOAT, 0, c_aris.data());
+        glPolygonMode(GL_FRONT, GL_LINE);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
+    }
+    if (solido)
+    {
+        glColorPointer(3, GL_FLOAT, 0, c_cara.data());
+        glPolygonMode(GL_FRONT, GL_FILL);
+        glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
+    }
+    glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLenum modo_dibujado)
+void Malla3D::draw_ModoDiferido(bool puntos, bool alambre, bool solido)
 {
     if (id_vbo_vertices == 0)
     {
@@ -49,7 +66,7 @@ void Malla3D::draw_ModoDiferido(GLenum modo_dibujado)
 
     if (id_vbo_color == 0)
     {
-        id_vbo_color = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c.size(), c.data());
+        id_vbo_color = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
     }
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
@@ -63,7 +80,7 @@ void Malla3D::draw_ModoDiferido(GLenum modo_dibujado)
     glColorPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    glPolygonMode(GL_FRONT, modo_dibujado);
+    glPolygonMode(GL_FRONT, GL_LINE);
     glPointSize(5);
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -73,31 +90,16 @@ void Malla3D::draw_ModoDiferido(GLenum modo_dibujado)
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(int modo_visualizacion, bool dibuja_diferido)
+void Malla3D::draw(bool dibuja_diferido, bool puntos, bool alambre, bool solido, bool ajedrez)
 {
-    GLenum modo;
-    switch(modo_visualizacion){
-        case (int)GL_POINT: //GL_POINT
-            modo = GL_POINT;
-            break;
-        case (int)GL_LINE: //GL_LINE
-            modo = GL_LINE;
-            break;
-        case (int)GL_FILL: //GL_FILL
-            modo = GL_FILL;
-            break;
-        case 3: //AJEDREZ
-            modo = GL_FILL;
-            break;
-    }
-    if (dibuja_diferido){
-        if (modo_visualizacion != 3){
-            draw_ModoDiferido(modo);
-        } else draw_AjedrezDiferido();
-    } else {
-        if (modo_visualizacion != 3){
-            draw_ModoInmediato(modo);
-        } else draw_AjedrezInmediato();
+    if (dibuja_diferido)
+    {
+        if (ajedrez) draw_AjedrezDiferido();
+        else draw_ModoDiferido(puntos,alambre,solido);
+    } else
+    {
+        if (ajedrez) draw_AjedrezInmediato();
+        else draw_ModoInmediato(puntos,alambre,solido);
     }
 }
 

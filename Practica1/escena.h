@@ -41,7 +41,7 @@ private:
     Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
     bool dibuja_cubo;
     bool dibuja_tetraedro;
-    int modo_visualizacion;
+    bool puntos,alambre,solido,ajedrez;
     bool dibuja_diferido;
 
 public:

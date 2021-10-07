@@ -22,6 +22,8 @@ Escena::Escena()
     dibuja_cubo = false;
     dibuja_tetraedro = false;
     dibuja_diferido = true;
+    puntos = alambre = ajedrez = false;
+    solido = true; // por defecto se inicia en modo solido
     // crear los objetos de la escena....
     // .......completar: ...
     // .....
@@ -64,11 +66,11 @@ void Escena::dibujar()
     change_observer();
     if (dibuja_cubo)
     {
-        cubo->draw(modo_visualizacion,dibuja_diferido);
+        cubo->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
     }
     if (dibuja_tetraedro)
     {
-        tetraedro->draw(modo_visualizacion,dibuja_diferido);
+        tetraedro->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
     }
     ejes.draw();
 
@@ -149,37 +151,36 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
             break;
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
-            if (modoMenu == SELOBJETO)
-            {
-                dibuja_cubo = true;
+
+            if (modoMenu == SELOBJETO) {
+                dibuja_cubo ^= 1;
                 dibuja_tetraedro = false;
             }
             break;
         case 'T':
-            if (modoMenu == SELOBJETO)
-            {
-                dibuja_tetraedro = true;
+            if (modoMenu == SELOBJETO){
+                dibuja_tetraedro ^= 1;
                 dibuja_cubo = false;
             }
             break;
         case 'P':
             if (modoMenu == SELVISUALIZACION){
-                modo_visualizacion = GL_POINT;
+                puntos ^= 1;
             }
             break;
         case 'L':
             if (modoMenu == SELVISUALIZACION){
-                modo_visualizacion = GL_LINE;
+                alambre ^= 1;
             }
             break;
         case 'S':
             if (modoMenu == SELVISUALIZACION){
-                modo_visualizacion = GL_FILL;
+                solido ^= 1;
             }
             break;
         case 'A':
             if (modoMenu == SELVISUALIZACION){
-                modo_visualizacion = 3;
+                ajedrez ^= 1;
             }
             break;
 

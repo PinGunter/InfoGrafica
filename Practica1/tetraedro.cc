@@ -21,8 +21,12 @@ Tetraedro::Tetraedro(float arista)
     f.push_back(Tupla3i(3, 2, 1));
     f.push_back(Tupla3i(3, 0, 2));
 
-    for (int i = 0; i < v.size(); i++)
-        c.push_back(Tupla3f(1, 1, 0));
+    for (int i = 0; i < v.size(); i++) {
+        c_vert.push_back(Tupla3f(1, 1, 0));
+        c_aris.push_back(Tupla3f(0, 1, 1));
+        c_cara.push_back(Tupla3f(0, 0, 0));
+    }
+
 
     // inicializar la tabla de caras o triángulos:
     // (es importante en cada cara ordenar los vértices en sentido contrario
