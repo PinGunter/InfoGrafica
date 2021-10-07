@@ -181,6 +181,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
         case 'A':
             if (modoMenu == SELVISUALIZACION){
                 ajedrez ^= 1;
+                solido = (ajedrez) ? true : solido;
             }
             break;
 
