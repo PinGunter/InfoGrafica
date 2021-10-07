@@ -26,8 +26,8 @@ public:
 
    // dibuja el objeto en modo diferido (usando VBOs)
    void draw_ModoDiferido(bool puntos, bool alambre, bool solido);
-   void draw_AjedrezDiferido();
-   void draw_AjedrezInmediato();
+   void draw_AjedrezDiferido(bool puntos, bool alambre, bool solido);
+   void draw_AjedrezInmediato(bool puntos, bool alambre, bool solido);
 
 
     // función que redibuja el objeto
@@ -44,11 +44,11 @@ protected:
    std::vector<Tupla3f> c_vert; // vector con los colores a dibujar (vertices)
    std::vector<Tupla3f> c_aris; // vector con los colores a dibujar (aristas)
    std::vector<Tupla3f> c_cara; // vector con los colores a dibujar (caras)
-
+   std::vector<Tupla3f> c_ajedrez; // vector con los colores con los que se alterna en el modo ajedrez
 
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
-   GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c;
+   GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c, id_vbo_color_aj;
 
 
    // completar: tabla de colores, tabla de normales de vértices

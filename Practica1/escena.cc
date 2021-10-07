@@ -21,7 +21,7 @@ Escena::Escena()
     tetraedro = new Tetraedro(50);
     dibuja_cubo = false;
     dibuja_tetraedro = false;
-    dibuja_diferido = true;
+    dibuja_diferido = true; // por defecto dibuja en modo diferido
     puntos = alambre = ajedrez = false;
     solido = true; // por defecto se inicia en modo solido
     // crear los objetos de la escena....
