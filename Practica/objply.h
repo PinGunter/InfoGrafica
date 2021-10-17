@@ -2,29 +2,32 @@
 //
 // Informática Gráfica (Grado Informática)
 //
-// Archivo: tetraedro.h
+// Archivo: cilindro.h
 
 //
 // #############################################################################
 
-#ifndef TETRAEDRO_H_INCLUDED
-#define TETRAEDRO_H_INCLUDED
+#ifndef OBJPLY_H_INCLUDED
+#define OBJPLY_H_INCLUDED
 
 #include "aux.h"
+#include "ply_reader.h"
+#include "malla.h"
+
+ 
 
 // *****************************************************************************
 //
-// clases derivadas de Malla3D (definen constructores específicos)
+// Clase ObjPLY (práctica 2)
 //
 // *****************************************************************************
-
-// *****************************************************************************
-// Tetraedro con centro en el origen
-
-class Tetraedro : public Malla3D
-{
+class ObjPLY: public Malla3D {
 public:
-   Tetraedro(float arista);
+ ObjPLY( const std::string & nombre_archivo ) ;
+    
+ 
 };
 
 #endif
+
+
