@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Practica_IG"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Practica_IG">
+				<Option output="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Practica_IG" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 Practica_IG"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Practica_IG/fast">
+				<Option output="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Practica_IG" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/salva/InfoGrafica/Practica_IG/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 Practica_IG/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/aux.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/cubo.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/ejes.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/escena.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/malla.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/objply.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/objrevolucion.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/ply_reader.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/tetraedro.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/include/tuplasg.h">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/cubo.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/ejes.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/escena.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/malla.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/objply.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/objrevolucion.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/ply_reader.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/practicas.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/src/tetraedro.cc">
+			<Option target="Practica_IG"/>
+		</Unit>
+		<Unit filename="/home/salva/InfoGrafica/Practica_IG/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

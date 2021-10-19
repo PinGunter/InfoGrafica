@@ -1,8 +1,8 @@
 
 
-#include "aux.h" // includes de OpenGL/glut/glew, windows, y librería std de C++
-#include "escena.h"
-#include "malla.h" // objetos: Cubo y otros....
+#include "../include/aux.h" // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include "../include/escena.h"
+#include "../include/malla.h" // objetos: Cubo y otros....
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -19,7 +19,7 @@ Escena::Escena()
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-//    amogus = new ObjPLY("plys/ant");
+    amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
     dibuja_diferido = true; // por defecto dibuja en modo diferido
@@ -73,7 +73,7 @@ void Escena::dibujar()
     {
         tetraedro->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
     }
-//    amogus->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
+    amogus->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
     ejes.draw();
 
 }

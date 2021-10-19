@@ -1,5 +1,5 @@
-#include "aux.h"
-#include "malla.h"
+#include "../include/aux.h"
+#include "../include/malla.h"
 
 // *****************************************************************************
 //
@@ -14,7 +14,7 @@ GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram)
     glBindBuffer(tipo_vbo, id_vbo);
 
     glBufferData(tipo_vbo, tamanio_bytes, puntero_ram, GL_STATIC_DRAW);
-    //    glBindBuffer(tipo_vbo,0);
+        glBindBuffer(tipo_vbo,0);
     return id_vbo;
 }
 
