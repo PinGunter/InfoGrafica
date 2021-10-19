@@ -1,5 +1,5 @@
-#include "../include/aux.h"
-#include "../include/malla.h"
+#include <aux.h>
+#include <malla.h>
 
 // *****************************************************************************
 //

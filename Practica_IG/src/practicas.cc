@@ -6,8 +6,8 @@
 // GPL
 //**************************************************************************
 
-#include "../include/aux.h" // includes de OpenGL, windows, y librería std de C++
-#include "../include/escena.h"
+#include <aux.h> // includes de OpenGL, windows, y librería std de C++
+#include <escena.h>
 
 // variable que contiene un puntero a la escena
 Escena *escena = nullptr;

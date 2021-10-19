@@ -1,6 +1,6 @@
-#include "../include/aux.h"
-#include "../include/malla.h"
-#include "../include/tetraedro.h"
+#include <aux.h>
+#include <malla.h>
+#include <tetraedro.h>
 
 Tetraedro::Tetraedro(float arista)
 {

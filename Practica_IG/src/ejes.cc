@@ -1,7 +1,7 @@
 
 
-#include "../include/aux.h"
-#include "../include/ejes.h"
+#include <aux.h>
+#include <ejes.h>
 
 // -----------------------------------------------------------------------------
 

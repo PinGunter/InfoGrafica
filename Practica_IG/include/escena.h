@@ -1,11 +1,11 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
-#include "ejes.h"
-#include "malla.h"
-#include "cubo.h"
-#include "tetraedro.h"
-#include "objply.h"
+#include <ejes.h>
+#include <malla.h>
+#include <cubo.h>
+#include <tetraedro.h>
+#include <objply.h>
 
 typedef enum
 {

@@ -1,5 +1,5 @@
-#include "../include/aux.h"
-#include "../include/objrevolucion.h"
+#include <aux.h>
+#include <objrevolucion.h>
 
 
 

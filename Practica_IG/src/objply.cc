@@ -1,5 +1,5 @@
-#include "../include/objply.h"
-#include "../include/ply_reader.h"
+#include <objply.h>
+#include <ply_reader.h>
  
 
 // *****************************************************************************

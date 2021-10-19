@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(Practica_IG)
 
 set(CMAKE_CXX_STANDARD 14)
-
+include_directories(include)
 add_executable(Practica_IG
         include/aux.h
         include/cubo.h
@@ -23,4 +23,5 @@ add_executable(Practica_IG
         src/ply_reader.cc
         src/practicas.cc
         src/tetraedro.cc)
+
 target_link_libraries(Practica_IG  -lm -lGL -lglut -lGLU -lGLEW)

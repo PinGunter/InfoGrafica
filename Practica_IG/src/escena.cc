@@ -1,8 +1,8 @@
 
 
-#include "../include/aux.h" // includes de OpenGL/glut/glew, windows, y librería std de C++
-#include "../include/escena.h"
-#include "../include/malla.h" // objetos: Cubo y otros....
+#include <aux.h> // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include <escena.h>
+#include <malla.h> // objetos: Cubo y otros....
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
