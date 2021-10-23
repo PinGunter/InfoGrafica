@@ -122,21 +122,18 @@ void Malla3D::draw_AjedrezDiferido(GLuint modo, int color_id) {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
     // vbos de los vectores de colores
-    if (id_vbo_color_v == 0)
-    {
-        id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
+    //VBOs de los vectores de colores
+    if (id_vbo_color_v == 0) {
+        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
     }
-    if (id_vbo_color_a== 0)
-    {
-        id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
+    if (id_vbo_color_a == 0) {
+        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
     }
-    if (id_vbo_color_c == 0)
-    {
-        id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
+    if (id_vbo_color_c == 0) {
+        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
     }
-    if (id_vbo_color_aj == 0)
-    {
-        id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER,sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
+    if (id_vbo_color_aj == 0) {
+        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
     }
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
