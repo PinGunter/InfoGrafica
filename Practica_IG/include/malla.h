@@ -11,6 +11,12 @@
 #define MALLA3D_H_INCLUDED
 
 #include <aux.h>
+#define PUNTOS GL_POINT
+#define PUNTOS_i 0
+#define ALAMBRE GL_LINE
+#define ALAMBRE_i 1
+#define SOLIDO GL_FILL
+#define SOLIDO_i 2
 
 // *****************************************************************************
 //
@@ -22,18 +28,18 @@ class Malla3D
 {
 public:
    // dibuja el objeto en modo inmediato
-   void draw_ModoInmediato(bool puntos, bool alambre, bool solido);
+    void draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color);
+    void draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color);
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido(bool puntos, bool alambre, bool solido);
-   void draw_AjedrezDiferido(bool puntos, bool alambre, bool solido);
-   void draw_AjedrezInmediato(bool puntos, bool alambre, bool solido);
+   void draw_ModoDiferido(GLuint modo, int color_id);
+   void draw_AjedrezDiferido(GLuint modo, int color_id);
 
 
     // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(bool modo_dibujado, bool puntos, bool alambre, bool solido, bool ajedrez);
+    void draw(bool dibuja_diferido, bool ajedrez, GLuint modo);
 
 
 protected:
@@ -52,13 +58,16 @@ protected:
    std::vector<Tupla3f> c_aris; // vector con los colores a dibujar (aristas)
    std::vector<Tupla3f> c_cara; // vector con los colores a dibujar (caras)
    std::vector<Tupla3f> c_ajedrez; // vector con los colores con los que se alterna en el modo ajedrez
-
+   std::vector<Tupla3f> * selector_color = nullptr; //selector de color del modo inmediato
+   GLuint selector_color_vbo; //selector de color del modo diferido
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
    GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c, id_vbo_color_aj;
 
-
-   // completar: tabla de colores, tabla de normales de vértices
+   void rellenaColores(const Tupla3f & vertices,
+                       const Tupla3f & aristas,
+                       const Tupla3f & solido,
+                       const Tupla3f & ajedrez);
 };
 
 #endif

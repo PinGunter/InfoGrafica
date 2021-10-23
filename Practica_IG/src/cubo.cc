@@ -39,13 +39,10 @@ Cubo::Cubo(float lado)
     this->f.push_back(Tupla3i(5, 7, 6)); // 9
     this->f.push_back(Tupla3i(0, 3, 7)); // 11
 
-    for (int i = 0; i < v.size(); i++)
-    {
-        c_vert.push_back(Tupla3f(0,1,0));
-        c_aris.push_back(Tupla3f(1,0,0));
-        c_cara.push_back(Tupla3f(0,0,1));
-        c_ajedrez.push_back(Tupla3f(1, 0.24, 0.71));
-    }
+    rellenaColores(Tupla3f(0,1,0),
+                   Tupla3f(1,0,0),
+                   Tupla3f(0,0,1),
+                   Tupla3f(1, 0.24, 0.71));
 
     // (es importante en cada cara ordenar los vértices en sentido contrario
     //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)

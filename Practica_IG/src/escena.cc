@@ -1,33 +1,34 @@
 
 
-#include <aux.h> // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include <aux.h>// includes de OpenGL/glut/glew, windows, y librería std de C++
 #include <escena.h>
-#include <malla.h> // objetos: Cubo y otros....
+#include <malla.h>// objetos: Cubo y otros....
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
-Escena::Escena()
-{
+Escena::Escena() {
     Front_plane = 50.0;
     Back_plane = 2000.0;
     Observer_distance = 4 * Front_plane;
     Observer_angle_x = 0.0;
     Observer_angle_y = 0.0;
 
+    modos[PUNTOS_i] = PUNTOS;
+    modos[ALAMBRE_i] = ALAMBRE;
+    modos[SOLIDO_i] = SOLIDO;
+
+    modo_activo[PUNTOS_i] = modo_activo[ALAMBRE_i] = false;
+    modo_activo[SOLIDO_i] = true;// por defecto se dibuja en modo solido
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-    amogus = new ObjPLY("plys/amogus");
+    amogus = new ObjPLY("plys/virgin");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
-    dibuja_diferido = true; // por defecto dibuja en modo diferido
-    puntos = alambre = ajedrez = false;
-    solido = true; // por defecto se inicia en modo solido
-    // crear los objetos de la escena....
-    // .......completar: ...
-    // .....
+    dibuja_diferido = true;// por defecto dibuja en modo diferido
+    ajedrez = false;
 }
 
 //**************************************************************************
@@ -36,11 +37,10 @@ Escena::Escena()
 // Principalmemnte, inicializa OpenGL y la transf. de vista y proyección
 //**************************************************************************
 
-void Escena::inicializar(int UI_window_width, int UI_window_height)
-{
-    glClearColor(1.0, 1.0, 1.0, 1.0); // se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+void Escena::inicializar(int UI_window_width, int UI_window_height) {
+    glClearColor(1.0, 1.0, 1.0, 1.0);// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
-    glEnable(GL_DEPTH_TEST); // se habilita el z-bufer
+    glEnable(GL_DEPTH_TEST);// se habilita el z-bufer
     glEnable(GL_CULL_FACE);
 
     Width = UI_window_width / 10;
@@ -61,21 +61,20 @@ void Escena::inicializar(int UI_window_width, int UI_window_height)
 //
 // **************************************************************************
 
-void Escena::dibujar()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Limpiar la pantalla
+void Escena::dibujar() {
+    glScalef(1.5,1.5,1.5);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
     change_observer();
-    if (dibuja_cubo)
-    {
-        cubo->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
+    for (int i = 3; i >= 0; i--) {
+        if (modo_activo[i]) {
+            if (dibuja_cubo)
+                cubo->draw(dibuja_diferido, ajedrez, modos[i]);
+            if (dibuja_tetraedro)
+                tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
+        }
     }
-    if (dibuja_tetraedro)
-    {
-        tetraedro->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
-    }
-    amogus->draw(dibuja_diferido,puntos,alambre,solido,ajedrez);
-    ejes.draw();
 
+    ejes.draw();
 }
 
 //**************************************************************************
@@ -86,34 +85,30 @@ void Escena::dibujar()
 //
 //**************************************************************************
 
-bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
-{
+bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
     using namespace std;
     cout << "Tecla pulsada: '" << tecla << "'" << endl;
     bool salir = false;
-    switch (toupper(tecla))
-    {
+    switch (toupper(tecla)) {
         case 'Q':
-            if (modoMenu == SELOBJETO)
-            {
+            if (modoMenu == SELOBJETO) {
                 std::cout << "Saliendo del modo selección objeto" << std::endl;
                 modoMenu = NADA;
             }
 
-            else if (modoMenu == SELVISUALIZACION){
+            else if (modoMenu == SELVISUALIZACION) {
                 std::cout << "Saliendo del modo selección visualización" << std::endl;
                 modoMenu = NADA;
             }
 
-            else if (modoMenu == SELDIBUJADO){
+            else if (modoMenu == SELDIBUJADO) {
                 std::cout << "Saliendo del modo selección de modo de dibujado" << std::endl;
                 modoMenu = NADA;
             }
 
             else if (modoMenu != NADA)
                 modoMenu = NADA;
-            else
-            {
+            else {
                 salir = true;
             }
             break;
@@ -153,45 +148,45 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
             }
             break;
         case 'T':
-            if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO) {
                 dibuja_tetraedro ^= 1;
                 dibuja_cubo = false;
             }
             break;
         case 'P':
-            if (modoMenu == SELVISUALIZACION){
-                puntos ^= 1;
+            if (modoMenu == SELVISUALIZACION) {
+                modo_activo[PUNTOS_i] ^= 1;
             }
             break;
         case 'L':
-            if (modoMenu == SELVISUALIZACION){
-                alambre ^= 1;
+            if (modoMenu == SELVISUALIZACION) {
+                modo_activo[ALAMBRE_i] ^= 1;
             }
             break;
         case 'S':
-            if (modoMenu == SELVISUALIZACION){
-                solido ^= 1;
+            if (modoMenu == SELVISUALIZACION) {
+                modo_activo[SOLIDO_i] ^= 1;
             }
             break;
         case 'A':
-            if (modoMenu == SELVISUALIZACION){
+            if (modoMenu == SELVISUALIZACION) {
                 ajedrez ^= 1;
                 // en este caso queremos que siempre
                 // que este activado el modo ajedrez lo esté el modo solido
                 // para que no ocurra que se pulse la tecla a y no se vea nada
-                solido = (ajedrez) ? true : solido;
+                modo_activo[SOLIDO_i] = (ajedrez) ? true : modo_activo[SOLIDO_i];
             }
             break;
 
         case '1':
-            if (modoMenu == SELDIBUJADO){
+            if (modoMenu == SELDIBUJADO) {
                 dibuja_diferido = false;
-		std::cout << "Dibujando en modo inmediato" << std::endl;
+                std::cout << "Dibujando en modo inmediato" << std::endl;
             }
             break;
         case '2':
-            if (modoMenu == SELDIBUJADO){	   
-		std::cout << "Dibujando en modo diferido" << std::endl;	
+            if (modoMenu == SELDIBUJADO) {
+                std::cout << "Dibujando en modo diferido" << std::endl;
                 dibuja_diferido = true;
             }
     }
@@ -199,28 +194,26 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y)
 }
 //**************************************************************************
 
-void Escena::teclaEspecial(int Tecla1, int x, int y)
-{
-    switch (Tecla1)
-    {
-    case GLUT_KEY_LEFT:
-        Observer_angle_y--;
-        break;
-    case GLUT_KEY_RIGHT:
-        Observer_angle_y++;
-        break;
-    case GLUT_KEY_UP:
-        Observer_angle_x--;
-        break;
-    case GLUT_KEY_DOWN:
-        Observer_angle_x++;
-        break;
-    case GLUT_KEY_PAGE_UP:
-        Observer_distance *= 1.2;
-        break;
-    case GLUT_KEY_PAGE_DOWN:
-        Observer_distance /= 1.2;
-        break;
+void Escena::teclaEspecial(int Tecla1, int x, int y) {
+    switch (Tecla1) {
+        case GLUT_KEY_LEFT:
+            Observer_angle_y--;
+            break;
+        case GLUT_KEY_RIGHT:
+            Observer_angle_y++;
+            break;
+        case GLUT_KEY_UP:
+            Observer_angle_x--;
+            break;
+        case GLUT_KEY_DOWN:
+            Observer_angle_x++;
+            break;
+        case GLUT_KEY_PAGE_UP:
+            Observer_distance *= 1.2;
+            break;
+        case GLUT_KEY_PAGE_DOWN:
+            Observer_distance /= 1.2;
+            break;
     }
 
     //std::cout << Observer_distance << std::endl;
@@ -233,8 +226,7 @@ void Escena::teclaEspecial(int Tecla1, int x, int y)
 //
 //***************************************************************************
 
-void Escena::change_projection(const float ratio_xy)
-{
+void Escena::change_projection(const float ratio_xy) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     const float wx = float(Height) * ratio_xy;
@@ -244,8 +236,7 @@ void Escena::change_projection(const float ratio_xy)
 // Funcion que se invoca cuando cambia el tamaño de la ventana
 //***************************************************************************
 
-void Escena::redimensionar(int newWidth, int newHeight)
-{
+void Escena::redimensionar(int newWidth, int newHeight) {
     Width = newWidth / 10;
     Height = newHeight / 10;
     change_projection(float(newHeight) / float(newWidth));
@@ -256,8 +247,7 @@ void Escena::redimensionar(int newWidth, int newHeight)
 // Funcion para definir la transformación de vista (posicionar la camara)
 //***************************************************************************
 
-void Escena::change_observer()
-{
+void Escena::change_observer() {
     // posicion del observador
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();

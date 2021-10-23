@@ -43,8 +43,10 @@ private:
     ObjPLY * amogus = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
-    bool puntos,alambre,solido,ajedrez;
+    bool ajedrez;
     bool dibuja_diferido;
+    GLuint modos [3];
+    bool modo_activo[3];
 
 public:
     Escena();

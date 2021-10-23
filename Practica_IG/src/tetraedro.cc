@@ -31,14 +31,11 @@ Tetraedro::Tetraedro(float arista)
     f.push_back(Tupla3i(2, 0, 1)); // 1
     f.push_back(Tupla3i(3, 0, 2)); // 3
 
-    for (int i = 0; i < v.size(); i++) {
-        c_vert.push_back(Tupla3f(1, 0, 0));
-        c_aris.push_back(Tupla3f(0, 1, 1));
-        c_cara.push_back(Tupla3f(0, 0, 0));
-        c_ajedrez.push_back(Tupla3f(1, 0.24, 0.71));
-    }
 
-
+    rellenaColores(Tupla3f(1,1,0),
+                   Tupla3f(0,1,1),
+                   Tupla3f(0,0,0),
+                   Tupla3f(1, 0.24, 0.71));
     // inicializar la tabla de caras o triángulos:
     // (es importante en cada cara ordenar los vértices en sentido contrario
     //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
