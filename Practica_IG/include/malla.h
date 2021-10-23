@@ -17,7 +17,10 @@
 #define ALAMBRE_i 1
 #define SOLIDO GL_FILL
 #define SOLIDO_i 2
-
+#define PUNTOS_c 0
+#define ALAMBRE_c 1
+#define SOLIDO_c 2
+#define AJEDREZ_c 3
 // *****************************************************************************
 //
 // clase para objetos 3D (mallas indexadas)
@@ -63,11 +66,16 @@ protected:
    GLuint id_vbo_vertices;
    GLuint id_vbo_tri;
    GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c, id_vbo_color_aj;
+   GLuint ids_colores [4] = {0};
 
    void rellenaColores(const Tupla3f & vertices,
                        const Tupla3f & aristas,
                        const Tupla3f & solido,
                        const Tupla3f & ajedrez);
+
+   void mezclaVector(); // metodo para mezclar un vector y conseguir el efecto ajedrez
+
+   void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez);
 };
 
 #endif

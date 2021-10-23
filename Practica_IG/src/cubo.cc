@@ -25,21 +25,20 @@ Cubo::Cubo(float lado)
     // grupo (las caras impares)
 
     this->f.push_back(Tupla3i(0, 1, 2)); // 0
-    this->f.push_back(Tupla3i(0, 4, 1)); // 2
-    this->f.push_back(Tupla3i(1, 4, 6)); // 4
-    this->f.push_back(Tupla3i(3, 2, 6)); // 6
-    this->f.push_back(Tupla3i(5, 6, 4)); // 8
-    this->f.push_back(Tupla3i(0, 7, 5)); // 10
-
-
     this->f.push_back(Tupla3i(0, 2, 3)); // 1
+    this->f.push_back(Tupla3i(0, 4, 1)); // 2
     this->f.push_back(Tupla3i(0, 5, 4)); // 3
+    this->f.push_back(Tupla3i(1, 4, 6)); // 4
     this->f.push_back(Tupla3i(1, 6, 2)); // 5
+    this->f.push_back(Tupla3i(3, 2, 6)); // 6
     this->f.push_back(Tupla3i(3, 6, 7)); // 7
+    this->f.push_back(Tupla3i(5, 6, 4)); // 8
     this->f.push_back(Tupla3i(5, 7, 6)); // 9
+    this->f.push_back(Tupla3i(0, 7, 5)); // 10
     this->f.push_back(Tupla3i(0, 3, 7)); // 11
 
-    rellenaColores(Tupla3f(0,1,0),
+
+    inicializar(Tupla3f(0,1,0),
                    Tupla3f(1,0,0),
                    Tupla3f(0,0,1),
                    Tupla3f(1, 0.24, 0.71));

@@ -24,7 +24,7 @@ Escena::Escena() {
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-    amogus = new ObjPLY("plys/virgin");
+    amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
@@ -65,12 +65,13 @@ void Escena::dibujar() {
     glScalef(1.5,1.5,1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
     change_observer();
-    for (int i = 3; i >= 0; i--) {
+    for (int i = 0; i < 3; i++) {
         if (modo_activo[i]) {
             if (dibuja_cubo)
                 cubo->draw(dibuja_diferido, ajedrez, modos[i]);
             if (dibuja_tetraedro)
                 tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
+            amogus->draw(dibuja_diferido, ajedrez, modos[i]);
         }
     }
 

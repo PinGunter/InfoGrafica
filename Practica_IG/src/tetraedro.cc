@@ -32,7 +32,7 @@ Tetraedro::Tetraedro(float arista)
     f.push_back(Tupla3i(3, 0, 2)); // 3
 
 
-    rellenaColores(Tupla3f(1,1,0),
+    inicializar(Tupla3f(1,1,0),
                    Tupla3f(0,1,1),
                    Tupla3f(0,0,0),
                    Tupla3f(1, 0.24, 0.71));

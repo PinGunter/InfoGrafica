@@ -38,41 +38,7 @@ tuplasg.h
 aux.h
 -
 
-../include/ejes.h
-
-../include/escena.h
-ejes.h
--
-malla.h
--
-cubo.h
--
-tetraedro.h
--
-objply.h
--
-
 ../include/malla.h
-aux.h
--
-
-../include/objply.h
-aux.h
--
-ply_reader.h
--
-malla.h
--
-
-../include/ply_reader.h
-vector
--
-string
--
-tuplasg.h
--
-
-../include/tetraedro.h
 aux.h
 -
 
@@ -84,11 +50,11 @@ cassert
 iostream
 -
 
-/home/salva/InfoGrafica/Practica_IG/src/escena.cc
+/home/salva/InfoGrafica/Practica_IG/src/cubo.cc
 aux.h
 -
-escena.h
--
 malla.h
+-
+cubo.h
 -
 
