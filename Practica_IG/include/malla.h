@@ -35,8 +35,8 @@ public:
     void draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color);
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido(GLuint modo, int color_id);
-   void draw_AjedrezDiferido(GLuint modo, int color_id);
+   void draw_ModoDiferido(GLuint modo, GLuint color_id);
+   void draw_AjedrezDiferido(GLuint modo, GLuint color_id);
 
 
     // función que redibuja el objeto

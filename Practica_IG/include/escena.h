@@ -6,6 +6,7 @@
 #include <cubo.h>
 #include <tetraedro.h>
 #include <objply.h>
+#include <objrevolucion.h>
 
 typedef enum
 {
@@ -41,8 +42,10 @@ private:
     Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
     Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
     ObjPLY * amogus = nullptr;
+    ObjRevolucion * peon = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
+    bool dibuja_ply;
     bool ajedrez;
     bool dibuja_diferido;
     GLuint modos [3];

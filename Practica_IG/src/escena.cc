@@ -24,9 +24,11 @@ Escena::Escena() {
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-    amogus = new ObjPLY("plys/amogus");
+    amogus = new ObjPLY("plys/beethoven");
+    peon = new ObjRevolucion("plys/peon",10);
     dibuja_cubo = false;
     dibuja_tetraedro = false;
+    dibuja_ply = false;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     ajedrez = false;
 }
@@ -65,17 +67,34 @@ void Escena::dibujar() {
     glScalef(1.5,1.5,1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
     change_observer();
+    ejes.draw();
     for (int i = 0; i < 3; i++) {
         if (modo_activo[i]) {
-            if (dibuja_cubo)
+            if (dibuja_cubo) {
+                glPushMatrix();
+                glTranslatef(-100,1,-100);
                 cubo->draw(dibuja_diferido, ajedrez, modos[i]);
-            if (dibuja_tetraedro)
+                glPopMatrix();
+            }
+            if (dibuja_tetraedro) {
+                glPushMatrix();
+                glTranslatef(100,1,100);
                 tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
-            amogus->draw(dibuja_diferido, ajedrez, modos[i]);
+                glPopMatrix();
+            }
+
+            if (dibuja_ply){
+                glPushMatrix();
+                glTranslatef(1,-50,1);
+                glScalef(10.5,10.5,10.5);
+                peon->draw(dibuja_diferido, ajedrez, modos[i]);
+                glPopMatrix();
+
+            }
         }
     }
 
-    ejes.draw();
+
 }
 
 //**************************************************************************
@@ -145,18 +164,19 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             if (modoMenu == SELOBJETO) {
                 dibuja_cubo ^= 1;
-                dibuja_tetraedro = false;
             }
             break;
         case 'T':
             if (modoMenu == SELOBJETO) {
                 dibuja_tetraedro ^= 1;
-                dibuja_cubo = false;
             }
             break;
         case 'P':
             if (modoMenu == SELVISUALIZACION) {
                 modo_activo[PUNTOS_i] ^= 1;
+            }
+            if (modoMenu == SELOBJETO){
+                dibuja_ply ^= 1;
             }
             break;
         case 'L':

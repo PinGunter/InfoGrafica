@@ -36,7 +36,7 @@ void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color) {
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLuint modo, int color_id) {
+void Malla3D::draw_ModoDiferido(GLuint modo, GLuint color_id) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -110,7 +110,7 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, GLuint modo) {
 }
 
 
-void Malla3D::draw_AjedrezDiferido(GLuint modo, int color_id) {
+void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0)
     {
@@ -147,14 +147,14 @@ void Malla3D::draw_AjedrezDiferido(GLuint modo, int color_id) {
     // como es el modo ajedrez, en el modo solido dibujamos 2 veces
     // una con las caras pares (la primera mitad) y otra vez
     // con las caras impares (la segunda mitad)
-    int tam = f.size(), iter = 1, color = ids_colores[color_id];
-    long long offset = 0;
+    int tam = f.size(), iter = 1;
+    GLuint color = ids_colores[color_id];
+    unsigned long offset = 0;
     if (modo == GL_FILL){
         tam = f.size() / 2;
         iter = 2;
     }
     for (int i=0; i < iter; i++){
-        //un color
         glBindBuffer(GL_ARRAY_BUFFER, color);
         glColorPointer(3, GL_FLOAT, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
