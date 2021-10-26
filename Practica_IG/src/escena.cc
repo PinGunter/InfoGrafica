@@ -24,8 +24,8 @@ Escena::Escena() {
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-    amogus = new ObjPLY("plys/beethoven");
-    peon = new ObjRevolucion("plys/peon",10);
+    amogus = new ObjPLY("plys/amogus");
+    //peon = new ObjRevolucion("plys/peon",10);
     dibuja_cubo = false;
     dibuja_tetraedro = false;
     dibuja_ply = false;
@@ -85,9 +85,9 @@ void Escena::dibujar() {
 
             if (dibuja_ply){
                 glPushMatrix();
-                glTranslatef(1,-50,1);
-                glScalef(10.5,10.5,10.5);
-                peon->draw(dibuja_diferido, ajedrez, modos[i]);
+                glTranslatef(1,-100,1);
+                glScalef(0.5,0.5,0.5);
+                amogus->draw(dibuja_diferido, ajedrez, modos[i]);
                 glPopMatrix();
 
             }
