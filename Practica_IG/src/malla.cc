@@ -25,7 +25,7 @@ void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    glLineWidth(5);
+//    glLineWidth(5);
     glColorPointer(3, GL_FLOAT, 0, color->data());
     glPolygonMode(GL_FRONT, modo);
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
@@ -64,7 +64,7 @@ void Malla3D::draw_ModoDiferido(GLuint modo, GLuint color_id) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    glLineWidth(5);
+//    glLineWidth(5);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
@@ -140,7 +140,7 @@ void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    glLineWidth(5);
+//    glLineWidth(5);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
@@ -176,7 +176,7 @@ void Malla3D::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    glLineWidth(5);
+//    glLineWidth(5);
     int tam = f.size(), offset = 0, iter = 1;
     std::vector<Tupla3f> * color_dibujado = color;
     if (modo == GL_FILL){
@@ -217,6 +217,7 @@ void Malla3D::mezclaVector() {
     }
 }
 void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez) {
+    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
     mezclaVector();
 }

@@ -30,15 +30,20 @@ private:
     std::vector<Tupla3f> v_ejes;
    public:
        ObjRevolucion();
-       ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
-       ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
+       ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_inf=true, bool tapa_sup=true) ;
+       ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_inf=true, bool tapa_sup=true) ;
 protected:
+    void init();
+    void crearTapas(bool inf, bool sup);
+    void multMatVec(double m[][3], float * v, float *r);
+    Tupla3f rotarVertice(float alpha, float beta, float phi, const Tupla3f & vertice);
     void normalizarPerfil();
     void crearVertices(const std::vector<Tupla3f> & perfil_original,
                        const int                    num_instancias_perf);
     void crearMalla(const std::vector<Tupla3f> & perfil_original,
                     const int                    num_instancias_perf,
-                    const bool                   conTapas);
+                    bool                         tapa_inf,
+                    bool                         tapa_sup);
 
 } ;
 

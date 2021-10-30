@@ -4,7 +4,6 @@
 
 Tetraedro::Tetraedro(float arista)
 {
-    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     float base1 = ((1 / sqrt(2)) / 2) * arista;
     float arista_med = arista * 0.5;
     // Estas comentadas es otra posibilidad de hacer el tetraedro

@@ -4,7 +4,6 @@
 
 Cubo::Cubo(float lado)
 {
-    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     // inicializar la tabla de vértices
 
     float arista = lado / 2;
