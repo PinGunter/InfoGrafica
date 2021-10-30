@@ -24,11 +24,20 @@ Escena::Escena() {
     ejes.changeAxisSize(5000);
     cubo = new Cubo(100);
     tetraedro = new Tetraedro(50);
-//    amogus = new ObjPLY("plys/vertices");
-    peon = new ObjRevolucion("plys/peon",20);
-    dibuja_cubo = false;
-    dibuja_tetraedro = false;
+
+    std::vector<Tupla3f> v_rev {
+            Tupla3f(0,0,0),
+            Tupla3f(5,0,0),
+            Tupla3f(0,10,0)
+    };
+    obj_rev_vec = new ObjRevolucion(v_rev,20);
+    obj_rev_ply = new ObjRevolucion("plys/peon",20);
+    //    amogus = new ObjPLY("plys/vertices");
+    dibuja_cubo = true;
+    dibuja_tetraedro = true;
     dibuja_ply = false;
+    dibuja_rev_ply = true;
+    dibuja_rev_vec = true;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     ajedrez = false;
 }
@@ -78,7 +87,7 @@ void Escena::dibujar() {
             }
             if (dibuja_tetraedro) {
                 glPushMatrix();
-                glTranslatef(100,1,100);
+                glTranslatef(100,1,-100);
                 tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
                 glPopMatrix();
             }
@@ -87,9 +96,23 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef(1,1,1);
                 glScalef(50,50,50);
-                peon->draw(dibuja_diferido, ajedrez, modos[i]);
+                amogus->draw(dibuja_diferido, ajedrez, modos[i]);
                 glPopMatrix();
+            }
+            if (dibuja_rev_vec){
+                glPushMatrix();
+                glTranslatef(-50,-50,50);
+                glScalef(10,10,10);
+                obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i]);
+                glPopMatrix();
+            }
 
+            if (dibuja_rev_ply){
+                glPushMatrix();
+                glTranslatef(100,1,50);
+                glScalef(50,50,50);
+                obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i]);
+                glPopMatrix();
             }
         }
     }

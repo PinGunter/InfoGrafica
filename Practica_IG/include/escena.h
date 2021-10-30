@@ -42,12 +42,15 @@ private:
     Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
     Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
     ObjPLY * amogus = nullptr;
-    ObjRevolucion * peon = nullptr;
+    ObjRevolucion *obj_rev_ply = nullptr;
+    ObjRevolucion *obj_rev_vec = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
     bool dibuja_ply;
     bool ajedrez;
     bool dibuja_diferido;
+    bool dibuja_rev_ply;
+    bool dibuja_rev_vec;
     GLuint modos [3];
     bool modo_activo[3];
 

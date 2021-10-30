@@ -63,27 +63,51 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, b
 }
 
 void ObjRevolucion::normalizarPerfil(){
-    int ejes = 0;
     Tupla3f aux;
     bool es_descendente = false;
     for (auto e : perfil_original){ 
         if (e(0) == 0){
-            ejes++;
             v_ejes.push_back(e);
         }
     }
 
     remove_if(perfil_original.begin(), perfil_original.end(), [] (Tupla3f t) {return t(0) == 0;});
-    for (int i=0; i < ejes; i++) perfil_original.pop_back();
+    for (int i=0; i < v_ejes.size(); i++) perfil_original.pop_back();
 
     es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size()-1)(1));
 
+    // si tiene las tapas
+    if (es_descendente && !v_ejes.empty()){
+        vt_sup = v_ejes.at(0);
+        if (v_ejes.size() == 2){
+            vt_inf = v_ejes.at(1);
+        }
+    } else if (!v_ejes.empty()){
+        vt_inf = v_ejes.at(0);
+        if (v_ejes.size() == 2){
+            vt_sup = v_ejes.at(1);
+        }
+    }
+
+    //si no las tiene
+    if (es_descendente && v_ejes.empty()){
+        vt_sup = Tupla3f(0,perfil_original.at(0)(1),0);
+        vt_inf = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(0),0);
+    } else if (v_ejes.empty()){
+        vt_inf = Tupla3f(0,perfil_original.at(0)(1),0);
+        vt_sup = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(0),0);
+    } else if (v_ejes.empty()){
+    }
     if (es_descendente){
         for (int i=0; i < perfil_original.size()/2; i++){
             aux = perfil_original[i];
             perfil_original[i] = perfil_original[perfil_original.size()-i-1];
             perfil_original[perfil_original.size()-i-1] = aux;
         }
+    }
+
+    for (auto e: perfil_original){
+        std::cout << e << std::endl;
     }
 }
 
@@ -110,12 +134,29 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, cons
             f.push_back(Tupla3i(a,b+1,a+1));
         }
     }
-    crearTapas(tapa_inf,tapa_sup);
+//    crearTapas(tapa_inf, tapa_sup, num_instancias_perf);
 }
 
 
-void ObjRevolucion::crearTapas(bool inf, bool sup) {
+void ObjRevolucion::crearTapas(bool inf, bool sup, int num_instancias) {
+    int a,b;
+    if (inf){
+        v.push_back(vt_inf);
+        for (int i=0; i < num_instancias-1; i++){
+            a = i;
+            b = (i+1) %  num_instancias;
+            f.push_back(Tupla3i(b,v.size()-1,a));
+        }
+    }
 
+    if (sup){
+        v.push_back(vt_sup);
+        for (int i=0; i < num_instancias-1; i++){
+            a = perfil_original.size() * (perfil_original.size()-1) +i;
+            b = perfil_original.size() * (perfil_original.size()-1) +i +1;
+            f.push_back(Tupla3i(b,v.size()-1,a));
+        }
+    }
 }
 void ObjRevolucion::init() {
     inicializar(Tupla3f(0,1,0),
