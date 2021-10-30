@@ -27,11 +27,13 @@ class ObjRevolucion : public Malla3D
 {
 private:
     std::vector<Tupla3f> perfil_original;
+    std::vector<Tupla3f> v_ejes;
    public:
        ObjRevolucion();
        ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
        ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;
 protected:
+    void normalizarPerfil();
     void crearVertices(const std::vector<Tupla3f> & perfil_original,
                        const int                    num_instancias_perf);
     void crearMalla(const std::vector<Tupla3f> & perfil_original,
