@@ -39,12 +39,13 @@ Tupla3f ObjRevolucion::rotarVertice(float alpha, float beta, float phi, const Tu
 
 
 
-ObjRevolucion::ObjRevolucion() {init();}
+ObjRevolucion::ObjRevolucion() {offset_tapas = 0; init();}
 
 ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
     ply::read_vertices(archivo,perfil_original);
     normalizarPerfil();
     crearVertices(perfil_original,num_instancias);
+    offset_tapas = 0;
     crearMalla(perfil_original,num_instancias,tapa_inf,tapa_sup);
     init();
 }
@@ -55,14 +56,9 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bo
  
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
     perfil_original = archivo;
-    for (auto e: perfil_original){
-        std::cout << e << std::endl;
-    }
     normalizarPerfil();
-    for (auto e: perfil_original){
-        std::cout << e << std::endl;
-    }
     crearVertices(perfil_original,num_instancias);
+    offset_tapas = 0;
     crearMalla(perfil_original,num_instancias,tapa_sup, tapa_inf);
     init();
 
@@ -98,12 +94,12 @@ void ObjRevolucion::normalizarPerfil(){
     //si no las tiene
     if (es_descendente && v_ejes.empty()){
         vt_sup = Tupla3f(0,perfil_original.at(0)(1),0);
-        vt_inf = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(0),0);
+        vt_inf = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(1),0);
     } else if (v_ejes.empty()){
         vt_inf = Tupla3f(0,perfil_original.at(0)(1),0);
-        vt_sup = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(0),0);
-    } else if (v_ejes.empty()){
+        vt_sup = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(1),0);
     }
+
     if (es_descendente){
         for (int i=0; i < perfil_original.size()/2; i++){
             aux = perfil_original[i];
@@ -138,7 +134,7 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, cons
             f.push_back(Tupla3i(a,b+1,a+1));
         }
     }
-//    crearTapas(tapa_inf, tapa_sup, num_instancias_perf);
+    crearTapas(tapa_inf, tapa_sup, num_instancias_perf);
 }
 
 
@@ -146,19 +142,21 @@ void ObjRevolucion::crearTapas(bool inf, bool sup, int num_instancias) {
     int a,b;
     if (inf){
         v.push_back(vt_inf);
-        for (int i=0; i < num_instancias-1; i++){
-            a = i;
-            b = (i+1) %  num_instancias;
-            f.push_back(Tupla3i(b,v.size()-1,a));
+        offset_tapas = v.size();
+        for (int i=0; i < num_instancias; i++){
+                a = perfil_original.size()*i;
+                b = perfil_original.size()*((i+1) % num_instancias);
+                f.push_back(Tupla3i(b,a,v.size()-1));
+
         }
     }
-
     if (sup){
         v.push_back(vt_sup);
-        for (int i=0; i < num_instancias-1; i++){
-            a = perfil_original.size() * (perfil_original.size()-1) +i;
-            b = perfil_original.size() * (perfil_original.size()-1) +i +1;
-            f.push_back(Tupla3i(b,v.size()-1,a));
+        offset_tapas = (offset_tapas == 0) ? v.size() : offset_tapas;
+        for (int i=0; i < num_instancias; i++){
+                a = perfil_original.size()*i+perfil_original.size()-1;
+                b = perfil_original.size()*((i+1) % num_instancias) + perfil_original.size()-1;
+                f.push_back(Tupla3i(a,b,v.size()-1));
         }
     }
 }

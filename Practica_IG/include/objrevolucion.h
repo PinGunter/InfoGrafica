@@ -33,6 +33,7 @@ protected:
     std::vector<Tupla3f> perfil_original;
     std::vector<Tupla3f> v_ejes;
     Tupla3f vt_inf, vt_sup;
+    unsigned long offset_tapas;
     void init();
     void crearTapas(bool inf, bool sup, int num_instancias);
     void multMatVec(double m[][3], float * v, float *r);
