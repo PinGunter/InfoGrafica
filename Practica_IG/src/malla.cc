@@ -83,7 +83,7 @@ void Malla3D::draw_ModoDiferido(GLuint modo, GLuint color_id) {
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(bool dibuja_diferido, bool ajedrez, GLuint modo) {
+void Malla3D::draw(bool dibuja_diferido, bool ajedrez, GLuint modo, bool tapas) {
     switch (modo) {
         case PUNTOS:
             selector_color = &c_vert;
@@ -220,4 +220,7 @@ void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const
     id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
     mezclaVector();
+}
+bool Malla3D::esObjRevolucion() const {
+    return false;
 }

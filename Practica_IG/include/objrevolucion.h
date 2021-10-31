@@ -34,6 +34,8 @@ protected:
     std::vector<Tupla3f> v_ejes;
     Tupla3f vt_inf, vt_sup;
     unsigned long offset_tapas;
+
+    bool esObjRevolucion() const;
     void init();
     void crearTapas(bool inf, bool sup, int num_instancias);
     void multMatVec(double m[][3], float * v, float *r);
@@ -45,6 +47,8 @@ protected:
                     const int                    num_instancias_perf,
                     bool                         tapa_inf,
                     bool                         tapa_sup);
+
+
 
 } ;
 

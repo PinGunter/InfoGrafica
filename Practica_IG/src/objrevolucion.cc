@@ -167,3 +167,8 @@ void ObjRevolucion::init() {
                 Tupla3f(0,0,1),
                 Tupla3f(1, 0.24, 0.71));
 }
+bool ObjRevolucion::esObjRevolucion() const {
+    return true;
+}
+
+
