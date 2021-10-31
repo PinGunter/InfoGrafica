@@ -28,6 +28,7 @@ Escena::Escena() {
     std::vector<Tupla3f> v_rev {
             Tupla3f(0,0,0),
             Tupla3f(5,0,0),
+            Tupla3f(5,10,0),
             Tupla3f(0,10,0)
     };
     obj_rev_vec = new ObjRevolucion(v_rev,20);

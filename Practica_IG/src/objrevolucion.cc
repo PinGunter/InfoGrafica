@@ -55,9 +55,15 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bo
  
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
     perfil_original = archivo;
+    for (auto e: perfil_original){
+        std::cout << e << std::endl;
+    }
     normalizarPerfil();
-    crearVertices(archivo,num_instancias);
-    crearMalla(archivo,num_instancias,tapa_sup, tapa_inf);
+    for (auto e: perfil_original){
+        std::cout << e << std::endl;
+    }
+    crearVertices(perfil_original,num_instancias);
+    crearMalla(perfil_original,num_instancias,tapa_sup, tapa_inf);
     init();
 
 }
@@ -106,9 +112,7 @@ void ObjRevolucion::normalizarPerfil(){
         }
     }
 
-    for (auto e: perfil_original){
-        std::cout << e << std::endl;
-    }
+
 }
 
 void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf) {
