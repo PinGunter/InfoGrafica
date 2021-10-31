@@ -31,14 +31,20 @@ Escena::Escena() {
             Tupla3f(5,10,0),
             Tupla3f(0,10,0)
     };
-    obj_rev_vec = new ObjRevolucion(v_rev,10,false,true);
-    obj_rev_ply = new ObjRevolucion("plys/peon",10,true,false);
-    //    amogus = new ObjPLY("plys/vertices");
+    obj_rev_vec = new ObjRevolucion(v_rev,20);
+    obj_rev_ply = new ObjRevolucion("plys/peon",20);
+    esfera = new Esfera(100,100,10);
+    cono = new Cono(10,20,20,10,true);
+    cilindro = new Cilindro(10,20,20,20,true,true);
+    amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = true;
     dibuja_tetraedro = true;
-    dibuja_ply = false;
+    dibuja_ply = true;
     dibuja_rev_ply = true;
     dibuja_rev_vec = true;
+    dibuja_esfera = true;
+    dibuja_cono = true;
+    dibuja_cilindro = true;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     ajedrez = false;
 }
@@ -95,8 +101,8 @@ void Escena::dibujar() {
 
             if (dibuja_ply){
                 glPushMatrix();
-                glTranslatef(1,1,1);
-                glScalef(50,50,50);
+                glTranslatef(100,70,-100);
+//                glScalef(50,50,50);
                 amogus->draw(dibuja_diferido, ajedrez, modos[i]);
                 glPopMatrix();
             }
@@ -113,6 +119,30 @@ void Escena::dibujar() {
                 glTranslatef(100,1,50);
                 glScalef(50,50,50);
                 obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i]);
+                glPopMatrix();
+            }
+
+            if (dibuja_esfera){
+                glPushMatrix();
+                glTranslatef(70,130,60);
+                glScalef(5,5,5);
+                esfera->draw(dibuja_diferido,ajedrez,modos[i]);
+                glPopMatrix();
+            }
+
+            if (dibuja_cono){
+                glPushMatrix();
+                glTranslatef(-100,130,-100);
+                glScalef(5,5,5);
+                cono->draw(dibuja_diferido,ajedrez,modos[i]);
+                glPopMatrix();
+            }
+
+            if (dibuja_cilindro){
+                glPushMatrix();
+                glTranslatef(100,230,100);
+                glScalef(2.5,2.5,2.5);
+                cilindro->draw(dibuja_diferido,ajedrez,modos[i]);
                 glPopMatrix();
             }
         }

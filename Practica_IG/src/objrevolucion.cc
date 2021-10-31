@@ -134,7 +134,8 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, cons
             f.push_back(Tupla3i(a,b+1,a+1));
         }
     }
-    crearTapas(tapa_inf, tapa_sup, num_instancias_perf);
+    if (tapa_inf || tapa_sup)
+        crearTapas(tapa_inf, tapa_sup, num_instancias_perf);
 }
 
 

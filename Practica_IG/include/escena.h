@@ -7,6 +7,9 @@
 #include <tetraedro.h>
 #include <objply.h>
 #include <objrevolucion.h>
+#include <Esfera.h>
+#include <Cilindro.h>
+#include <Cono.h>
 
 typedef enum
 {
@@ -44,6 +47,9 @@ private:
     ObjPLY * amogus = nullptr;
     ObjRevolucion *obj_rev_ply = nullptr;
     ObjRevolucion *obj_rev_vec = nullptr;
+    Esfera * esfera = nullptr;
+    Cono * cono = nullptr;
+    Cilindro * cilindro = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
     bool dibuja_ply;
@@ -51,6 +57,9 @@ private:
     bool dibuja_diferido;
     bool dibuja_rev_ply;
     bool dibuja_rev_vec;
+    bool dibuja_esfera;
+    bool dibuja_cono;
+    bool dibuja_cilindro;
     GLuint modos [3];
     bool modo_activo[3];
 
