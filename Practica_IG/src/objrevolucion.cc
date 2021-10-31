@@ -59,7 +59,7 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, b
     normalizarPerfil();
     crearVertices(perfil_original,num_instancias);
     offset_tapas = 0;
-    crearMalla(perfil_original,num_instancias,tapa_sup, tapa_inf);
+    crearMalla(perfil_original,num_instancias,tapa_inf, tapa_sup);
     init();
 
 }

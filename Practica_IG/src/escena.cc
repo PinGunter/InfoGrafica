@@ -31,8 +31,8 @@ Escena::Escena() {
             Tupla3f(5,10,0),
             Tupla3f(0,10,0)
     };
-    obj_rev_vec = new ObjRevolucion(v_rev,4);
-    obj_rev_ply = new ObjRevolucion("plys/peon",4);
+    obj_rev_vec = new ObjRevolucion(v_rev,10,false,true);
+    obj_rev_ply = new ObjRevolucion("plys/peon",10,true,false);
     //    amogus = new ObjPLY("plys/vertices");
     dibuja_cubo = true;
     dibuja_tetraedro = true;
