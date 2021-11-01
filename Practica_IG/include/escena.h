@@ -42,26 +42,29 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
-    Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
-    Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
-    ObjPLY * amogus = nullptr;
-    ObjRevolucion *obj_rev_ply = nullptr;
-    ObjRevolucion *obj_rev_vec = nullptr;
-    Esfera * esfera = nullptr;
-    Cono * cono = nullptr;
-    Cilindro * cilindro = nullptr;
-    bool dibuja_cubo;
-    bool dibuja_tetraedro;
-    bool dibuja_ply;
+    //    Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
+    //    Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
+    //    ObjPLY * amogus = nullptr;
+    //    ObjRevolucion *obj_rev_ply = nullptr;
+    //    ObjRevolucion *obj_rev_vec = nullptr;
+    //    Esfera * esfera = nullptr;
+    //    Cono * cono = nullptr;
+    //    Cilindro * cilindro = nullptr;
+    std::vector<std::pair<Malla3D, bool>> objetos;
+    std::vector<std::vector<float>> traslaciones;
+    std::vector<std::vector<float>> escalados;
+    //    bool dibuja_cubo;
+    //    bool dibuja_tetraedro;
+    //    bool dibuja_ply;
+    //    bool dibuja_rev_ply;
+    //    bool dibuja_rev_vec;
+    //    bool dibuja_esfera;
+    //    bool dibuja_cono;
+    //    bool dibuja_cilindro;
     bool ajedrez;
     bool dibuja_tapas;
     bool dibuja_diferido;
-    bool dibuja_rev_ply;
-    bool dibuja_rev_vec;
-    bool dibuja_esfera;
-    bool dibuja_cono;
-    bool dibuja_cilindro;
-    GLuint modos [3];
+    GLuint modos[3];
     bool modo_activo[3];
 
 public:
@@ -75,5 +78,8 @@ public:
     // Interacción con la escena
     bool teclaPulsada(unsigned char Tecla1, int x, int y);
     void teclaEspecial(int Tecla1, int x, int y);
+
+    //wrapper de tranformaciones
+    void dibujaObjeto(const std::vector<float> &tr, const std::vector<float> &sc, Malla3D &obj, int id_modo);
 };
 #endif

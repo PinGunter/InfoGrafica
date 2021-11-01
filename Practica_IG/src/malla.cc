@@ -20,7 +20,6 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
 // Visualización en modo inmediato con 'glDrawElements'
 
 void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
-    std::cout << "Draw inmediato generico" << std::endl;
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);

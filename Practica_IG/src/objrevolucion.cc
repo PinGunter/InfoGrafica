@@ -180,9 +180,7 @@ void ObjRevolucion::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color,
     int tam = f.size() - (f.size() - offset_tapas);
     if (tapas) {
         tam = f.size();
-        std::cout << "con tapas" << std::endl;
-    } else
-        std::cout << "sin tapas" << std::endl;
+    }
     glColorPointer(3, GL_FLOAT, 0, color->data());
     glPolygonMode(GL_FRONT, modo);
     glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f.data());
@@ -257,9 +255,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) 
 
     if (tapas) {
         tam = f.size();
-        std::cout << "con tapas" << std::endl;
-    } else
-        std::cout << "sin tapas" << std::endl;
+    }
 
     glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
     glColorPointer(3, GL_FLOAT, 0, 0);

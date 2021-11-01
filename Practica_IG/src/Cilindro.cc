@@ -20,8 +20,5 @@ Cilindro::Cilindro(int num_vert_perfil, int num_instancias_perf, float h, float 
     crearMalla(perfil_original,num_instancias_perf,t_inf, t_sup);
 
     init();
-    for (auto e: f){
-        std::cout << e << std::endl;
-    }
 }
 
