@@ -192,8 +192,36 @@ void ObjRevolucion::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color,
 }
 
 void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
-    Malla3D::draw_AjedrezInmediato(modo, color);
-}
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, v.data());
+    glPointSize(8);
+    //    glLineWidth(5);
+    int tam = f.size(), iter_tapa = 1, offset = 0, iter = 1, tam_tapas = f.size() - offset_tapas;
+    std::vector<Tupla3f> * color_dibujado = color;
+    if (tapas) iter_tapa = 2;
+    iter = 2;
+    tam -= tam_tapas;
+    tam /= 2;
+
+    // como es el modo ajedrez, en el modo solido dibujamos 2 veces
+    // una con las caras pares (la primera mitad) y otra vez
+    // con las caras impares (la segunda mitad)
+    for (int i=0; i < iter_tapa; i++) {
+        for (int j = 0; j < iter; j++) {
+            glColorPointer(3, GL_FLOAT, 0, color_dibujado->data());
+            glPolygonMode(GL_FRONT, modo);
+            glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f[offset]);
+            color_dibujado = &c_ajedrez;
+            offset += tam;
+        }
+        color_dibujado = color;
+        offset = offset_tapas;
+        tam = tam_tapas / 2;
+    }
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
+    glLineWidth(1);
+    glDisableClientState(GL_VERTEX_ARRAY);}
 void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
