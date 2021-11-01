@@ -1,18 +1,17 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
-#include <ejes.h>
-#include <malla.h>
+#include <cilindro.h>
+#include <cono.h>
 #include <cubo.h>
-#include <tetraedro.h>
+#include <ejes.h>
+#include <esfera.h>
+#include <malla.h>
 #include <objply.h>
 #include <objrevolucion.h>
-#include <Esfera.h>
-#include <Cilindro.h>
-#include <Cono.h>
+#include <tetraedro.h>
 
-typedef enum
-{
+typedef enum {
     NADA,
     SELOBJETO,
     SELVISUALIZACION,
@@ -42,14 +41,14 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
-    Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
-    Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
-    ObjPLY * amogus = nullptr;
+    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
+    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
+    ObjPLY *amogus = nullptr;
     ObjRevolucion *obj_rev_ply = nullptr;
     ObjRevolucion *obj_rev_vec = nullptr;
-    Esfera * esfera = nullptr;
-    Cono * cono = nullptr;
-    Cilindro * cilindro = nullptr;
+    esfera *esfera = nullptr;
+    cono *cono = nullptr;
+    cilindro *cilindro = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
     bool dibuja_ply;

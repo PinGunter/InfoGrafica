@@ -6,14 +6,14 @@
 #define PRACTICA_IG_CILINDRO_H
 #include <objrevolucion.h>
 
-class Cilindro : public ObjRevolucion{
+class cilindro : public ObjRevolucion {
 private:
     void generarPerfil(float h, float r, int n);
     float altura;
     float radio;
 
 public:
-    Cilindro(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t_inf = true, bool t_sup = true);
+    cilindro(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t_inf = true, bool t_sup = true);
 };
 
 
