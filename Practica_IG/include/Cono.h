@@ -10,6 +10,8 @@ class Cono : public ObjRevolucion {
 private:
     Tupla3f rectaGeneradoraPerfil(const Tupla3f & a, const Tupla3f & b, const float &x);
     void generarPerfil(float h, float r, int n);
+    void crearTapas(bool inf, bool sup, int num_instancias) override;
+
     float altura;
     float radio;
     bool tapa;

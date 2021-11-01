@@ -15,9 +15,7 @@ void Cono::generarPerfil(float h, float r, int n) {
     for (int i=0; i < n; i++){
         perfil_original.push_back(rectaGeneradoraPerfil(a,b,i*distancia));
     }
-    for (auto e: perfil_original){
-        std::cout << e << std::endl;
-    }
+
 }
 
 Cono::Cono(int num_vert_perfil, int num_instancias_perf, float h, float r, bool t) {
@@ -30,4 +28,27 @@ Cono::Cono(int num_vert_perfil, int num_instancias_perf, float h, float r, bool 
     offset_tapas = 0;
     crearMalla(perfil_original,num_instancias_perf, t, true);
     init();
+}
+void Cono::crearTapas(bool inf, bool sup, int num_instancias) {
+    int a,b;
+    int n_tri_pretapa;
+
+    v.push_back(vt_sup);
+    for (int i=0; i < num_instancias; i++){
+        a = perfil_original.size()*i+perfil_original.size()-1;
+        b = perfil_original.size()*((i+1) % num_instancias) + perfil_original.size()-1;
+        f.push_back(Tupla3i(a,b,v.size()-1));
+    }
+    n_tri_pretapa = f.size();
+
+    if (inf){
+        v.push_back(vt_inf);
+        for (int i=0; i < num_instancias; i++){
+            a = perfil_original.size()*i;
+            b = perfil_original.size()*((i+1) % num_instancias);
+            f.push_back(Tupla3i(b,a,v.size()-1));
+
+        }
+    }
+    offset_tapas = n_tri_pretapa;
 }

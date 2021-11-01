@@ -54,6 +54,7 @@ private:
     bool dibuja_tetraedro;
     bool dibuja_ply;
     bool ajedrez;
+    bool dibuja_tapas;
     bool dibuja_diferido;
     bool dibuja_rev_ply;
     bool dibuja_rev_vec;

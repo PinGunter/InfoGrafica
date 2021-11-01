@@ -29,13 +29,13 @@
 
 class Malla3D {
 public:
-    // dibuja el objeto en modo inmediato
-    void draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color);
-    void draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color);
+    virtual// dibuja el objeto en modo inmediato
+    void draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas = false);
+    virtual void draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas = false);
 
-    // dibuja el objeto en modo diferido (usando VBOs)
-    void draw_ModoDiferido(GLuint modo, GLuint color_id);
-    void draw_AjedrezDiferido(GLuint modo, GLuint color_id);
+    virtual// dibuja el objeto en modo diferido (usando VBOs)
+    void draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas = false);
+    virtual void draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapas = false);
 
 
     // función que redibuja el objeto
@@ -44,8 +44,11 @@ public:
     void draw(bool dibuja_diferido, bool ajedrez, GLuint modo, bool tapas = false);
 
 
-protected:
     bool esObjRevolucion() const;
+
+protected:
+    GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) ;
+
     void calcular_normales();// calcula tabla de normales de vértices (práctica 3)
 
     std::vector<Tupla3f> v;// tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
@@ -73,7 +76,7 @@ protected:
                         const Tupla3f &solido,
                         const Tupla3f &ajedrez);
 
-    void mezclaVector();// metodo para mezclar un vector y conseguir el efecto ajedrez
+    virtual void mezclaVector();// metodo para mezclar un vector y conseguir el efecto ajedrez
 
     void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez);
 };

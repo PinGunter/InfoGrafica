@@ -18,7 +18,10 @@ Cilindro::Cilindro(int num_vert_perfil, int num_instancias_perf, float h, float 
     crearVertices(perfil_original,num_instancias_perf);
     offset_tapas = 0;
     crearMalla(perfil_original,num_instancias_perf,t_inf, t_sup);
-    init();
 
+    init();
+    for (auto e: f){
+        std::cout << e << std::endl;
+    }
 }
 

@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) {
+GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) {
     GLuint id_vbo;
     glGenBuffers(1, &id_vbo);
     glBindBuffer(tipo_vbo, id_vbo);
@@ -19,7 +19,8 @@ GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) {
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color) {
+void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
+    std::cout << "Draw inmediato generico" << std::endl;
 //    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -36,7 +37,7 @@ void Malla3D::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color) {
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLuint modo, GLuint color_id) {
+void Malla3D::draw_ModoDiferido(GLuint modo, GLuint color_id,bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -99,18 +100,18 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, GLuint modo, bool tapas) 
             break;
     }
     if (dibuja_diferido) {
-        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo);
+        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo,tapas);
         else
-            draw_ModoDiferido(modo, selector_color_vbo);
+            draw_ModoDiferido(modo, selector_color_vbo,tapas);
     } else {
-        if (ajedrez) draw_AjedrezInmediato(modo, selector_color);
+        if (ajedrez) draw_AjedrezInmediato(modo, selector_color,tapas);
         else
-            draw_ModoInmediato(modo, selector_color);
+            draw_ModoInmediato(modo, selector_color, tapas);
     }
 }
 
 
-void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id) {
+void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id,bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0)
     {
@@ -121,7 +122,6 @@ void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id) {
     {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
-    // vbos de los vectores de colores
     //VBOs de los vectores de colores
     if (id_vbo_color_v == 0) {
         ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
@@ -171,7 +171,7 @@ void Malla3D::draw_AjedrezDiferido(GLuint modo, GLuint color_id) {
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Malla3D::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color) {
+void Malla3D::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color,bool tapas) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());

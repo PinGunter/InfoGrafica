@@ -1,9 +1,8 @@
-#include <aux.h>
-#include <objrevolucion.h>
-#include <iostream>
-#include <fstream>
 #include <algorithm>
-
+#include <aux.h>
+#include <fstream>
+#include <iostream>
+#include <objrevolucion.h>
 
 
 // *****************************************************************************
@@ -18,106 +17,104 @@
 
 
 void ObjRevolucion::multMatVec(double (*m)[3], float *v, float *r) {
-    for (int i=0; i < 3; i++){
+    for (int i = 0; i < 3; i++) {
         r[i] = 0;
-        for (int j=0; j < 3; j++){
-            r[i] += m[i][j]*v[j];
+        for (int j = 0; j < 3; j++) {
+            r[i] += m[i][j] * v[j];
         }
     }
 }
 Tupla3f ObjRevolucion::rotarVertice(float alpha, float beta, float phi, const Tupla3f &vertice) {
     double rotacion[3][3]{
-            cos(alpha)*cos(beta), cos(alpha)*sin(beta)*sin(phi)-sin(alpha)*cos(phi), cos(alpha)*sin(beta)*cos(phi)+sin(alpha)*sin(phi),
-            sin(alpha)*cos(beta), sin(alpha)*sin(beta)*sin(phi)+cos(alpha)*cos(phi), sin(alpha)*sin(beta)*cos(phi)-cos(alpha)*sin(phi),
-            -sin(beta), cos(beta)*sin(phi), cos(beta)*cos(phi)
-    };
-    float v [3] = {vertice(0), vertice(1), vertice(2)};
+            cos(alpha) * cos(beta), cos(alpha) * sin(beta) * sin(phi) - sin(alpha) * cos(phi), cos(alpha) * sin(beta) * cos(phi) + sin(alpha) * sin(phi),
+            sin(alpha) * cos(beta), sin(alpha) * sin(beta) * sin(phi) + cos(alpha) * cos(phi), sin(alpha) * sin(beta) * cos(phi) - cos(alpha) * sin(phi),
+            -sin(beta), cos(beta) * sin(phi), cos(beta) * cos(phi)};
+    float v[3] = {vertice(0), vertice(1), vertice(2)};
     float r[3] = {0};
     multMatVec(rotacion, v, r);
-    return Tupla3f(r[0],r[1],r[2]);
+    return Tupla3f(r[0], r[1], r[2]);
 }
 
 
-
-ObjRevolucion::ObjRevolucion() {offset_tapas = 0; init();}
-
-ObjRevolucion::ObjRevolucion(const std::string & archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
-    ply::read_vertices(archivo,perfil_original);
-    normalizarPerfil();
-    crearVertices(perfil_original,num_instancias);
+ObjRevolucion::ObjRevolucion() {
     offset_tapas = 0;
-    crearMalla(perfil_original,num_instancias,tapa_inf,tapa_sup);
+    init();
+}
+
+ObjRevolucion::ObjRevolucion(const std::string &archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
+    ply::read_vertices(archivo, perfil_original);
+    normalizarPerfil();
+    crearVertices(perfil_original, num_instancias);
+    offset_tapas = 0;
+    crearMalla(perfil_original, num_instancias, tapa_inf, tapa_sup);
     init();
 }
 
 // *****************************************************************************
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
- 
+
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
     perfil_original = archivo;
     normalizarPerfil();
-    crearVertices(perfil_original,num_instancias);
+    crearVertices(perfil_original, num_instancias);
     offset_tapas = 0;
-    crearMalla(perfil_original,num_instancias,tapa_inf, tapa_sup);
+    crearMalla(perfil_original, num_instancias, tapa_inf, tapa_sup);
     init();
-
 }
 
-void ObjRevolucion::normalizarPerfil(){
+void ObjRevolucion::normalizarPerfil() {
     Tupla3f aux;
     bool es_descendente = false;
-    for (auto e : perfil_original){ 
-        if (e(0) == 0){
+    for (auto e : perfil_original) {
+        if (e(0) == 0) {
             v_ejes.push_back(e);
         }
     }
 
-    remove_if(perfil_original.begin(), perfil_original.end(), [] (Tupla3f t) {return t(0) == 0;});
-    for (int i=0; i < v_ejes.size(); i++) perfil_original.pop_back();
+    remove_if(perfil_original.begin(), perfil_original.end(), [](Tupla3f t) { return t(0) == 0; });
+    for (int i = 0; i < v_ejes.size(); i++) perfil_original.pop_back();
 
-    es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size()-1)(1));
+    es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size() - 1)(1));
 
     // si tiene las tapas
-    if (es_descendente && !v_ejes.empty()){
+    if (es_descendente && !v_ejes.empty()) {
         vt_sup = v_ejes.at(0);
-        if (v_ejes.size() == 2){
+        if (v_ejes.size() == 2) {
             vt_inf = v_ejes.at(1);
         }
-    } else if (!v_ejes.empty()){
+    } else if (!v_ejes.empty()) {
         vt_inf = v_ejes.at(0);
-        if (v_ejes.size() == 2){
+        if (v_ejes.size() == 2) {
             vt_sup = v_ejes.at(1);
         }
     }
 
     //si no las tiene
-    if (es_descendente && v_ejes.empty()){
-        vt_sup = Tupla3f(0,perfil_original.at(0)(1),0);
-        vt_inf = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(1),0);
-    } else if (v_ejes.empty()){
-        vt_inf = Tupla3f(0,perfil_original.at(0)(1),0);
-        vt_sup = Tupla3f(0,perfil_original.at(perfil_original.size()-1)(1),0);
+    if (es_descendente && v_ejes.empty()) {
+        vt_sup = Tupla3f(0, perfil_original.at(0)(1), 0);
+        vt_inf = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
+    } else if (v_ejes.empty()) {
+        vt_inf = Tupla3f(0, perfil_original.at(0)(1), 0);
+        vt_sup = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
     }
 
-    if (es_descendente){
-        for (int i=0; i < perfil_original.size()/2; i++){
+    if (es_descendente) {
+        for (int i = 0; i < perfil_original.size() / 2; i++) {
             aux = perfil_original[i];
-            perfil_original[i] = perfil_original[perfil_original.size()-i-1];
-            perfil_original[perfil_original.size()-i-1] = aux;
+            perfil_original[i] = perfil_original[perfil_original.size() - i - 1];
+            perfil_original[perfil_original.size() - i - 1] = aux;
         }
     }
-
-
 }
 
 void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf) {
     float angulo = 0.0;
     Tupla3f vert;
-    for (int i=0; i < num_instancias_perf; i++){
-        for (int j=0; j < perfil_original.size(); j++){
-            angulo = 2.0*M_PI*i/num_instancias_perf;
-            vert = rotarVertice(0,angulo,0,perfil_original[j]);
+    for (int i = 0; i < num_instancias_perf; i++) {
+        for (int j = 0; j < perfil_original.size(); j++) {
+            angulo = 2.0 * M_PI * i / num_instancias_perf;
+            vert = rotarVertice(0, angulo, 0, perfil_original[j]);
             v.push_back(vert);
         }
     }
@@ -125,13 +122,13 @@ void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, c
 
 
 void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf, bool tapa_inf, bool tapa_sup) {
-    int a,b;
-    for (int i=0; i < num_instancias_perf; i++){
-        for (int j=0; j < perfil_original.size()-1; j++){
-            a = perfil_original.size()*i+j;
-            b = perfil_original.size()*((i+1) % num_instancias_perf) + j;
-            f.push_back(Tupla3i(a,b,b+1));
-            f.push_back(Tupla3i(a,b+1,a+1));
+    int a, b;
+    for (int i = 0; i < num_instancias_perf; i++) {
+        for (int j = 0; j < perfil_original.size() - 1; j++) {
+            a = perfil_original.size() * i + j;
+            b = perfil_original.size() * ((i + 1) % num_instancias_perf) + j;
+            f.push_back(Tupla3i(a, b, b + 1));
+            f.push_back(Tupla3i(a, b + 1, a + 1));
         }
     }
     if (tapa_inf || tapa_sup)
@@ -140,35 +137,205 @@ void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, cons
 
 
 void ObjRevolucion::crearTapas(bool inf, bool sup, int num_instancias) {
-    int a,b;
-    if (inf){
+    int a, b;
+    int n_tri_pretapa = f.size();
+    if (inf) {
         v.push_back(vt_inf);
-        offset_tapas = v.size();
-        for (int i=0; i < num_instancias; i++){
-                a = perfil_original.size()*i;
-                b = perfil_original.size()*((i+1) % num_instancias);
-                f.push_back(Tupla3i(b,a,v.size()-1));
-
+        for (int i = 0; i < num_instancias; i++) {
+            a = perfil_original.size() * i;
+            b = perfil_original.size() * ((i + 1) % num_instancias);
+            f.push_back(Tupla3i(b, a, v.size() - 1));
         }
     }
-    if (sup){
+    if (sup) {
         v.push_back(vt_sup);
-        offset_tapas = (offset_tapas == 0) ? v.size() : offset_tapas;
-        for (int i=0; i < num_instancias; i++){
-                a = perfil_original.size()*i+perfil_original.size()-1;
-                b = perfil_original.size()*((i+1) % num_instancias) + perfil_original.size()-1;
-                f.push_back(Tupla3i(a,b,v.size()-1));
+        for (int i = 0; i < num_instancias; i++) {
+            a = perfil_original.size() * i + perfil_original.size() - 1;
+            b = perfil_original.size() * ((i + 1) % num_instancias) + perfil_original.size() - 1;
+            f.push_back(Tupla3i(a, b, v.size() - 1));
         }
+    }
+    offset_tapas = n_tri_pretapa;
+    if (offset_tapas == 0) {
+        offset_tapas = f.size();
     }
 }
 void ObjRevolucion::init() {
-    inicializar(Tupla3f(0,1,0),
-                Tupla3f(1,0,0),
-                Tupla3f(0,0,1),
+    inicializar(Tupla3f(0, 1, 0),
+                Tupla3f(1, 0, 0),
+                Tupla3f(0, 0, 1),
                 Tupla3f(1, 0.24, 0.71));
 }
-bool ObjRevolucion::esObjRevolucion() const {
+bool ObjRevolucion::esObjRevolucion() {
     return true;
 }
 
 
+void ObjRevolucion::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
+    glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, v.data());
+    glPointSize(8);
+    //    glLineWidth(5);
+    int tam = f.size() - (f.size() - offset_tapas);
+    if (tapas) {
+        tam = f.size();
+        std::cout << "con tapas" << std::endl;
+    } else
+        std::cout << "sin tapas" << std::endl;
+    glColorPointer(3, GL_FLOAT, 0, color->data());
+    glPolygonMode(GL_FRONT, modo);
+    glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f.data());
+
+    glLineWidth(1);
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
+    Malla3D::draw_AjedrezInmediato(modo, color);
+}
+void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) {
+    //Creacion de VBOs
+    if (id_vbo_vertices == 0) {
+        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
+    }
+
+    if (id_vbo_tri == 0) {
+        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
+    }
+    //VBOs de los vectores de colores
+    if (id_vbo_color_v == 0) {
+        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
+    }
+    if (id_vbo_color_a == 0) {
+        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
+    }
+    if (id_vbo_color_c == 0) {
+        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
+    }
+    if (id_vbo_color_aj == 0) {
+        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glPointSize(8);
+    //    glLineWidth(5);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
+    glEnableClientState(GL_COLOR_ARRAY);
+
+    int tam = f.size() - (f.size() - offset_tapas);
+
+    if (tapas) {
+        tam = f.size();
+        std::cout << "con tapas" << std::endl;
+    } else
+        std::cout << "sin tapas" << std::endl;
+
+    glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
+    glColorPointer(3, GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glPolygonMode(GL_FRONT, modo);
+    glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, (void *) 0);
+
+
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
+    glLineWidth(1);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+void ObjRevolucion::draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapas) {
+    //Creacion de VBOs
+    if (id_vbo_vertices == 0) {
+        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
+    }
+
+    if (id_vbo_tri == 0) {
+        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
+    }
+    //VBOs de los vectores de colores
+    if (id_vbo_color_v == 0) {
+        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
+    }
+    if (id_vbo_color_a == 0) {
+        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
+    }
+    if (id_vbo_color_c == 0) {
+        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
+    }
+    if (id_vbo_color_aj == 0) {
+        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
+    glVertexPointer(3, GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glPointSize(8);
+    //    glLineWidth(5);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
+    glEnableClientState(GL_COLOR_ARRAY);
+
+
+    int iter = 2, iter_tapa = 1, tam = f.size(), tam_tapas = f.size() - offset_tapas;
+    GLuint color = ids_colores[color_id];
+    if (tapas) iter_tapa = 2;
+    tam = f.size() - tam_tapas;
+    tam /= 2;
+
+    unsigned long offset_ajedrez = 0;
+    for (int i = 0; i < iter_tapa; i++) {
+        for (int j = 0; j < iter; j++) {
+            glBindBuffer(GL_ARRAY_BUFFER, color);
+            glColorPointer(3, GL_FLOAT, 0, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glPolygonMode(GL_FRONT, modo);
+            glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, (void *) (sizeof(float) * 3 * offset_ajedrez));
+            color = id_vbo_color_aj;
+            offset_ajedrez += tam;
+        }
+        color = ids_colores[color_id];
+        offset_ajedrez = offset_tapas;
+        tam = tam_tapas / 2;
+    }
+
+    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
+    glLineWidth(1);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
+}
+
+
+void ObjRevolucion::mezclaVector() {
+    Tupla3i aux;
+    std::vector<Tupla3i> copia_sin_tapas;
+    std::vector<Tupla3i> copia_tapas;
+    for (int i = 0; i < offset_tapas; i++) {
+        copia_sin_tapas.push_back(f[i]);
+    }
+    for (int i = offset_tapas; i < f.size(); i++) {
+        copia_tapas.push_back(f[i]);
+    }
+    //mezcla caras laterales
+    for (auto i = copia_sin_tapas.begin(); i != copia_sin_tapas.end(); ++i) {
+        aux = *i;
+        copia_sin_tapas.erase(i);
+        copia_sin_tapas.push_back(aux);
+    }
+    //mezcla tapas
+    for (auto i = copia_tapas.begin(); i != copia_tapas.end(); ++i) {
+        aux = *i;
+        copia_tapas.erase(i);
+        copia_tapas.push_back(aux);
+    }
+    f.clear();
+    //las unimos en f
+    for (auto e : copia_sin_tapas) {
+        f.push_back(e);
+    }
+    for (auto e : copia_tapas) {
+        f.push_back(e);
+    }
+}

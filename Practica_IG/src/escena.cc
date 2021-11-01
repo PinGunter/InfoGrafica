@@ -34,19 +34,20 @@ Escena::Escena() {
     obj_rev_vec = new ObjRevolucion(v_rev,20);
     obj_rev_ply = new ObjRevolucion("plys/peon",20);
     esfera = new Esfera(100,100,10);
-    cono = new Cono(10,20,20,10,true);
-    cilindro = new Cilindro(10,20,20,20,true,true);
+    cono = new Cono(20,20,20,10,true);
+    cilindro = new Cilindro(3,20,20,20, true, true);
     amogus = new ObjPLY("plys/amogus");
-    dibuja_cubo = true;
-    dibuja_tetraedro = true;
-    dibuja_ply = true;
-    dibuja_rev_ply = true;
-    dibuja_rev_vec = true;
-    dibuja_esfera = true;
-    dibuja_cono = true;
+    dibuja_cubo = false;
+    dibuja_tetraedro = false;
+    dibuja_ply = false;
+    dibuja_rev_ply = false;
+    dibuja_rev_vec = false;
+    dibuja_esfera = false;
+    dibuja_cono = false;
     dibuja_cilindro = true;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
-    ajedrez = false;
+    dibuja_tapas = true;
+    ajedrez = true;
 }
 
 //**************************************************************************
@@ -83,19 +84,19 @@ void Escena::dibujar() {
     glScalef(1.5,1.5,1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
     change_observer();
-    ejes.draw();
+//    ejes.draw();
     for (int i = 0; i < 3; i++) {
         if (modo_activo[i]) {
             if (dibuja_cubo) {
                 glPushMatrix();
                 glTranslatef(-100,1,-100);
-                cubo->draw(dibuja_diferido, ajedrez, modos[i]);
+                cubo->draw(dibuja_diferido, ajedrez, modos[i],dibuja_tapas);
                 glPopMatrix();
             }
             if (dibuja_tetraedro) {
                 glPushMatrix();
                 glTranslatef(100,1,-100);
-                tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
+                tetraedro->draw(dibuja_diferido, ajedrez, modos[i],dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -103,46 +104,47 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef(100,70,-100);
 //                glScalef(50,50,50);
-                amogus->draw(dibuja_diferido, ajedrez, modos[i]);
+                amogus->draw(dibuja_diferido, ajedrez, modos[i],dibuja_tapas);
                 glPopMatrix();
             }
             if (dibuja_rev_vec){
                 glPushMatrix();
                 glTranslatef(-50,-50,50);
                 glScalef(10,10,10);
-                obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i]);
+                obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
             }
 
             if (dibuja_rev_ply){
                 glPushMatrix();
-                glTranslatef(100,1,50);
+//                glTranslatef(100,1,50);
                 glScalef(50,50,50);
-                obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i]);
+                obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
             }
 
             if (dibuja_esfera){
                 glPushMatrix();
-                glTranslatef(70,130,60);
+//                glTranslatef(70,130,60);
                 glScalef(5,5,5);
-                esfera->draw(dibuja_diferido,ajedrez,modos[i]);
+                esfera->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
             }
 
             if (dibuja_cono){
                 glPushMatrix();
-                glTranslatef(-100,130,-100);
+//                glTranslatef(-100,130,-100);
                 glScalef(5,5,5);
-                cono->draw(dibuja_diferido,ajedrez,modos[i]);
+                cono->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
             }
 
             if (dibuja_cilindro){
                 glPushMatrix();
-                glTranslatef(100,230,100);
+//                glTranslatef(100,230,100);
                 glScalef(2.5,2.5,2.5);
-                cilindro->draw(dibuja_diferido,ajedrez,modos[i]);
+                cilindro->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                std::cout << ((dibuja_tapas) ? "tapas" : "no tapas") << std::endl;
                 glPopMatrix();
             }
         }
@@ -224,6 +226,9 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == SELOBJETO) {
                 dibuja_tetraedro ^= 1;
             }
+            if (modoMenu == SELVISUALIZACION){
+                dibuja_tapas ^= 1;
+            }
             break;
         case 'P':
             if (modoMenu == SELVISUALIZACION) {
@@ -249,7 +254,6 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 // en este caso queremos que siempre
                 // que este activado el modo ajedrez lo esté el modo solido
                 // para que no ocurra que se pulse la tecla a y no se vea nada
-                modo_activo[SOLIDO_i] = (ajedrez) ? true : modo_activo[SOLIDO_i];
             }
             break;
 
