@@ -22,6 +22,6 @@ add_executable(Practica_IG
         src/objrevolucion.cc
         src/ply_reader.cc
         src/practicas.cc
-        src/tetraedro.cc)
+        src/tetraedro.cc src/Cilindro.cc include/Cilindro.h src/Esfera.cc include/Esfera.h src/Cono.cc include/Cono.h)
 
 target_link_libraries(Practica_IG  -lm -lGL -lglut -lGLU -lGLEW)
