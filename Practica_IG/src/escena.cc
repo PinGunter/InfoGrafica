@@ -30,11 +30,11 @@ Escena::Escena() {
             Tupla3f(5, 0, 0),
             Tupla3f(5, 10, 0),
             Tupla3f(0, 10, 0)};
-    obj_rev_vec = new ObjRevolucion(v_rev, 20);
-    obj_rev_ply = new ObjRevolucion("plys/peon", 20, false);
+    obj_rev_vec = new ObjRevolucion(v_rev, Eje_rotacion::EJE_Y, 20);
+    obj_rev_ply = new ObjRevolucion("plys/peon", Eje_rotacion::EJE_Y, 20, true);
     esfera = new Esfera(100, 100, 10);
-    cono = new Cono(20, 20, 20, 10, false);
-    cilindro = new Cilindro(3, 20, 20, 20, false, true);
+    cono = new Cono(20, 20, 20, 10, true);
+    cilindro = new Cilindro(3, 20, 20, 20, true, true);
     amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
@@ -110,7 +110,7 @@ void Escena::dibujar() {
             }
             if (dibuja_rev_vec){
                 glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(10, 10, 10);
                 obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -118,7 +118,7 @@ void Escena::dibujar() {
 
             if (dibuja_rev_ply){
                 glPushMatrix();
-                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
+//                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
                 glScalef(50,50,50);
                 obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -126,7 +126,7 @@ void Escena::dibujar() {
 
             if (dibuja_esfera){
                 glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
                 esfera->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -134,7 +134,7 @@ void Escena::dibujar() {
 
             if (dibuja_cono){
                 glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
                 cono->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -142,7 +142,7 @@ void Escena::dibujar() {
 
             if (dibuja_cilindro){
                 glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(2.5, 2.5, 2.5);
                 cilindro->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();

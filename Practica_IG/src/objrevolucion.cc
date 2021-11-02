@@ -26,23 +26,45 @@ void ObjRevolucion::multMatVec(double (*m)[3], float *v, float *r) {
 }
 Tupla3f ObjRevolucion::rotarVertice(float alpha, float beta, float phi, const Tupla3f &vertice) {
     double rotacion[3][3]{
-            cos(alpha) * cos(beta), cos(alpha) * sin(beta) * sin(phi) - sin(alpha) * cos(phi), cos(alpha) * sin(beta) * cos(phi) + sin(alpha) * sin(phi),
-            sin(alpha) * cos(beta), sin(alpha) * sin(beta) * sin(phi) + cos(alpha) * cos(phi), sin(alpha) * sin(beta) * cos(phi) - cos(alpha) * sin(phi),
-            -sin(beta), cos(beta) * sin(phi), cos(beta) * cos(phi)};
+            cos(phi) * cos(beta), cos(phi) * sin(beta) * sin(alpha) - sin(phi) * cos(alpha), cos(phi) * sin(beta) * cos(alpha) + sin(phi) * sin(alpha),
+            sin(phi) * cos(beta), sin(phi) * sin(beta) * sin(alpha) + cos(phi) * cos(alpha), sin(phi) * sin(beta) * cos(alpha) - cos(phi) * sin(alpha),
+            -sin(beta), cos(beta) * sin(alpha), cos(beta) * cos(alpha)};
     float v[3] = {vertice(0), vertice(1), vertice(2)};
     float r[3] = {0};
     multMatVec(rotacion, v, r);
     return Tupla3f(r[0], r[1], r[2]);
 }
 
+bool ObjRevolucion::comparaEpsilon(float a, float b, float e) const {
+    return abs(a - b) <= e;
+}
+bool ObjRevolucion::esEjeRotacion(Tupla3f t) const {
+    bool salida;
+    float epsilon = 0.01;
+    switch (mi_eje) {
+        case Eje_rotacion::EJE_X:
+            salida = comparaEpsilon(t(1), 0, epsilon) && comparaEpsilon(t(2), 0, epsilon);
+            break;
+
+        case Eje_rotacion::EJE_Y:
+            salida = comparaEpsilon(t(0), 0, epsilon) && comparaEpsilon(t(2), 0, epsilon);
+            break;
+
+        case Eje_rotacion::EJE_Z:
+            salida = comparaEpsilon(t(0), 0, epsilon) && comparaEpsilon(t(1), 0, epsilon);
+            break;
+    }
+    return salida;
+}
 
 ObjRevolucion::ObjRevolucion() {
     offset_tapas = 0;
     init();
 }
 
-ObjRevolucion::ObjRevolucion(const std::string &archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
+ObjRevolucion::ObjRevolucion(const std::string &archivo, Eje_rotacion eje, int num_instancias, bool tapa_inf, bool tapa_sup) {
     ply::read_vertices(archivo, perfil_original);
+    mi_eje = eje;
     normalizarPerfil();
     offset_tapas = 0;
     crearMalla(perfil_original, num_instancias, tapa_inf, tapa_sup);
@@ -53,8 +75,9 @@ ObjRevolucion::ObjRevolucion(const std::string &archivo, int num_instancias, boo
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
 
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, bool tapa_inf, bool tapa_sup) {
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, Eje_rotacion eje, int num_instancias, bool tapa_inf, bool tapa_sup) {
     perfil_original = archivo;
+    mi_eje = eje;
     normalizarPerfil();
     offset_tapas = 0;
     crearMalla(perfil_original, num_instancias, tapa_inf, tapa_sup);
@@ -64,46 +87,65 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, b
 void ObjRevolucion::normalizarPerfil() {
     Tupla3f aux;
     bool es_descendente = false;
-    for (auto e : perfil_original) {
-        if (e(0) == 0) {
-            v_ejes.push_back(e);
-        }
-    }
-
-    remove_if(perfil_original.begin(), perfil_original.end(), [](Tupla3f t) { return t(0) == 0; });
-    for (int i = 0; i < v_ejes.size(); i++) perfil_original.pop_back();
-
+    Tupla3f *tapa_inf_ptr = nullptr, *tapa_sup_ptr = nullptr;
     es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size() - 1)(1));
-
-    // si tiene las tapas
-    if (es_descendente && !v_ejes.empty()) {
-        vt_sup = v_ejes.at(0);
-        if (v_ejes.size() == 2) {
-            vt_inf = v_ejes.at(1);
-        }
-    } else if (!v_ejes.empty()) {
-        vt_inf = v_ejes.at(0);
-        if (v_ejes.size() == 2) {
-            vt_sup = v_ejes.at(1);
-        }
-    }
-
-    //si no las tiene
-    if (es_descendente && v_ejes.empty()) {
-        vt_sup = Tupla3f(0, perfil_original.at(0)(1), 0);
-        vt_inf = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
-    } else if (v_ejes.empty()) {
-        vt_inf = Tupla3f(0, perfil_original.at(0)(1), 0);
-        vt_sup = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
-    }
 
     if (es_descendente) {
         for (int i = 0; i < perfil_original.size() / 2; i++) {
             aux = perfil_original[i];
-            perfil_original[i] = perfil_original[perfil_original.size() - i - 1];
-            perfil_original[perfil_original.size() - i - 1] = aux;
+            perfil_original[i] = perfil_original[perfil_original.size() - 1 - i];
+            perfil_original[perfil_original.size() - 1 - i] = aux;
         }
     }
+
+    //comprobamos si hay tapas => hay vértice inicial y/o final que cumple esEjeRotacion();
+    if (esEjeRotacion(*perfil_original.begin())) {//tapa inferior
+        vt_inf = *perfil_original.begin();
+        tapa_inf_ptr = & vt_inf;
+    }
+    if (esEjeRotacion(*(--perfil_original.end()))) {//tapa superior
+        vt_sup = *(--perfil_original.end());
+        tapa_sup_ptr = & vt_sup;
+    }
+
+    //borramos las tapas del vector, importante borrar primero la final para no cambiar los indices
+    if (tapa_sup_ptr != nullptr) perfil_original.erase(--perfil_original.end());
+    if (tapa_inf_ptr != nullptr) perfil_original.erase(perfil_original.begin());
+
+    //si no habia tapas las generamos
+    if (tapa_inf_ptr == nullptr) {
+        switch (mi_eje) {
+            case Eje_rotacion::EJE_X:
+                vt_inf = Tupla3f(perfil_original.at(0)(0), 0, 0);
+                break;
+
+            case Eje_rotacion::EJE_Y:
+                vt_inf = Tupla3f(0, perfil_original.at(0)(1), 0);
+                break;
+
+            case Eje_rotacion::EJE_Z:
+                vt_inf = Tupla3f(0, 0, perfil_original.at(0)(2));
+                break;
+        }
+    }
+
+    if (tapa_sup_ptr == nullptr) {
+        switch (mi_eje) {
+            case Eje_rotacion::EJE_X:
+                vt_sup = Tupla3f(perfil_original.at(perfil_original.size()-1)(0), 0, 0);
+                break;
+
+            case Eje_rotacion::EJE_Y:
+                vt_sup = Tupla3f(0, perfil_original.at(perfil_original.size()-1)(1), 0);
+                break;
+
+            case Eje_rotacion::EJE_Z:
+                vt_sup = Tupla3f(0, 0, perfil_original.at(perfil_original.size()-1)(2));
+                break;
+        }
+    }
+    std::cout << "Tapa inferior " << vt_inf << std::endl;
+    std::cout << "Tapa superior " << vt_sup << std::endl;
 }
 
 void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf) {
@@ -120,7 +162,7 @@ void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, c
 
 
 void ObjRevolucion::crearMalla(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf, bool tapa_inf, bool tapa_sup) {
-    crearVertices(perfil_original,num_instancias_perf);
+    crearVertices(perfil_original, num_instancias_perf);
     int a, b;
     for (int i = 0; i < num_instancias_perf; i++) {
         for (int j = 0; j < perfil_original.size() - 1; j++) {
@@ -195,7 +237,7 @@ void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *col
     glPointSize(8);
     //    glLineWidth(5);
     int tam = f.size(), iter_tapa = 1, offset = 0, iter = 1, tam_tapas = f.size() - offset_tapas;
-    std::vector<Tupla3f> * color_dibujado = color;
+    std::vector<Tupla3f> *color_dibujado = color;
     if (tapas) iter_tapa = 2;
     iter = 2;
     tam -= tam_tapas;
@@ -204,7 +246,7 @@ void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *col
     // como es el modo ajedrez, en el modo solido dibujamos 2 veces
     // una con las caras pares (la primera mitad) y otra vez
     // con las caras impares (la segunda mitad)
-    for (int i=0; i < iter_tapa; i++) {
+    for (int i = 0; i < iter_tapa; i++) {
         for (int j = 0; j < iter; j++) {
             glColorPointer(3, GL_FLOAT, 0, color_dibujado->data());
             glPolygonMode(GL_FRONT, modo);
@@ -218,7 +260,8 @@ void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *col
     }
     //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
     glLineWidth(1);
-    glDisableClientState(GL_VERTEX_ARRAY);}
+    glDisableClientState(GL_VERTEX_ARRAY);
+}
 void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {

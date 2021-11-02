@@ -17,7 +17,7 @@ private:
     bool tapa;
 
 public:
-    Cono(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t = true);
+    Cono(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t = true, Eje_rotacion eje = Eje_rotacion::EJE_Y);
 };
 
 

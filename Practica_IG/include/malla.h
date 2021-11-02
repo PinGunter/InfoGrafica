@@ -21,6 +21,8 @@
 #define ALAMBRE_c 1
 #define SOLIDO_c 2
 #define AJEDREZ_c 3
+
+enum class Eje_rotacion{EJE_X, EJE_Y, EJE_Z};
 // *****************************************************************************
 //
 // clase para objetos 3D (mallas indexadas)

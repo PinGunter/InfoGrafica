@@ -17,7 +17,9 @@ void Cono::generarPerfil(float h, float r, int n) {
     }
 }
 
-Cono::Cono(int num_vert_perfil, int num_instancias_perf, float h, float r, bool t) {
+Cono::Cono(int num_vert_perfil, int num_instancias_perf, float h, float r, bool t, Eje_rotacion eje) {
+    std::cout << "Soy cono " << std::endl;
+    mi_eje = eje;
     altura = h;
     radio = r;
     tapa = t;

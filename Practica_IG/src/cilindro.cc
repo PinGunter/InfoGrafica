@@ -10,7 +10,9 @@ void Cilindro::generarPerfil(float h, float r, int n) {
     }
 }
 
-Cilindro::Cilindro(int num_vert_perfil, int num_instancias_perf, float h, float r, bool t_inf, bool t_sup) {
+Cilindro::Cilindro(int num_vert_perfil, int num_instancias_perf, float h, float r, bool t_inf, bool t_sup, Eje_rotacion eje) {
+    std::cout << "Soy cilindro " << std::endl;
+    mi_eje = eje;
     altura = h;
     radio = r;
     generarPerfil(altura, radio, num_vert_perfil);

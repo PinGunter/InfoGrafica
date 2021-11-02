@@ -6,15 +6,18 @@
 
 void Esfera::generarPerfil(float radio, int n) {
     float x, y;
+    float angulo_base = 3*M_PI/2;
     for (int i = 0; i < n; i++) {
-        x = radio * cos(2 * M_PI * i / n);
-        y = radio * sin(2 * M_PI * i / n);
+        x = radio * cos(angulo_base + 2 * M_PI * i / (n-1));
+        y = radio * sin(angulo_base + 2 * M_PI * i / (n-1));
         perfil_original.push_back(Tupla3f(x, y, 0));
     }
 }
 
 
-Esfera::Esfera(int num_vert_perfil, int num_instancias_perf, float r) {
+Esfera::Esfera(int num_vert_perfil, int num_instancias_perf, float r, Eje_rotacion eje) {
+    std::cout << "Soy esfera " << std::endl;
+    mi_eje = eje;
     radio = r;
     generarPerfil(radio, num_vert_perfil);
     normalizarPerfil();
