@@ -15,7 +15,6 @@ Cilindro::Cilindro(int num_vert_perfil, int num_instancias_perf, float h, float 
     radio = r;
     generarPerfil(altura, radio, num_vert_perfil);
     normalizarPerfil();
-    crearVertices(perfil_original, num_instancias_perf);
     crearMalla(perfil_original, num_instancias_perf, t_inf, t_sup);
 
     init();
