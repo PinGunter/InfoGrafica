@@ -31,10 +31,10 @@ Escena::Escena() {
             Tupla3f(5, 10, 0),
             Tupla3f(0, 10, 0)};
     obj_rev_vec = new ObjRevolucion(v_rev, 20);
-    obj_rev_ply = new ObjRevolucion("plys/peon", 20);
+    obj_rev_ply = new ObjRevolucion("plys/peon", 20, false);
     esfera = new Esfera(100, 100, 10);
-    cono = new Cono(20, 20, 20, 10, true);
-    cilindro = new Cilindro(3, 20, 20, 20, true, true);
+    cono = new Cono(20, 20, 20, 10, false);
+    cilindro = new Cilindro(3, 20, 20, 20, false, true);
     amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
@@ -87,6 +87,7 @@ void Escena::dibujar() {
     ejes.draw();
     for (int i = 0; i < 3; i++) {
         if (modo_activo[i]) {
+            j = 0;
             if (dibuja_cubo) {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
@@ -103,7 +104,7 @@ void Escena::dibujar() {
             if (dibuja_ply) {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(5, 5, 5);
+//                glScalef(5, 5, 5);
                 amogus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
                 glPopMatrix();
             }
@@ -117,7 +118,7 @@ void Escena::dibujar() {
 
             if (dibuja_rev_ply){
                 glPushMatrix();
-                //                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
+                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
                 glScalef(50,50,50);
                 obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
