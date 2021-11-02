@@ -18,6 +18,7 @@ Esfera::Esfera(int num_vert_perfil, int num_instancias_perf, float r) {
     radio = r;
     generarPerfil(radio, num_vert_perfil);
     normalizarPerfil();
+    crearVertices(perfil_original, num_instancias_perf);
     crearMalla(perfil_original, num_instancias_perf);
     init();
     offset_tapas = f.size();
