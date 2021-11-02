@@ -65,22 +65,39 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, int num_instancias, b
 
 void ObjRevolucion::normalizarPerfil() {
     Tupla3f aux;
-    Tupla3f *tapa_1 = nullptr, *tapa_2 = nullptr;
     bool es_descendente = false;
-
-    if (perfil_original[0](0) == 0) tapa_1 = &perfil_original[0];
-    if (perfil_original[perfil_original.size() - 1](0) == 0) tapa_2 = &perfil_original[perfil_original.size() - 1];
-
-    if (tapa_1 != nullptr) {
-        perfil_original.erase(perfil_original.begin());
+    for (auto e : perfil_original) {
+        if (e(0) == 0) {
+            v_ejes.push_back(e);
+        }
     }
-    if (tapa_2 != nullptr) {
-        auto it = perfil_original.end();
-        --it;
-        perfil_original.erase(it);
-    }
+
+    remove_if(perfil_original.begin(), perfil_original.end(), [](Tupla3f t) { return t(0) == 0; });
+    for (int i = 0; i < v_ejes.size(); i++) perfil_original.pop_back();
 
     es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size() - 1)(1));
+
+    // si tiene las tapas
+    if (es_descendente && !v_ejes.empty()) {
+        vt_sup = v_ejes.at(0);
+        if (v_ejes.size() == 2) {
+            vt_inf = v_ejes.at(1);
+        }
+    } else if (!v_ejes.empty()) {
+        vt_inf = v_ejes.at(0);
+        if (v_ejes.size() == 2) {
+            vt_sup = v_ejes.at(1);
+        }
+    }
+
+    //si no las tiene
+    if (es_descendente && v_ejes.empty()) {
+        vt_sup = Tupla3f(0, perfil_original.at(0)(1), 0);
+        vt_inf = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
+    } else if (v_ejes.empty()) {
+        vt_inf = Tupla3f(0, perfil_original.at(0)(1), 0);
+        vt_sup = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
+    }
 
     if (es_descendente) {
         for (int i = 0; i < perfil_original.size() / 2; i++) {
@@ -89,10 +106,6 @@ void ObjRevolucion::normalizarPerfil() {
             perfil_original[perfil_original.size() - i - 1] = aux;
         }
     }
-
-    //generamos las tapas
-    vt_inf = Tupla3f(0, perfil_original.at(0)(1), 0);
-    vt_sup = Tupla3f(0, perfil_original.at(perfil_original.size() - 1)(1), 0);
 }
 
 void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, const int num_instancias_perf) {

@@ -26,13 +26,14 @@ Escena::Escena() {
     tetraedro = new Tetraedro(50);
 
     std::vector<Tupla3f> v_rev{
+            Tupla3f(0, 0, 0),
             Tupla3f(5, 0, 0),
-            Tupla3f(2.5, 5, 0),
-            Tupla3f(5, 10, 0)};
+            Tupla3f(5, 10, 0),
+            Tupla3f(0, 10, 0)};
     obj_rev_vec = new ObjRevolucion(v_rev, 20);
-    obj_rev_ply = new ObjRevolucion("plys/lata-pcue", 20, false);
+    obj_rev_ply = new ObjRevolucion("plys/peon", 20, false);
     esfera = new Esfera(100, 100, 10);
-    cono = new Cono(20, 20, 20, 10, true);
+    cono = new Cono(20, 20, 20, 10, false);
     cilindro = new Cilindro(3, 20, 20, 20, false, true);
     amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
