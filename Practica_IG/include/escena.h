@@ -46,9 +46,9 @@ private:
     ObjPLY *amogus = nullptr;
     ObjRevolucion *obj_rev_ply = nullptr;
     ObjRevolucion *obj_rev_vec = nullptr;
-    esfera *esfera = nullptr;
-    cono *cono = nullptr;
-    cilindro *cilindro = nullptr;
+    Esfera *esfera = nullptr;
+    Cono *cono = nullptr;
+    Cilindro *cilindro = nullptr;
     bool dibuja_cubo;
     bool dibuja_tetraedro;
     bool dibuja_ply;

@@ -31,10 +31,10 @@ Escena::Escena() {
             Tupla3f(5, 10, 0),
             Tupla3f(0, 10, 0)};
     obj_rev_vec = new ObjRevolucion(v_rev, 20);
-    obj_rev_ply = new ObjRevolucion("plys/lata-pinf", 20);
-    esfera = new esfera(100, 100, 10);
-    cono = new cono(20, 20, 20, 10, true);
-    cilindro = new cilindro(3, 20, 20, 20, true, true);
+    obj_rev_ply = new ObjRevolucion("plys/peon", 20);
+    esfera = new Esfera(100, 100, 10);
+    cono = new Cono(20, 20, 20, 10, true);
+    cilindro = new Cilindro(3, 20, 20, 20, true, true);
     amogus = new ObjPLY("plys/amogus");
     dibuja_cubo = false;
     dibuja_tetraedro = false;
@@ -195,9 +195,9 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             std::cout << "\"F\" para dibujar obj_ply" << std::endl;
             std::cout << "\"R\" para dibujar obj_ply_revolucion" << std::endl;
             std::cout << "\"A\" para dibujar obj_revolucion_vector" << std::endl;
-            std::cout << "\"L\" para dibujar cilindro" << std::endl;
-            std::cout << "\"E\" para dibujar esfera" << std::endl;
-            std::cout << "\"P\" para dibujar cono" << std::endl;
+            std::cout << "\"L\" para dibujar Cilindro" << std::endl;
+            std::cout << "\"E\" para dibujar Esfera" << std::endl;
+            std::cout << "\"P\" para dibujar Cono" << std::endl;
             std::cout << "\"Q\" para salir del modo objeto" << std::endl;
             modoMenu = SELOBJETO;
             break;

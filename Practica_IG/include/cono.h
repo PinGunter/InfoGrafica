@@ -6,7 +6,7 @@
 #define PRACTICA_IG_CONO_H
 #include <objrevolucion.h>
 
-class cono : public ObjRevolucion {
+class Cono : public ObjRevolucion {
 private:
     Tupla3f rectaGeneradoraPerfil(const Tupla3f &a, const Tupla3f &b, const float &x);
     void generarPerfil(float h, float r, int n);
@@ -17,7 +17,7 @@ private:
     bool tapa;
 
 public:
-    cono(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t = true);
+    Cono(int num_vert_perfil = 2, int num_instancias_perf = 20, float h = 1.0, float r = 1.0, bool t = true);
 };
 
 
