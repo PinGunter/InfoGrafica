@@ -35,7 +35,7 @@ Escena::Escena() {
     obj_rev_ply = new ObjRevolucion("plys/peon", Eje_rotacion::EJE_Y, 20, true);
     peon_x = new ObjRevolucion("plys/peon_rotadoX", Eje_rotacion::EJE_X, 20, true);
     peon_z = new ObjRevolucion("plys/peon_rotadoZ", Eje_rotacion::EJE_Z, 20, true);
-    esfera = new Esfera(100, 100, 10);
+    esfera = new Esfera(15, 15, 10);
     cono = new Cono(20, 20, 20, 10, true);
     cilindro = new Cilindro(3, 20, 20, 20, true, true);
     amogus = new ObjPLY("plys/amogus");
@@ -131,7 +131,7 @@ void Escena::dibujar() {
 
             if (dibuja_esfera){
                 glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
                 esfera->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();

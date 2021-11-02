@@ -100,7 +100,18 @@ void ObjRevolucion::normalizarPerfil() {
     Tupla3f aux;
     bool es_descendente = false;
     Tupla3f *tapa_inf_ptr = nullptr, *tapa_sup_ptr = nullptr;
-    es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size() - 1)(1));
+    switch (mi_eje)
+    {
+        case Eje_rotacion::EJE_X:
+            es_descendente = (perfil_original.at(0)(0) >= perfil_original.at(perfil_original.size() - 1)(0));
+            break;
+        case Eje_rotacion::EJE_Y:
+            es_descendente = (perfil_original.at(0)(1) >= perfil_original.at(perfil_original.size() - 1)(1));
+            break;
+        case Eje_rotacion::EJE_Z:
+            es_descendente = (perfil_original.at(0)(2) >= perfil_original.at(perfil_original.size() - 1)(2));
+            break;
+    }
 
     if (es_descendente) {
         for (int i = 0; i < perfil_original.size() / 2; i++) {
