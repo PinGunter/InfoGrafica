@@ -24,7 +24,19 @@ void ObjRevolucion::multMatVec(double (*m)[3], float *v, float *r) {
         }
     }
 }
-Tupla3f ObjRevolucion::rotarVertice(float alpha, float beta, float phi, const Tupla3f &vertice) {
+Tupla3f ObjRevolucion::rotarVertice(Eje_rotacion eje, float angulo, const Tupla3f &vertice) {
+    double alpha = 0, beta = 0, phi = 0;
+    switch (eje){
+        case Eje_rotacion::EJE_X:
+            alpha = angulo;
+            break;
+        case Eje_rotacion::EJE_Y:
+            beta = angulo;
+            break;
+        case Eje_rotacion::EJE_Z:
+            phi = angulo;
+            break;
+    }
     double rotacion[3][3]{
             cos(phi) * cos(beta), cos(phi) * sin(beta) * sin(alpha) - sin(phi) * cos(alpha), cos(phi) * sin(beta) * cos(alpha) + sin(phi) * sin(alpha),
             sin(phi) * cos(beta), sin(phi) * sin(beta) * sin(alpha) + cos(phi) * cos(alpha), sin(phi) * sin(beta) * cos(alpha) - cos(phi) * sin(alpha),
@@ -154,7 +166,7 @@ void ObjRevolucion::crearVertices(const std::vector<Tupla3f> &perfil_original, c
     for (int i = 0; i < num_instancias_perf; i++) {
         for (int j = 0; j < perfil_original.size(); j++) {
             angulo = 2.0 * M_PI * i / num_instancias_perf;
-            vert = rotarVertice(0, angulo, 0, perfil_original[j]);
+            vert = rotarVertice(mi_eje, angulo, perfil_original[j]);
             v.push_back(vert);
         }
     }

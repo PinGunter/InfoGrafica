@@ -46,6 +46,8 @@ private:
     ObjPLY *amogus = nullptr;
     ObjRevolucion *obj_rev_ply = nullptr;
     ObjRevolucion *obj_rev_vec = nullptr;
+    ObjRevolucion * peon_x = nullptr;
+    ObjRevolucion * peon_z = nullptr;
     Esfera *esfera = nullptr;
     Cono *cono = nullptr;
     Cilindro *cilindro = nullptr;
@@ -60,6 +62,8 @@ private:
     bool dibuja_esfera;
     bool dibuja_cono;
     bool dibuja_cilindro;
+    bool dibuja_peon_x;
+    bool dibuja_peon_z;
     GLuint modos [3];
     bool modo_activo[3];
 

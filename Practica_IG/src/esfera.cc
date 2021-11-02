@@ -16,7 +16,6 @@ void Esfera::generarPerfil(float radio, int n) {
 
 
 Esfera::Esfera(int num_vert_perfil, int num_instancias_perf, float r, Eje_rotacion eje) {
-    std::cout << "Soy esfera " << std::endl;
     mi_eje = eje;
     radio = r;
     generarPerfil(radio, num_vert_perfil);

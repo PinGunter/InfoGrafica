@@ -3,7 +3,7 @@
 #include <aux.h>// includes de OpenGL/glut/glew, windows, y librería std de C++
 #include <escena.h>
 #include <malla.h>// objetos: Cubo y otros....
-#define N_OBJ 8
+#define N_OBJ 10
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
@@ -29,9 +29,12 @@ Escena::Escena() {
             Tupla3f(0, 0, 0),
             Tupla3f(5, 0, 0),
             Tupla3f(5, 10, 0),
-            Tupla3f(0, 10, 0)};
+            Tupla3f(0, 10, 0)
+    };
     obj_rev_vec = new ObjRevolucion(v_rev, Eje_rotacion::EJE_Y, 20);
     obj_rev_ply = new ObjRevolucion("plys/peon", Eje_rotacion::EJE_Y, 20, true);
+    peon_x = new ObjRevolucion("plys/peon_rotadoX", Eje_rotacion::EJE_X, 20, true);
+    peon_z = new ObjRevolucion("plys/peon_rotadoZ", Eje_rotacion::EJE_Z, 20, true);
     esfera = new Esfera(100, 100, 10);
     cono = new Cono(20, 20, 20, 10, true);
     cilindro = new Cilindro(3, 20, 20, 20, true, true);
@@ -44,6 +47,8 @@ Escena::Escena() {
     dibuja_esfera = false;
     dibuja_cono = false;
     dibuja_cilindro = false;
+    dibuja_peon_x = false;
+    dibuja_peon_z = false;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     dibuja_tapas = true;
     ajedrez = false;
@@ -110,7 +115,7 @@ void Escena::dibujar() {
             }
             if (dibuja_rev_vec){
                 glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glTranslatef(0, 100, 0);
                 glScalef(10, 10, 10);
                 obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -118,7 +123,7 @@ void Escena::dibujar() {
 
             if (dibuja_rev_ply){
                 glPushMatrix();
-//                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
+                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
                 glScalef(50,50,50);
                 obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -126,7 +131,7 @@ void Escena::dibujar() {
 
             if (dibuja_esfera){
                 glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
                 esfera->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -134,7 +139,7 @@ void Escena::dibujar() {
 
             if (dibuja_cono){
                 glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
                 cono->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
@@ -142,9 +147,25 @@ void Escena::dibujar() {
 
             if (dibuja_cilindro){
                 glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(2.5, 2.5, 2.5);
                 cilindro->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                glPopMatrix();
+            }
+
+            if (dibuja_peon_x){
+                glPushMatrix();
+                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glScalef(50,50,50);
+                peon_x->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                glPopMatrix();
+            }
+
+            if (dibuja_peon_z){
+                glPushMatrix();
+                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+                glScalef(50,50,50);
+                peon_z->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
                 glPopMatrix();
             }
         }
@@ -199,6 +220,8 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             std::cout << "\"L\" para dibujar Cilindro" << std::endl;
             std::cout << "\"E\" para dibujar Esfera" << std::endl;
             std::cout << "\"P\" para dibujar Cono" << std::endl;
+            std::cout << "\"X\" para dibujar Peon Rotado sobre el eje X" << std::endl;
+            std::cout << "\"Z\" para dibujar Peon Rotado sobre el eje Z" << std::endl;
             std::cout << "\"Q\" para salir del modo objeto" << std::endl;
             modoMenu = SELOBJETO;
             break;
@@ -281,7 +304,16 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 dibuja_cono ^= 1;
             }
             break;
-
+        case 'X':
+            if (modoMenu == SELOBJETO){
+                dibuja_peon_x ^= 1;
+            }
+            break;
+        case 'Z':
+            if(modoMenu == SELOBJETO){
+                dibuja_peon_z ^= 1;
+            }
+            break;
         case 'S':
             if (modoMenu == SELVISUALIZACION) {
                 modo_activo[SOLIDO_i] ^= 1;

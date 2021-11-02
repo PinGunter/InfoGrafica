@@ -38,7 +38,6 @@ public:
 
 protected:
     std::vector<Tupla3f> perfil_original;
-    std::vector<Tupla3f> v_ejes;
     Tupla3f vt_inf, vt_sup;
     unsigned long offset_tapas;
     Eje_rotacion mi_eje;
@@ -47,7 +46,7 @@ protected:
     bool esEjeRotacion(Tupla3f t) const;
     virtual void crearTapas(bool inf, bool sup, int num_instancias);
     void multMatVec(double m[][3], float *v, float *r);
-    Tupla3f rotarVertice(float alpha, float beta, float phi, const Tupla3f &vertice);
+    Tupla3f rotarVertice(Eje_rotacion eje, float angulo, const Tupla3f &vertice);
     void normalizarPerfil();
     void crearVertices(const std::vector<Tupla3f> &perfil_original,
                        const int num_instancias_perf);
