@@ -235,30 +235,27 @@ bool ObjRevolucion::esObjRevolucion() {
 }
 
 
-void ObjRevolucion::draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
+void ObjRevolucion::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    //    glLineWidth(5);
     int tam = f.size() - (f.size() - offset_tapas);
     if (tapas) {
         tam = f.size();
     }
     glColorPointer(3, GL_FLOAT, 0, color->data());
-    glPolygonMode(GL_FRONT, modo);
+    glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f.data());
 
-    glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas) {
+void ObjRevolucion::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    //    glLineWidth(5);
     int tam = f.size(), iter_tapa = 1, offset = 0, iter = 1, tam_tapas = f.size() - offset_tapas;
     std::vector<Tupla3f> *color_dibujado = color;
     if (tapas) iter_tapa = 2;
@@ -272,7 +269,7 @@ void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *col
     for (int i = 0; i < iter_tapa; i++) {
         for (int j = 0; j < iter; j++) {
             glColorPointer(3, GL_FLOAT, 0, color_dibujado->data());
-            glPolygonMode(GL_FRONT, modo);
+            glPolygonMode(GL_FRONT, map_modo(modo));
             glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f[offset]);
             color_dibujado = &c_ajedrez;
             offset += tam;
@@ -281,11 +278,11 @@ void ObjRevolucion::draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *col
         offset = offset_tapas;
         tam = tam_tapas / 2;
     }
-    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
-    glLineWidth(1);
+
+
     glDisableClientState(GL_VERTEX_ARRAY);
 }
-void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) {
+void ObjRevolucion::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -312,7 +309,6 @@ void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    //    glLineWidth(5);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
@@ -325,17 +321,16 @@ void ObjRevolucion::draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas) 
     glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
     glColorPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glPolygonMode(GL_FRONT, modo);
+    glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, (void *) 0);
 
 
-    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
-    glLineWidth(1);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
-void ObjRevolucion::draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapas) {
+void ObjRevolucion::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -362,7 +357,6 @@ void ObjRevolucion::draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapa
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    //    glLineWidth(5);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
@@ -379,7 +373,7 @@ void ObjRevolucion::draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapa
             glBindBuffer(GL_ARRAY_BUFFER, color);
             glColorPointer(3, GL_FLOAT, 0, 0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            glPolygonMode(GL_FRONT, modo);
+            glPolygonMode(GL_FRONT, map_modo(modo));
             glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, (void *) (sizeof(float) * 3 * offset_ajedrez));
             color = id_vbo_color_aj;
             offset_ajedrez += tam;
@@ -389,8 +383,7 @@ void ObjRevolucion::draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapa
         tam = tam_tapas / 2;
     }
 
-    //volvemos al tamaño de linea predeterminado para que los ejes no se vean muy anchos
-    glLineWidth(1);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);

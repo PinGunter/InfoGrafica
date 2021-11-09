@@ -18,6 +18,7 @@ typedef enum {
     SELDIBUJADO
 } menu;
 
+
 class Escena
 {
 
@@ -64,8 +65,8 @@ private:
     bool dibuja_cilindro;
     bool dibuja_peon_x;
     bool dibuja_peon_z;
-    GLuint modos [3];
-    bool modo_activo[3];
+    ModoVisualizacion modos [5];
+    bool modo_activo[5];
 
 public:
     Escena();
