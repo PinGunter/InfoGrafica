@@ -10,7 +10,7 @@
 #include <objply.h>
 #include <objrevolucion.h>
 #include <tetraedro.h>
-
+#define N_MODOS 3
 typedef enum {
     NADA,
     SELOBJETO,
@@ -65,8 +65,9 @@ private:
     bool dibuja_cilindro;
     bool dibuja_peon_x;
     bool dibuja_peon_z;
-    ModoVisualizacion modos [5];
-    bool modo_activo[5];
+    bool modo_activo[N_MODOS];
+    ModoVisualizacion modos [N_MODOS];
+    ModoLuz  tipo_luz;
 
 public:
     Escena();

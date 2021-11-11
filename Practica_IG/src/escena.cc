@@ -18,9 +18,10 @@ Escena::Escena() {
     modos[(int) ModoVisualizacion::PUNTOS] = ModoVisualizacion::PUNTOS;
     modos[(int) ModoVisualizacion::ALAMBRE] = ModoVisualizacion::ALAMBRE;
     modos[(int) ModoVisualizacion::SOLIDO] = ModoVisualizacion::SOLIDO;
+    tipo_luz = ModoLuz::NINGUNA;
 
-    modo_activo[(int) ModoVisualizacion::PUNTOS] = modo_activo[(int) ModoVisualizacion::ALAMBRE]
-            = modo_activo[(int) ModoVisualizacion::SUAVE] = modo_activo[(int) ModoVisualizacion::PLANO] = false;
+
+    modo_activo[(int) ModoVisualizacion::PUNTOS] = modo_activo[(int) ModoVisualizacion::ALAMBRE] = false;
 
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
@@ -92,19 +93,21 @@ void Escena::dibujar() {
     change_observer();
     int j = 0;
     ejes.draw();
-    for (int i = 0; i < 3; i++) {
+    if (tipo_luz != ModoLuz::NINGUNA)
+        glEnable(GL_LIGHTING);
+    for (int i = 0; i < N_MODOS; i++) {
         if (modo_activo[i]) {
             j = 0;
             if (dibuja_cubo) {
                 glPushMatrix();
 //                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                cubo->draw(dibuja_diferido, ajedrez, modos[i]);
+                cubo->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
                 glPopMatrix();
             }
             if (dibuja_tetraedro) {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                tetraedro->draw(dibuja_diferido, ajedrez, modos[i]);
+                tetraedro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
                 glPopMatrix();
             }
 
@@ -112,14 +115,14 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
 //                glScalef(5, 5, 5);
-                amogus->draw(dibuja_diferido, ajedrez, modos[i]);
+                amogus->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
                 glPopMatrix();
             }
             if (dibuja_rev_vec){
                 glPushMatrix();
                 glTranslatef(0, 100, 0);
                 glScalef(10, 10, 10);
-                obj_rev_vec->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                obj_rev_vec->draw(dibuja_diferido, ajedrez, modos[i],tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -127,7 +130,7 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
                 glScalef(50,50,50);
-                obj_rev_ply->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                obj_rev_ply->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -135,7 +138,7 @@ void Escena::dibujar() {
                 glPushMatrix();
 //                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
-                esfera->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                esfera->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -143,7 +146,7 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(5, 5, 5);
-                cono->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                cono->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -151,7 +154,7 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(2.5, 2.5, 2.5);
-                cilindro->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                cilindro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -159,7 +162,7 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(50,50,50);
-                peon_x->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                peon_x->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
 
@@ -167,12 +170,12 @@ void Escena::dibujar() {
                 glPushMatrix();
                 glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
                 glScalef(50,50,50);
-                peon_z->draw(dibuja_diferido,ajedrez,modos[i],dibuja_tapas);
+                peon_z->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                 glPopMatrix();
             }
         }
     }
-
+    glDisable(GL_LIGHTING);
 
 }
 
@@ -269,7 +272,11 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 dibuja_ply ^= 1;
             }
             if (modoMenu == SELVISUALIZACION){
-                modo_activo[(int) ModoVisualizacion::PLANO] ^= 1;
+                if (tipo_luz == ModoLuz::PLANO){
+                    tipo_luz = ModoLuz::NINGUNA;
+                } else {
+                    tipo_luz = ModoLuz ::PLANO;
+                }
             }
             break;
 
@@ -327,7 +334,12 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
         case 'S':
             if (modoMenu == SELVISUALIZACION){
-                modo_activo[(int) ModoVisualizacion::SUAVE] ^= 1;
+                if (tipo_luz == ModoLuz::SUAVE){
+                    tipo_luz = ModoLuz::NINGUNA;
+                } else {
+                    tipo_luz = ModoLuz ::SUAVE;
+                }
+
             }
             break;
         case '1':

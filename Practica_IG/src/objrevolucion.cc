@@ -235,7 +235,34 @@ bool ObjRevolucion::esObjRevolucion() {
 }
 
 
-void ObjRevolucion::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) {
+void ObjRevolucion::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion, bool tapas) {
+    switch (modo) {
+        case ModoVisualizacion::PUNTOS:
+            selector_color = &c_vert;
+            selector_color_vbo = PUNTOS_c;
+            break;
+        case ModoVisualizacion::ALAMBRE:
+            selector_color = &c_aris;
+            selector_color_vbo = ALAMBRE_c;
+            break;
+        case ModoVisualizacion::SOLIDO:
+            selector_color = &c_cara;
+            selector_color_vbo = SOLIDO_c;
+            break;
+    }
+    if (dibuja_diferido) {
+        if (ajedrez) draw_AjedrezDiferido(selector_color_vbo, tapas, modo, iluminacion);
+        else
+            draw_ModoDiferido(selector_color_vbo, tapas, modo, iluminacion);
+    } else {
+        if (ajedrez) draw_AjedrezInmediato(selector_color, tapas, modo, iluminacion);
+        else
+            draw_ModoInmediato(selector_color, tapas, modo, iluminacion);
+    }
+}
+
+
+void ObjRevolucion::draw_ModoInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
@@ -251,7 +278,7 @@ void ObjRevolucion::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla
     glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void ObjRevolucion::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) {
+void ObjRevolucion::draw_AjedrezInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
@@ -282,7 +309,7 @@ void ObjRevolucion::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tu
 
     glDisableClientState(GL_VERTEX_ARRAY);
 }
-void ObjRevolucion::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) {
+void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -330,7 +357,7 @@ void ObjRevolucion::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, b
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
-void ObjRevolucion::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) {
+void ObjRevolucion::draw_AjedrezDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());

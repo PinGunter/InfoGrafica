@@ -28,11 +28,13 @@ public:
     ObjRevolucion();
     ObjRevolucion(const std::string &archivo, Eje_rotacion eje, int num_instancias, bool tapa_inf = true, bool tapa_sup = true);
     ObjRevolucion(std::vector<Tupla3f> archivo, Eje_rotacion eje, int num_instancias, bool tapa_inf = true, bool tapa_sup = true);
-    void draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) override;
-    void draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) override;
+    void draw_ModoInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion);
+    void draw_AjedrezInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion);
 
-    void draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) override;
-    void draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, bool tapas) override;
+    void draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion);
+    void draw_AjedrezDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion);
+
+    void draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion, bool tapas);
 
     bool esObjRevolucion();
 

@@ -19,20 +19,20 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, bool tapas) {
-    std::cout << "Draw inmediato generico" << std::endl;
+void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    if (modo == ModoVisualizacion::SUAVE || modo == ModoVisualizacion::PLANO){
+    if (iluminacion != ModoLuz::NINGUNA){
+        std::cout << "lucecitas " << std::endl;
         glNormalPointer(GL_FLOAT,0,nv.data());
-        glShadeModel(map_modo(modo));
+        glShadeModel(map_luz(iluminacion));
     }else {
         glColorPointer(3, GL_FLOAT, 0, color->data());
-        glPolygonMode(GL_FRONT, map_modo(modo));
     }
+    glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -40,7 +40,7 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id,bool tapas) {
+void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLuz iluminacion) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0) {
         id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
@@ -85,7 +85,7 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id,bool tap
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, bool tapas) {
+void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion) {
     switch (modo) {
         case ModoVisualizacion::PUNTOS:
             selector_color = &c_vert;
@@ -101,18 +101,18 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, b
             break;
     }
     if (dibuja_diferido) {
-        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo,tapas);
+        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo,iluminacion);
         else
-            draw_ModoDiferido(modo, selector_color_vbo,tapas);
+            draw_ModoDiferido(modo, selector_color_vbo,iluminacion);
     } else {
-        if (ajedrez) draw_AjedrezInmediato(modo, selector_color,tapas);
+        if (ajedrez) draw_AjedrezInmediato(modo, selector_color,iluminacion);
         else
-            draw_ModoInmediato(modo, selector_color, tapas);
+            draw_ModoInmediato(modo, selector_color, iluminacion);
     }
 }
 
 
-void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id,bool tapas) {
+void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion) {
     //Creacion de VBOs
     if (id_vbo_vertices == 0)
     {
@@ -169,7 +169,7 @@ void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id,bool 
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Malla3D::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color,bool tapas) {
+void Malla3D::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
@@ -259,14 +259,20 @@ GLuint Malla3D::map_modo(ModoVisualizacion v) const {
         case ModoVisualizacion::SOLIDO:
             return GL_FILL;
             break;
-        case ModoVisualizacion::SUAVE:
+    }
+}
+
+GLuint Malla3D::map_luz(ModoLuz l) const{
+    switch (l){
+        case ModoLuz::SUAVE:
             return GL_SMOOTH;
             break;
-        case ModoVisualizacion::PLANO:
+        case ModoLuz::PLANO:
             return GL_FLAT;
             break;
     }
 }
+
 void Malla3D::setMaterial(Material m) {
     this -> m = m;
 }
