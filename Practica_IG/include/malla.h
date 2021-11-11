@@ -92,7 +92,7 @@ protected:
 
     virtual void mezclaVector();// metodo para mezclar un vector y conseguir el efecto ajedrez
 
-    void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez);
+    void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez, const Tupla4f &ambiente, const Tupla4f &especular, const Tupla4f &difuso, float brillo);
 };
 
 #endif

@@ -36,11 +36,13 @@ Cubo::Cubo(float lado)
     this->f.push_back(Tupla3i(0, 7, 5)); // 10
     this->f.push_back(Tupla3i(0, 3, 7)); // 11
 
-
-    inicializar(Tupla3f(0,1,0),
-                   Tupla3f(1,0,0),
-                   Tupla3f(0,0,1),
-                   Tupla3f(1, 0.24, 0.71));
+    Tupla4f ambiente (1,0,0,0);
+    Tupla4f especular (1,0,0,0);
+    Tupla4f difuso (1,0,0,0);
+    inicializar(Tupla3f(0, 1, 0),
+                Tupla3f(1, 0, 0),
+                Tupla3f(0, 0, 1),
+                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 1);
 
     // (es importante en cada cara ordenar los vértices en sentido contrario
     //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)

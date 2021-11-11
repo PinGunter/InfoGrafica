@@ -26,7 +26,7 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
     if (iluminacion != ModoLuz::NINGUNA){
-        std::cout << "lucecitas " << std::endl;
+        m.aplicar();
         glNormalPointer(GL_FLOAT,0,nv.data());
         glShadeModel(map_luz(iluminacion));
     }else {
@@ -212,9 +212,10 @@ void Malla3D::mezclaVector() {
         f.push_back(aux);
     }
 }
-void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez) {
+void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez, const Tupla4f &ambiente, const Tupla4f &especular, const Tupla4f &difuso, float brillo) {
     id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
+    setMaterial(Material(ambiente,especular,difuso,brillo));
     calcularNormales();
     mezclaVector();
 }
