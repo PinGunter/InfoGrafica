@@ -1,23 +1,23 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
-#include <ejes.h>
-#include <malla.h>
+#include <cilindro.h>
+#include <cono.h>
 #include <cubo.h>
-#include <tetraedro.h>
+#include <ejes.h>
+#include <esfera.h>
+#include <malla.h>
 #include <objply.h>
 #include <objrevolucion.h>
-#include <Esfera.h>
-#include <Cilindro.h>
-#include <Cono.h>
-
-typedef enum
-{
+#include <tetraedro.h>
+#define N_MODOS 3
+typedef enum {
     NADA,
     SELOBJETO,
     SELVISUALIZACION,
     SELDIBUJADO
 } menu;
+
 
 class Escena
 {
@@ -42,30 +42,32 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
-    //    Cubo *cubo = nullptr;           // es importante inicializarlo a 'nullptr'
-    //    Tetraedro *tetraedro = nullptr; // es importante inicializarlo a 'nullptr'
-    //    ObjPLY * amogus = nullptr;
-    //    ObjRevolucion *obj_rev_ply = nullptr;
-    //    ObjRevolucion *obj_rev_vec = nullptr;
-    //    Esfera * esfera = nullptr;
-    //    Cono * cono = nullptr;
-    //    Cilindro * cilindro = nullptr;
-    std::vector<std::pair<Malla3D, bool>> objetos;
-    std::vector<std::vector<float>> traslaciones;
-    std::vector<std::vector<float>> escalados;
-    //    bool dibuja_cubo;
-    //    bool dibuja_tetraedro;
-    //    bool dibuja_ply;
-    //    bool dibuja_rev_ply;
-    //    bool dibuja_rev_vec;
-    //    bool dibuja_esfera;
-    //    bool dibuja_cono;
-    //    bool dibuja_cilindro;
+    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
+    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
+    ObjPLY *amogus = nullptr;
+    ObjRevolucion *obj_rev_ply = nullptr;
+    ObjRevolucion *obj_rev_vec = nullptr;
+    ObjRevolucion * peon_x = nullptr;
+    ObjRevolucion * peon_z = nullptr;
+    Esfera *esfera = nullptr;
+    Cono *cono = nullptr;
+    Cilindro *cilindro = nullptr;
+    bool dibuja_cubo;
+    bool dibuja_tetraedro;
+    bool dibuja_ply;
     bool ajedrez;
     bool dibuja_tapas;
     bool dibuja_diferido;
-    GLuint modos[3];
-    bool modo_activo[3];
+    bool dibuja_rev_ply;
+    bool dibuja_rev_vec;
+    bool dibuja_esfera;
+    bool dibuja_cono;
+    bool dibuja_cilindro;
+    bool dibuja_peon_x;
+    bool dibuja_peon_z;
+    bool modo_activo[N_MODOS];
+    ModoVisualizacion modos [N_MODOS];
+    ModoLuz  tipo_luz;
 
 public:
     Escena();

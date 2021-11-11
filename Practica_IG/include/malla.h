@@ -10,17 +10,25 @@
 #ifndef MALLA3D_H_INCLUDED
 #define MALLA3D_H_INCLUDED
 
+#include <material.h>
 #include <aux.h>
-#define PUNTOS GL_POINT
-#define PUNTOS_i 0
-#define ALAMBRE GL_LINE
-#define ALAMBRE_i 1
-#define SOLIDO GL_FILL
-#define SOLIDO_i 2
 #define PUNTOS_c 0
 #define ALAMBRE_c 1
 #define SOLIDO_c 2
 #define AJEDREZ_c 3
+
+enum class Eje_rotacion{EJE_X, EJE_Y, EJE_Z};
+enum class ModoVisualizacion{
+    PUNTOS,
+    ALAMBRE,
+    SOLIDO
+};
+
+enum class ModoLuz{
+    SUAVE,
+    PLANO,
+    NINGUNA
+};
 // *****************************************************************************
 //
 // clase para objetos 3D (mallas indexadas)
@@ -29,19 +37,19 @@
 
 class Malla3D {
 public:
-    virtual// dibuja el objeto en modo inmediato
-    void draw_ModoInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas = false);
-    virtual void draw_AjedrezInmediato(GLuint modo, std::vector<Tupla3f> *color, bool tapas = false);
+    // dibuja el objeto en modo inmediato
+    void draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion);
+    void draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion);
 
-    virtual// dibuja el objeto en modo diferido (usando VBOs)
-    void draw_ModoDiferido(GLuint modo, GLuint color_id, bool tapas = false);
-    virtual void draw_AjedrezDiferido(GLuint modo, GLuint color_id, bool tapas = false);
+    // dibuja el objeto en modo diferido (usando VBOs)
+    void draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion);
+    void draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion);
 
-
+;
     // función que redibuja el objeto
     // está función llama a 'draw_ModoInmediato' (modo inmediato)
     // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-    void draw(bool dibuja_diferido, bool ajedrez, GLuint modo, bool tapas = false);
+    void draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion);
 
 
     bool esObjRevolucion() const;
@@ -49,11 +57,14 @@ public:
 protected:
     GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) ;
 
-    void calcular_normales();// calcula tabla de normales de vértices (práctica 3)
+    GLuint map_modo(ModoVisualizacion v) const;
+    GLuint map_luz(ModoLuz l) const;
 
     std::vector<Tupla3f> v;// tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
     std::vector<Tupla3i> f;// una terna de 3 enteros por cada cara o triángulo
-
+    std::vector<Tupla3f> nv; // vector de normales de los vertices
+    std::vector<Tupla3f> nf; // vector de normales de las caras
+    Material m;
     // necesitamos varios vectores de colores para
     // poder diferencias los modos de visualizacion
     // de esta forma tendremos colores distintos
@@ -71,6 +82,9 @@ protected:
     GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c, id_vbo_color_aj;
     GLuint ids_colores[4] = {0};
 
+    Tupla3f calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c);
+    void calcularNormales() ;
+    void setMaterial (Material m);
     void rellenaColores(const Tupla3f &vertices,
                         const Tupla3f &aristas,
                         const Tupla3f &solido,
@@ -78,7 +92,7 @@ protected:
 
     virtual void mezclaVector();// metodo para mezclar un vector y conseguir el efecto ajedrez
 
-    void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez);
+    void inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez, const Tupla4f &ambiente, const Tupla4f &especular, const Tupla4f &difuso, float brillo);
 };
 
 #endif

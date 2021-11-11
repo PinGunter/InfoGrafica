@@ -30,11 +30,14 @@ Tetraedro::Tetraedro(float arista)
     f.push_back(Tupla3i(2, 0, 1)); // 1
     f.push_back(Tupla3i(3, 0, 2)); // 3
 
+    Tupla4f ambiente (0,1,0,0);
+    Tupla4f especular (0,1,0,0);
+    Tupla4f difuso (0,1,0,0);
 
-    inicializar(Tupla3f(1,1,0),
-                   Tupla3f(0,1,1),
-                   Tupla3f(0,0,0),
-                   Tupla3f(1, 0.24, 0.71));
+    inicializar(Tupla3f(1, 1, 0),
+                Tupla3f(0, 1, 1),
+                Tupla3f(0, 0, 0),
+                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 2);
     // inicializar la tabla de caras o triángulos:
     // (es importante en cada cara ordenar los vértices en sentido contrario
     //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
