@@ -18,6 +18,18 @@ typedef enum {
     SELDIBUJADO
 } menu;
 
+enum class Objetos_Escena{
+    CUBO,
+    TETRAEDRO,
+    OBJPLY,
+    OBJPLY_REV,
+    ESFERA,
+    CONO,
+    CILINDRO,
+    REV_VEC,
+    PEON_X,
+    PEON_Z
+};
 
 class Escena
 {
@@ -42,29 +54,35 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
-    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
-    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
-    ObjPLY *amogus = nullptr;
-    ObjRevolucion *obj_rev_ply = nullptr;
-    ObjRevolucion *obj_rev_vec = nullptr;
-    ObjRevolucion * peon_x = nullptr;
-    ObjRevolucion * peon_z = nullptr;
-    Esfera *esfera = nullptr;
-    Cono *cono = nullptr;
-    Cilindro *cilindro = nullptr;
-    bool dibuja_cubo;
-    bool dibuja_tetraedro;
-    bool dibuja_ply;
+    std::vector<Malla3D*> objetos;
+    std::vector<Tupla3f> transformaciones;
+    std::vector<Tupla3f> escalados;
+    std::vector<bool> se_dibuja;
+//    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
+//    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
+//    ObjPLY *amogus = nullptr;
+//    ObjRevolucion *obj_rev_ply = nullptr;
+//    ObjRevolucion *obj_rev_vec = nullptr;
+//    ObjRevolucion * peon_x = nullptr;
+//    ObjRevolucion * peon_z = nullptr;
+//    Esfera *esfera = nullptr;
+//    Cono *cono = nullptr;
+//    Cilindro *cilindro = nullptr;
+//    bool dibuja_cubo;
+//    bool dibuja_tetraedro;
+//    bool dibuja_ply;
+
+//    bool dibuja_rev_ply;
+//    bool dibuja_rev_vec;
+//    bool dibuja_esfera;
+//    bool dibuja_cono;
+//    bool dibuja_cilindro;
+//    bool dibuja_peon_x;
+//    bool dibuja_peon_z;
+
     bool ajedrez;
     bool dibuja_tapas;
     bool dibuja_diferido;
-    bool dibuja_rev_ply;
-    bool dibuja_rev_vec;
-    bool dibuja_esfera;
-    bool dibuja_cono;
-    bool dibuja_cilindro;
-    bool dibuja_peon_x;
-    bool dibuja_peon_z;
     bool modo_activo[N_MODOS];
     ModoVisualizacion modos [N_MODOS];
     ModoLuz  tipo_luz;
@@ -80,5 +98,7 @@ public:
     // Interacción con la escena
     bool teclaPulsada(unsigned char Tecla1, int x, int y);
     void teclaEspecial(int Tecla1, int x, int y);
+
+
 };
 #endif

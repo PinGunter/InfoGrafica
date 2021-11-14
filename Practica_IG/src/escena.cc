@@ -8,7 +8,7 @@
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
-Escena::Escena() {
+Escena::Escena() : se_dibuja(N_OBJ,false){
     Front_plane = 50.0;
     Back_plane = 2000.0;
     Observer_distance = 4 * Front_plane;
@@ -25,32 +25,47 @@ Escena::Escena() {
 
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
-    ejes.changeAxisSize(5000);
-    cubo = new Cubo(100);
-    tetraedro = new Tetraedro(50);
-
     std::vector<Tupla3f> v_rev{
             Tupla3f(5, 0, 0),
             Tupla3f(5, 10, 0),
     };
-    obj_rev_vec = new ObjRevolucion(v_rev, Eje_rotacion::EJE_Y, 20);
-    obj_rev_ply = new ObjRevolucion("plys/peon", Eje_rotacion::EJE_Y, 20, true);
-    peon_x = new ObjRevolucion("plys/peon_rotadoX", Eje_rotacion::EJE_X, 20, true);
-    peon_z = new ObjRevolucion("plys/peon_rotadoZ", Eje_rotacion::EJE_Z, 20, true);
-    esfera = new Esfera(12, 12, 10);
-    cono = new Cono(20, 20, 20, 10, true);
-    cilindro = new Cilindro(3, 20, 20, 20, true, true);
-    amogus = new ObjPLY("plys/amogus");
-    dibuja_cubo = false;
-    dibuja_tetraedro = false;
-    dibuja_ply = false;
-    dibuja_rev_ply = false;
-    dibuja_rev_vec = false;
-    dibuja_esfera = false;
-    dibuja_cono = false;
-    dibuja_cilindro = false;
-    dibuja_peon_x = false;
-    dibuja_peon_z = false;
+
+    ejes.changeAxisSize(5000);
+
+    objetos.reserve(N_OBJ);
+    objetos[(int)Objetos_Escena::CUBO] = new Cubo(50);
+    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
+    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
+    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon_rotadoX",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon_rotadoZ",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(12,12,10);
+    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
+    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
+
+
+
+//    cubo = new Cubo(100);
+//    tetraedro = new Tetraedro(50);
+//    obj_rev_vec = new ObjRevolucion(v_rev, Eje_rotacion::EJE_Y, 20);
+//    obj_rev_ply = new ObjRevolucion("plys/peon", Eje_rotacion::EJE_Y, 20, true);
+//    peon_x = new ObjRevolucion("plys/peon_rotadoX", Eje_rotacion::EJE_X, 20, true);
+//    peon_z = new ObjRevolucion("plys/peon_rotadoZ", Eje_rotacion::EJE_Z, 20, true);
+//    esfera = new Esfera(12, 12, 10);
+//    cono = new Cono(20, 20, 20, 10, true);
+//    cilindro = new Cilindro(3, 20, 20, 20, true, true);
+//    amogus = new ObjPLY("plys/amogus");
+//    dibuja_cubo = false;
+//    dibuja_tetraedro = false;
+//    dibuja_ply = false;
+//    dibuja_rev_ply = false;
+//    dibuja_rev_vec = false;
+//    dibuja_esfera = false;
+//    dibuja_cono = false;
+//    dibuja_cilindro = false;
+//    dibuja_peon_x = false;
+//    dibuja_peon_z = false;
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     dibuja_tapas = true;
     ajedrez = false;
@@ -95,86 +110,106 @@ void Escena::dibujar() {
     ejes.draw();
     if (tipo_luz != ModoLuz::NINGUNA)
         glEnable(GL_LIGHTING);
-    for (int i = 0; i < N_MODOS; i++) {
-        if (modo_activo[i]) {
-            j = 0;
-            if (dibuja_cubo) {
-                glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                cubo->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
-                glPopMatrix();
-            }
-            if (dibuja_tetraedro) {
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                tetraedro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
-                glPopMatrix();
-            }
 
-            if (dibuja_ply) {
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-//                glScalef(5, 5, 5);
-                amogus->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
-                glPopMatrix();
-            }
-            if (dibuja_rev_vec){
-                glPushMatrix();
-                glTranslatef(0, 100, 0);
-                glScalef(10, 10, 10);
-                obj_rev_vec->draw(dibuja_diferido, ajedrez, modos[i],tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_rev_ply){
-                glPushMatrix();
-                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
-                glScalef(50,50,50);
-                obj_rev_ply->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_esfera){
-                glPushMatrix();
-//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(5, 5, 5);
-                esfera->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_cono){
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(5, 5, 5);
-                cono->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_cilindro){
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(2.5, 2.5, 2.5);
-                cilindro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_peon_x){
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(50,50,50);
-                peon_x->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
-            }
-
-            if (dibuja_peon_z){
-                glPushMatrix();
-                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
-                glScalef(50,50,50);
-                peon_z->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
-                glPopMatrix();
+    for (int i=0; i < N_MODOS; i++){
+        for (int j=0; j < N_OBJ; j++) {
+            if (modo_activo[i]) {
+                if (se_dibuja[j]) {
+                    glPushMatrix();
+                    glTranslatef(200*sin(2*M_PI*j/N_OBJ),0,200*cos(2*M_PI*j/N_OBJ));
+                    glScalef(2.5,2.5,2.5);
+                    ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(objetos[j]);
+                    if (obj_rev != nullptr) {
+                        std::cout << "Soy un objeto de revolución" << std::endl;
+                        obj_rev->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+                    }
+                    else
+                        objetos[j]->draw(dibuja_diferido,ajedrez,modos[i],tipo_luz);
+                    glPopMatrix();
+                }
             }
         }
     }
+//    for (int i = 0; i < N_MODOS; i++) {
+//        if (modo_activo[i]) {
+//            j = 0;
+//            if (dibuja_cubo) {
+//                glPushMatrix();
+//                //                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                cubo->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
+//                glPopMatrix();
+//            }
+//            if (dibuja_tetraedro) {
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                tetraedro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_ply) {
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                //                glScalef(5, 5, 5);
+//                amogus->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz);
+//                glPopMatrix();
+//            }
+//            if (dibuja_rev_vec){
+//                glPushMatrix();
+//                glTranslatef(0, 100, 0);
+//                glScalef(10, 10, 10);
+//                obj_rev_vec->draw(dibuja_diferido, ajedrez, modos[i],tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_rev_ply){
+//                glPushMatrix();
+//                glTranslatef((float)200*cos(2*M_PI*j++/N_OBJ),-100,(float)200*sin(2*M_PI*j++/N_OBJ));
+//                glScalef(50,50,50);
+//                obj_rev_ply->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_esfera){
+//                glPushMatrix();
+//                //                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glScalef(5, 5, 5);
+//                esfera->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_cono){
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glScalef(5, 5, 5);
+//                cono->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_cilindro){
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), -100, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glScalef(2.5, 2.5, 2.5);
+//                cilindro->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_peon_x){
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glScalef(50,50,50);
+//                peon_x->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//
+//            if (dibuja_peon_z){
+//                glPushMatrix();
+//                glTranslatef((float) 200 * cos(2 * M_PI * j++ / N_OBJ), 200, (float) 200 * sin(2 * M_PI * j++ / N_OBJ));
+//                glScalef(50,50,50);
+//                peon_z->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
+//                glPopMatrix();
+//            }
+//        }
+//    }
     glDisable(GL_LIGHTING);
 
 }
@@ -254,13 +289,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
             if (modoMenu == SELOBJETO) {
-                dibuja_cubo ^= 1;
+                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }
             break;
 
         case 'T':
             if (modoMenu == SELOBJETO) {
-                dibuja_tetraedro ^= 1;
+                se_dibuja[(int)Objetos_Escena::TETRAEDRO] = !se_dibuja[(int) Objetos_Escena::TETRAEDRO];
             }
             if (modoMenu == SELVISUALIZACION) {
                 dibuja_tapas ^= 1;
@@ -269,7 +304,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
         case 'F':
             if (modoMenu == SELOBJETO) {
-                dibuja_ply ^= 1;
+                se_dibuja[(int)Objetos_Escena::OBJPLY] = !se_dibuja[(int) Objetos_Escena::OBJPLY];
             }
             if (modoMenu == SELVISUALIZACION){
                 if (tipo_luz == ModoLuz::PLANO){
@@ -282,7 +317,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
         case 'R':
             if (modoMenu == SELOBJETO) {
-                dibuja_rev_ply ^= 1;
+                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
             }
             if (modoMenu == SELVISUALIZACION) {
                 modo_activo[(int) ModoVisualizacion::SOLIDO] ^= 1;
@@ -294,7 +329,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 ajedrez ^= 1;
             }
             if (modoMenu == SELOBJETO) {
-                dibuja_rev_vec ^= 1;
+                se_dibuja[(int)Objetos_Escena::REV_VEC] = !se_dibuja[(int) Objetos_Escena::REV_VEC];
             }
             break;
 
@@ -303,13 +338,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modo_activo[(int) ModoVisualizacion::ALAMBRE] ^= 1;
             }
             if (modoMenu == SELOBJETO) {
-                dibuja_cilindro ^= 1;
+                se_dibuja[(int)Objetos_Escena::CILINDRO] = !se_dibuja[(int) Objetos_Escena::CILINDRO];
             }
             break;
 
         case 'E':
             if (modoMenu == SELOBJETO) {
-                dibuja_esfera ^= 1;
+                se_dibuja[(int)Objetos_Escena::ESFERA] = !se_dibuja[(int) Objetos_Escena::ESFERA];
             }
             break;
 
@@ -318,17 +353,17 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modo_activo[(int) ModoVisualizacion::PUNTOS] ^= 1;
             }
             if (modoMenu == SELOBJETO) {
-                dibuja_cono ^= 1;
+                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
             }
             break;
         case 'X':
             if (modoMenu == SELOBJETO){
-                dibuja_peon_x ^= 1;
+                se_dibuja[(int)Objetos_Escena::PEON_X] = !se_dibuja[(int) Objetos_Escena::PEON_X];
             }
             break;
         case 'Z':
             if(modoMenu == SELOBJETO){
-                dibuja_peon_z ^= 1;
+                se_dibuja[(int)Objetos_Escena::PEON_Z] = !se_dibuja[(int) Objetos_Escena::PEON_Z];
             }
             break;
 
