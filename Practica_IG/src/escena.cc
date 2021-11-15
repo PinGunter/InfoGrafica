@@ -99,6 +99,7 @@ void Escena::dibujar() {
 //                    glTranslatef(200*sin(2*M_PI*j/N_OBJ),0,200*cos(2*M_PI*j/N_OBJ));
                     ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(objetos[j]);
                     if (obj_rev != nullptr) {
+                        glScalef(100,100,100);
                         std::cout << "Soy un objeto de revolución" << std::endl;
                         obj_rev->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                     }

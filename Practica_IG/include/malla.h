@@ -78,6 +78,7 @@ protected:
     GLuint selector_color_vbo;                     //selector de color del modo diferido
     GLuint id_vbo_vertices;
     GLuint id_vbo_tri;
+    GLuint id_vbo_normal;
     GLuint id_vbo_color_v, id_vbo_color_a, id_vbo_color_c, id_vbo_color_aj;
     GLuint ids_colores[4] = {0};
 

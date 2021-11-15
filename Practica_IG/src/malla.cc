@@ -24,10 +24,10 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
+    glNormalPointer(GL_FLOAT,0,nv.data());
     glPointSize(8);
     if (iluminacion != ModoLuz::NINGUNA){
         m.aplicar();
-        glNormalPointer(GL_FLOAT,0,nv.data());
         glShadeModel(map_luz(iluminacion));
     }else {
         glColorPointer(3, GL_FLOAT, 0, color->data());
@@ -49,6 +49,9 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLu
     if (id_vbo_tri == 0) {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
     }
+    if (id_vbo_normal == 0){
+        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
+    }
     //VBOs de los vectores de colores
     if (id_vbo_color_v == 0) {
         ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
@@ -68,18 +71,29 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLu
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
+    glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
+    glNormalPointer(GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
     glEnableClientState(GL_COLOR_ARRAY);
 
-    glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
-    glColorPointer(3, GL_FLOAT, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    if (iluminacion != ModoLuz::NINGUNA){
+        m.aplicar();
+        glShadeModel(map_luz(iluminacion));
+    } else{
+        glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
 
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -122,6 +136,9 @@ void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, Modo
     if (id_vbo_tri == 0)
     {
         id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
+    }
+    if (id_vbo_normal == 0){
+        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
     }
     //VBOs de los vectores de colores
     if (id_vbo_color_v == 0) {
@@ -213,7 +230,7 @@ void Malla3D::mezclaVector() {
     }
 }
 void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const Tupla3f &solido, const Tupla3f &ajedrez, const Tupla4f &ambiente, const Tupla4f &especular, const Tupla4f &difuso, float brillo) {
-    id_vbo_tri = id_vbo_vertices = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
+    id_vbo_tri = id_vbo_vertices = id_vbo_normal = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
     setMaterial(Material(ambiente,especular,difuso,brillo));
     calcularNormales();
