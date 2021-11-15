@@ -15,7 +15,10 @@ typedef enum {
     NADA,
     SELOBJETO,
     SELVISUALIZACION,
-    SELDIBUJADO
+    SELDIBUJADO,
+    SELILUMINACION,
+    VARIACION_ALFA,
+    VARIACION_BETA
 } menu;
 
 enum class Objetos_Escena{

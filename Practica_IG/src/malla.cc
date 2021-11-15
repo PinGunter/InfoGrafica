@@ -268,9 +268,6 @@ GLuint Malla3D::map_luz(ModoLuz l) const{
         case ModoLuz::SUAVE:
             return GL_SMOOTH;
             break;
-        case ModoLuz::PLANO:
-            return GL_FLAT;
-            break;
     }
 }
 

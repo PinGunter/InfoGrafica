@@ -26,7 +26,6 @@ enum class ModoVisualizacion{
 
 enum class ModoLuz{
     SUAVE,
-    PLANO,
     NINGUNA
 };
 // *****************************************************************************
