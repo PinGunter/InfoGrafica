@@ -35,20 +35,23 @@ Escena::Escena() : se_dibuja(N_OBJ,false){
 
     objetos.reserve(N_OBJ);
     objetos[(int)Objetos_Escena::CUBO] = new Cubo(50);
-    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
-    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
-    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon_rotadoX",Eje_rotacion::EJE_X,20);
-    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon_rotadoZ",Eje_rotacion::EJE_Z,20);
-    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
-    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
-    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
+//    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
+//    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
+//    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+//    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1), 120));
+    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0,0,0,1),Tupla4f(0,0,0,1),Tupla4f(0,0,0,1), 120));
+
+//    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
+//    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
+//    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
 
 
     luces.reserve(2);
     luces[0] = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    luces[1] = new LuzPosicional(Tupla3f(110,110,110),GL_LIGHT1,Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,0,0,1));
+    luces[1] = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     dibuja_tapas = true;
     ajedrez = false;
@@ -102,10 +105,10 @@ void Escena::dibujar() {
             if (modo_activo[i]) {
                 if (se_dibuja[j]) {
                     glPushMatrix();
-                    glTranslatef(0,50,0);
+                    glTranslatef(200*sin(2*M_PI*j/N_OBJ),0,200*cos(2*M_PI*j/N_OBJ));
                     ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(objetos[j]);
                     if (obj_rev != nullptr) {
-                        glScalef(5,5,5);
+                        glScalef(50,50,50);
                         std::cout << "Soy un objeto de revolución" << std::endl;
                         obj_rev->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                     }

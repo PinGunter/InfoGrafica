@@ -44,19 +44,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/salva/clion/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/pingo/clion/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/salva/clion/bin/cmake/linux/bin/cmake -E rm -f
+RM = /home/pingo/clion/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/salva/InfoGrafica/Practica_IG
+CMAKE_SOURCE_DIR = /home/pingo/InfoGrafica/Practica_IG
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/salva/InfoGrafica/Practica_IG/cmake-build-debug
+CMAKE_BINARY_DIR = /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Practica_IG.dir/depend.make
@@ -68,120 +68,211 @@ include CMakeFiles/Practica_IG.dir/flags.make
 
 CMakeFiles/Practica_IG.dir/src/cubo.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/cubo.cc.o: ../src/cubo.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Practica_IG.dir/src/cubo.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/cubo.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/cubo.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Practica_IG.dir/src/cubo.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/cubo.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/cubo.cc
 
 CMakeFiles/Practica_IG.dir/src/cubo.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/cubo.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/cubo.cc > CMakeFiles/Practica_IG.dir/src/cubo.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/cubo.cc > CMakeFiles/Practica_IG.dir/src/cubo.cc.i
 
 CMakeFiles/Practica_IG.dir/src/cubo.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/cubo.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/cubo.cc -o CMakeFiles/Practica_IG.dir/src/cubo.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/cubo.cc -o CMakeFiles/Practica_IG.dir/src/cubo.cc.s
 
 CMakeFiles/Practica_IG.dir/src/ejes.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/ejes.cc.o: ../src/ejes.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Practica_IG.dir/src/ejes.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/ejes.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/ejes.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Practica_IG.dir/src/ejes.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/ejes.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/ejes.cc
 
 CMakeFiles/Practica_IG.dir/src/ejes.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/ejes.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/ejes.cc > CMakeFiles/Practica_IG.dir/src/ejes.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/ejes.cc > CMakeFiles/Practica_IG.dir/src/ejes.cc.i
 
 CMakeFiles/Practica_IG.dir/src/ejes.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/ejes.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/ejes.cc -o CMakeFiles/Practica_IG.dir/src/ejes.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/ejes.cc -o CMakeFiles/Practica_IG.dir/src/ejes.cc.s
 
 CMakeFiles/Practica_IG.dir/src/escena.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/escena.cc.o: ../src/escena.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Practica_IG.dir/src/escena.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/escena.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/escena.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Practica_IG.dir/src/escena.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/escena.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/escena.cc
 
 CMakeFiles/Practica_IG.dir/src/escena.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/escena.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/escena.cc > CMakeFiles/Practica_IG.dir/src/escena.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/escena.cc > CMakeFiles/Practica_IG.dir/src/escena.cc.i
 
 CMakeFiles/Practica_IG.dir/src/escena.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/escena.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/escena.cc -o CMakeFiles/Practica_IG.dir/src/escena.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/escena.cc -o CMakeFiles/Practica_IG.dir/src/escena.cc.s
 
 CMakeFiles/Practica_IG.dir/src/malla.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/malla.cc.o: ../src/malla.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Practica_IG.dir/src/malla.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/malla.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/malla.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Practica_IG.dir/src/malla.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/malla.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/malla.cc
 
 CMakeFiles/Practica_IG.dir/src/malla.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/malla.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/malla.cc > CMakeFiles/Practica_IG.dir/src/malla.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/malla.cc > CMakeFiles/Practica_IG.dir/src/malla.cc.i
 
 CMakeFiles/Practica_IG.dir/src/malla.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/malla.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/malla.cc -o CMakeFiles/Practica_IG.dir/src/malla.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/malla.cc -o CMakeFiles/Practica_IG.dir/src/malla.cc.s
 
 CMakeFiles/Practica_IG.dir/src/objply.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/objply.cc.o: ../src/objply.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Practica_IG.dir/src/objply.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/objply.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/objply.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Practica_IG.dir/src/objply.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/objply.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/objply.cc
 
 CMakeFiles/Practica_IG.dir/src/objply.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/objply.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/objply.cc > CMakeFiles/Practica_IG.dir/src/objply.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/objply.cc > CMakeFiles/Practica_IG.dir/src/objply.cc.i
 
 CMakeFiles/Practica_IG.dir/src/objply.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/objply.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/objply.cc -o CMakeFiles/Practica_IG.dir/src/objply.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/objply.cc -o CMakeFiles/Practica_IG.dir/src/objply.cc.s
 
 CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o: ../src/objrevolucion.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/objrevolucion.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/objrevolucion.cc
 
 CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/objrevolucion.cc > CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/objrevolucion.cc > CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.i
 
 CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/objrevolucion.cc -o CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/objrevolucion.cc -o CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.s
 
 CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o: ../src/ply_reader.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/ply_reader.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/ply_reader.cc
 
 CMakeFiles/Practica_IG.dir/src/ply_reader.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/ply_reader.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/ply_reader.cc > CMakeFiles/Practica_IG.dir/src/ply_reader.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/ply_reader.cc > CMakeFiles/Practica_IG.dir/src/ply_reader.cc.i
 
 CMakeFiles/Practica_IG.dir/src/ply_reader.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/ply_reader.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/ply_reader.cc -o CMakeFiles/Practica_IG.dir/src/ply_reader.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/ply_reader.cc -o CMakeFiles/Practica_IG.dir/src/ply_reader.cc.s
 
 CMakeFiles/Practica_IG.dir/src/practicas.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/practicas.cc.o: ../src/practicas.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Practica_IG.dir/src/practicas.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/practicas.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/practicas.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Practica_IG.dir/src/practicas.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/practicas.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/practicas.cc
 
 CMakeFiles/Practica_IG.dir/src/practicas.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/practicas.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/practicas.cc > CMakeFiles/Practica_IG.dir/src/practicas.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/practicas.cc > CMakeFiles/Practica_IG.dir/src/practicas.cc.i
 
 CMakeFiles/Practica_IG.dir/src/practicas.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/practicas.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/practicas.cc -o CMakeFiles/Practica_IG.dir/src/practicas.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/practicas.cc -o CMakeFiles/Practica_IG.dir/src/practicas.cc.s
 
 CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o: CMakeFiles/Practica_IG.dir/flags.make
 CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o: ../src/tetraedro.cc
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o -c /home/salva/InfoGrafica/Practica_IG/src/tetraedro.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/tetraedro.cc
 
 CMakeFiles/Practica_IG.dir/src/tetraedro.cc.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/tetraedro.cc.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/salva/InfoGrafica/Practica_IG/src/tetraedro.cc > CMakeFiles/Practica_IG.dir/src/tetraedro.cc.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/tetraedro.cc > CMakeFiles/Practica_IG.dir/src/tetraedro.cc.i
 
 CMakeFiles/Practica_IG.dir/src/tetraedro.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/tetraedro.cc.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/salva/InfoGrafica/Practica_IG/src/tetraedro.cc -o CMakeFiles/Practica_IG.dir/src/tetraedro.cc.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/tetraedro.cc -o CMakeFiles/Practica_IG.dir/src/tetraedro.cc.s
+
+CMakeFiles/Practica_IG.dir/src/cilindro.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/cilindro.cc.o: ../src/cilindro.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Practica_IG.dir/src/cilindro.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/cilindro.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/cilindro.cc
+
+CMakeFiles/Practica_IG.dir/src/cilindro.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/cilindro.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/cilindro.cc > CMakeFiles/Practica_IG.dir/src/cilindro.cc.i
+
+CMakeFiles/Practica_IG.dir/src/cilindro.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/cilindro.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/cilindro.cc -o CMakeFiles/Practica_IG.dir/src/cilindro.cc.s
+
+CMakeFiles/Practica_IG.dir/src/esfera.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/esfera.cc.o: ../src/esfera.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Practica_IG.dir/src/esfera.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/esfera.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/esfera.cc
+
+CMakeFiles/Practica_IG.dir/src/esfera.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/esfera.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/esfera.cc > CMakeFiles/Practica_IG.dir/src/esfera.cc.i
+
+CMakeFiles/Practica_IG.dir/src/esfera.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/esfera.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/esfera.cc -o CMakeFiles/Practica_IG.dir/src/esfera.cc.s
+
+CMakeFiles/Practica_IG.dir/src/cono.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/cono.cc.o: ../src/cono.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/Practica_IG.dir/src/cono.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/cono.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/cono.cc
+
+CMakeFiles/Practica_IG.dir/src/cono.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/cono.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/cono.cc > CMakeFiles/Practica_IG.dir/src/cono.cc.i
+
+CMakeFiles/Practica_IG.dir/src/cono.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/cono.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/cono.cc -o CMakeFiles/Practica_IG.dir/src/cono.cc.s
+
+CMakeFiles/Practica_IG.dir/src/luz.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/luz.cc.o: ../src/luz.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/Practica_IG.dir/src/luz.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/luz.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/luz.cc
+
+CMakeFiles/Practica_IG.dir/src/luz.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/luz.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/luz.cc > CMakeFiles/Practica_IG.dir/src/luz.cc.i
+
+CMakeFiles/Practica_IG.dir/src/luz.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/luz.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/luz.cc -o CMakeFiles/Practica_IG.dir/src/luz.cc.s
+
+CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o: ../src/luz_direccional.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/luz_direccional.cc
+
+CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/luz_direccional.cc > CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.i
+
+CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/luz_direccional.cc -o CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.s
+
+CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o: ../src/luz_posicional.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/luz_posicional.cc
+
+CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/luz_posicional.cc > CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.i
+
+CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/luz_posicional.cc -o CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.s
+
+CMakeFiles/Practica_IG.dir/src/material.cc.o: CMakeFiles/Practica_IG.dir/flags.make
+CMakeFiles/Practica_IG.dir/src/material.cc.o: ../src/material.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/Practica_IG.dir/src/material.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Practica_IG.dir/src/material.cc.o -c /home/pingo/InfoGrafica/Practica_IG/src/material.cc
+
+CMakeFiles/Practica_IG.dir/src/material.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Practica_IG.dir/src/material.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/pingo/InfoGrafica/Practica_IG/src/material.cc > CMakeFiles/Practica_IG.dir/src/material.cc.i
+
+CMakeFiles/Practica_IG.dir/src/material.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Practica_IG.dir/src/material.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/pingo/InfoGrafica/Practica_IG/src/material.cc -o CMakeFiles/Practica_IG.dir/src/material.cc.s
 
 # Object files for target Practica_IG
 Practica_IG_OBJECTS = \
@@ -193,7 +284,14 @@ Practica_IG_OBJECTS = \
 "CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o" \
 "CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o" \
 "CMakeFiles/Practica_IG.dir/src/practicas.cc.o" \
-"CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o"
+"CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/cilindro.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/esfera.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/cono.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/luz.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o" \
+"CMakeFiles/Practica_IG.dir/src/material.cc.o"
 
 # External object files for target Practica_IG
 Practica_IG_EXTERNAL_OBJECTS =
@@ -207,9 +305,16 @@ Practica_IG: CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o
 Practica_IG: CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o
 Practica_IG: CMakeFiles/Practica_IG.dir/src/practicas.cc.o
 Practica_IG: CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/cilindro.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/esfera.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/cono.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/luz.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o
+Practica_IG: CMakeFiles/Practica_IG.dir/src/material.cc.o
 Practica_IG: CMakeFiles/Practica_IG.dir/build.make
 Practica_IG: CMakeFiles/Practica_IG.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable Practica_IG"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Linking CXX executable Practica_IG"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Practica_IG.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -221,6 +326,6 @@ CMakeFiles/Practica_IG.dir/clean:
 .PHONY : CMakeFiles/Practica_IG.dir/clean
 
 CMakeFiles/Practica_IG.dir/depend:
-	cd /home/salva/InfoGrafica/Practica_IG/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/salva/InfoGrafica/Practica_IG /home/salva/InfoGrafica/Practica_IG /home/salva/InfoGrafica/Practica_IG/cmake-build-debug /home/salva/InfoGrafica/Practica_IG/cmake-build-debug /home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pingo/InfoGrafica/Practica_IG /home/pingo/InfoGrafica/Practica_IG /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Practica_IG.dir/depend
 
