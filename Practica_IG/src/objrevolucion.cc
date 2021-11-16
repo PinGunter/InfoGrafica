@@ -359,7 +359,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
 
     if (iluminacion != ModoLuz::NINGUNA){
         m.aplicar();
-        glShadeModel(map_luz(iluminacion));
+//        glShadeModel(map_luz(iluminacion));
     } else{
         glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
         glColorPointer(3, GL_FLOAT, 0, 0);
