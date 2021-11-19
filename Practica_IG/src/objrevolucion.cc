@@ -225,14 +225,14 @@ void ObjRevolucion::crearTapas(bool inf, bool sup, int num_instancias) {
     }
 }
 void ObjRevolucion::init() {
-    Tupla4f ambiente (1,1,0,0.5);
-    Tupla4f especular (1,1,0,0.5);
-    Tupla4f difuso (1,1,0,0.5);
+    Tupla4f ambiente (1,1,0,1);
+    Tupla4f especular (1,1,0,1);
+    Tupla4f difuso (1,1,0,1);
 
     inicializar(Tupla3f(0, 1, 0),
                 Tupla3f(1, 0, 0),
                 Tupla3f(0, 0, 1),
-                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 4);
+                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 124);
 }
 bool ObjRevolucion::esObjRevolucion() {
     return true;
