@@ -50,6 +50,7 @@ public:
     // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
     void draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion);
 
+    void setMaterial (Material m);
 
     bool esObjRevolucion() const;
 
@@ -84,7 +85,6 @@ protected:
 
     Tupla3f calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c);
     void calcularNormales() ;
-    void setMaterial (Material m);
     void rellenaColores(const Tupla3f &vertices,
                         const Tupla3f &aristas,
                         const Tupla3f &solido,

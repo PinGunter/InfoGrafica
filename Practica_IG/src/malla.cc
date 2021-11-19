@@ -28,7 +28,7 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     glPointSize(8);
     if (iluminacion != ModoLuz::NINGUNA){
         m.aplicar();
-        glShadeModel(map_luz(iluminacion));
+//        glShadeModel(map_luz(iluminacion));
     }else {
         glColorPointer(3, GL_FLOAT, 0, color->data());
     }

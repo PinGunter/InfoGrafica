@@ -48,19 +48,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/salva/clion/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/pingo/clion/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/salva/clion/bin/cmake/linux/bin/cmake -E rm -f
+RM = /home/pingo/clion/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/salva/InfoGrafica/Practica_IG
+CMAKE_SOURCE_DIR = /home/pingo/InfoGrafica/Practica_IG
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/salva/InfoGrafica/Practica_IG/cmake-build-debug
+CMAKE_BINARY_DIR = /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -68,7 +68,7 @@ CMAKE_BINARY_DIR = /home/salva/InfoGrafica/Practica_IG/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/salva/clion/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/pingo/clion/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -78,7 +78,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/salva/clion/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/pingo/clion/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles /home/salva/InfoGrafica/Practica_IG/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -128,6 +128,54 @@ Practica_IG: cmake_check_build_system
 Practica_IG/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/build
 .PHONY : Practica_IG/fast
+
+src/cilindro.o: src/cilindro.cc.o
+.PHONY : src/cilindro.o
+
+# target to build an object file
+src/cilindro.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cilindro.cc.o
+.PHONY : src/cilindro.cc.o
+
+src/cilindro.i: src/cilindro.cc.i
+.PHONY : src/cilindro.i
+
+# target to preprocess a source file
+src/cilindro.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cilindro.cc.i
+.PHONY : src/cilindro.cc.i
+
+src/cilindro.s: src/cilindro.cc.s
+.PHONY : src/cilindro.s
+
+# target to generate assembly for a file
+src/cilindro.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cilindro.cc.s
+.PHONY : src/cilindro.cc.s
+
+src/cono.o: src/cono.cc.o
+.PHONY : src/cono.o
+
+# target to build an object file
+src/cono.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cono.cc.o
+.PHONY : src/cono.cc.o
+
+src/cono.i: src/cono.cc.i
+.PHONY : src/cono.i
+
+# target to preprocess a source file
+src/cono.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cono.cc.i
+.PHONY : src/cono.cc.i
+
+src/cono.s: src/cono.cc.s
+.PHONY : src/cono.s
+
+# target to generate assembly for a file
+src/cono.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/cono.cc.s
+.PHONY : src/cono.cc.s
 
 src/cubo.o: src/cubo.cc.o
 .PHONY : src/cubo.o
@@ -201,6 +249,102 @@ src/escena.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/escena.cc.s
 .PHONY : src/escena.cc.s
 
+src/esfera.o: src/esfera.cc.o
+.PHONY : src/esfera.o
+
+# target to build an object file
+src/esfera.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/esfera.cc.o
+.PHONY : src/esfera.cc.o
+
+src/esfera.i: src/esfera.cc.i
+.PHONY : src/esfera.i
+
+# target to preprocess a source file
+src/esfera.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/esfera.cc.i
+.PHONY : src/esfera.cc.i
+
+src/esfera.s: src/esfera.cc.s
+.PHONY : src/esfera.s
+
+# target to generate assembly for a file
+src/esfera.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/esfera.cc.s
+.PHONY : src/esfera.cc.s
+
+src/luz.o: src/luz.cc.o
+.PHONY : src/luz.o
+
+# target to build an object file
+src/luz.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz.cc.o
+.PHONY : src/luz.cc.o
+
+src/luz.i: src/luz.cc.i
+.PHONY : src/luz.i
+
+# target to preprocess a source file
+src/luz.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz.cc.i
+.PHONY : src/luz.cc.i
+
+src/luz.s: src/luz.cc.s
+.PHONY : src/luz.s
+
+# target to generate assembly for a file
+src/luz.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz.cc.s
+.PHONY : src/luz.cc.s
+
+src/luz_direccional.o: src/luz_direccional.cc.o
+.PHONY : src/luz_direccional.o
+
+# target to build an object file
+src/luz_direccional.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o
+.PHONY : src/luz_direccional.cc.o
+
+src/luz_direccional.i: src/luz_direccional.cc.i
+.PHONY : src/luz_direccional.i
+
+# target to preprocess a source file
+src/luz_direccional.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.i
+.PHONY : src/luz_direccional.cc.i
+
+src/luz_direccional.s: src/luz_direccional.cc.s
+.PHONY : src/luz_direccional.s
+
+# target to generate assembly for a file
+src/luz_direccional.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.s
+.PHONY : src/luz_direccional.cc.s
+
+src/luz_posicional.o: src/luz_posicional.cc.o
+.PHONY : src/luz_posicional.o
+
+# target to build an object file
+src/luz_posicional.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o
+.PHONY : src/luz_posicional.cc.o
+
+src/luz_posicional.i: src/luz_posicional.cc.i
+.PHONY : src/luz_posicional.i
+
+# target to preprocess a source file
+src/luz_posicional.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.i
+.PHONY : src/luz_posicional.cc.i
+
+src/luz_posicional.s: src/luz_posicional.cc.s
+.PHONY : src/luz_posicional.s
+
+# target to generate assembly for a file
+src/luz_posicional.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.s
+.PHONY : src/luz_posicional.cc.s
+
 src/malla.o: src/malla.cc.o
 .PHONY : src/malla.o
 
@@ -224,6 +368,30 @@ src/malla.s: src/malla.cc.s
 src/malla.cc.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/malla.cc.s
 .PHONY : src/malla.cc.s
+
+src/material.o: src/material.cc.o
+.PHONY : src/material.o
+
+# target to build an object file
+src/material.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/material.cc.o
+.PHONY : src/material.cc.o
+
+src/material.i: src/material.cc.i
+.PHONY : src/material.i
+
+# target to preprocess a source file
+src/material.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/material.cc.i
+.PHONY : src/material.cc.i
+
+src/material.s: src/material.cc.s
+.PHONY : src/material.s
+
+# target to generate assembly for a file
+src/material.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Practica_IG.dir/build.make CMakeFiles/Practica_IG.dir/src/material.cc.s
+.PHONY : src/material.cc.s
 
 src/objply.o: src/objply.cc.o
 .PHONY : src/objply.o
@@ -354,6 +522,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Practica_IG"
+	@echo "... src/cilindro.o"
+	@echo "... src/cilindro.i"
+	@echo "... src/cilindro.s"
+	@echo "... src/cono.o"
+	@echo "... src/cono.i"
+	@echo "... src/cono.s"
 	@echo "... src/cubo.o"
 	@echo "... src/cubo.i"
 	@echo "... src/cubo.s"
@@ -363,9 +537,24 @@ help:
 	@echo "... src/escena.o"
 	@echo "... src/escena.i"
 	@echo "... src/escena.s"
+	@echo "... src/esfera.o"
+	@echo "... src/esfera.i"
+	@echo "... src/esfera.s"
+	@echo "... src/luz.o"
+	@echo "... src/luz.i"
+	@echo "... src/luz.s"
+	@echo "... src/luz_direccional.o"
+	@echo "... src/luz_direccional.i"
+	@echo "... src/luz_direccional.s"
+	@echo "... src/luz_posicional.o"
+	@echo "... src/luz_posicional.i"
+	@echo "... src/luz_posicional.s"
 	@echo "... src/malla.o"
 	@echo "... src/malla.i"
 	@echo "... src/malla.s"
+	@echo "... src/material.o"
+	@echo "... src/material.i"
+	@echo "... src/material.s"
 	@echo "... src/objply.o"
 	@echo "... src/objply.i"
 	@echo "... src/objply.s"

@@ -1,4 +1,4 @@
-/home/salva/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/salva/InfoGrafica/Practica_IG
+/home/pingo/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/pingo/InfoGrafica/Practica_IG
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/salva/InfoGrafica/Practica_IG/cmake-build-debug
+-- Build files have been written to: /home/pingo/InfoGrafica/Practica_IG/cmake-build-debug

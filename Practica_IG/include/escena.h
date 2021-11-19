@@ -1,6 +1,9 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
+#include <luz.h>
+#include <luz_direccional.h>
+#include <luz_posicional.h>
 #include <cilindro.h>
 #include <cono.h>
 #include <cubo.h>
@@ -61,6 +64,7 @@ private:
     std::vector<Tupla3f> transformaciones;
     std::vector<Tupla3f> escalados;
     std::vector<bool> se_dibuja;
+    std::vector<Luz *> luces;
 //    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
 //    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
 //    ObjPLY *amogus = nullptr;

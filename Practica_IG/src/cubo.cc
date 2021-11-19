@@ -36,7 +36,7 @@ Cubo::Cubo(float lado)
     this->f.push_back(Tupla3i(0, 7, 5)); // 10
     this->f.push_back(Tupla3i(0, 3, 7)); // 11
 
-    Tupla4f ambiente (1,0,0,1);
+    Tupla4f ambiente (1,1,1,1);
     Tupla4f especular (1,0,0,1);
     Tupla4f difuso (1,0,0,1);
     inicializar(Tupla3f(0, 1, 0),

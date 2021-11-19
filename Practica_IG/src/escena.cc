@@ -4,6 +4,7 @@
 #include <escena.h>
 #include <malla.h>// objetos: Cubo y otros....
 #define N_OBJ 10
+#define LUZ(i) GL_LIGHTi
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
@@ -34,16 +35,23 @@ Escena::Escena() : se_dibuja(N_OBJ,false){
 
     objetos.reserve(N_OBJ);
     objetos[(int)Objetos_Escena::CUBO] = new Cubo(50);
-    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
-    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
-    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon_rotadoX",Eje_rotacion::EJE_X,20);
-    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon_rotadoZ",Eje_rotacion::EJE_Z,20);
-    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
-    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
-    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
+//    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
+//    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
+//    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+//    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(1,1,1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1), 120));
+    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
+    objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0,0,0,1),Tupla4f(0,0,0,1),Tupla4f(0,0,0,1), 120));
 
+//    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
+//    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
+//    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
+
+
+    luces.reserve(2);
+    luces[0] = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luces[1] = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     dibuja_tapas = true;
     ajedrez = false;
@@ -88,6 +96,7 @@ void Escena::dibujar() {
     ejes.draw();
     if (tipo_luz != ModoLuz::NINGUNA) {
         glEnable(GL_LIGHTING);
+        glShadeModel(GL_SMOOTH);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
     }
 
@@ -96,10 +105,10 @@ void Escena::dibujar() {
             if (modo_activo[i]) {
                 if (se_dibuja[j]) {
                     glPushMatrix();
-//                    glTranslatef(200*sin(2*M_PI*j/N_OBJ),0,200*cos(2*M_PI*j/N_OBJ));
+                    glTranslatef(200*sin(2*M_PI*j/N_OBJ),0,200*cos(2*M_PI*j/N_OBJ));
                     ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(objetos[j]);
                     if (obj_rev != nullptr) {
-                        glScalef(100,100,100);
+                        glScalef(50,50,50);
                         std::cout << "Soy un objeto de revolución" << std::endl;
                         obj_rev->draw(dibuja_diferido, ajedrez, modos[i], tipo_luz, dibuja_tapas);
                     }
@@ -282,8 +291,9 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
         case 'I':
             if (modoMenu == SELVISUALIZACION){
                 modoMenu = SELILUMINACION;
+                std::cout << "Modo iluminacion" << std::endl;
             }
-            if (modoMenu == SELILUMINACION){
+            else if (modoMenu == SELILUMINACION){
                 modoMenu = SELVISUALIZACION;
             }
 
@@ -293,18 +303,34 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             } else{
                 tipo_luz = ModoLuz::NINGUNA;
             }
-
+            break;
         case '<':
 
             break;
         case '>':
 
             break;
-
+        case '0':
+            if (modoMenu == SELILUMINACION){
+                cout << "luz" << endl;
+                if (luces[0]->getActivada()){
+                    luces[0]->desactivar();
+                } else{
+                    luces[0]->activar();
+                }
+            }
+            break;
         case '1':
             if (modoMenu == SELDIBUJADO) {
                 dibuja_diferido = false;
                 std::cout << "Dibujando en modo inmediato" << std::endl;
+            }
+            if (modoMenu == SELILUMINACION){
+                if (luces[1]->getActivada()){
+                    luces[1]->desactivar();
+                } else{
+                    luces[1]->activar();
+                }
             }
             break;
         case '2':
@@ -312,6 +338,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 std::cout << "Dibujando en modo diferido" << std::endl;
                 dibuja_diferido = true;
             }
+            break;
     }
     return salir;
 }

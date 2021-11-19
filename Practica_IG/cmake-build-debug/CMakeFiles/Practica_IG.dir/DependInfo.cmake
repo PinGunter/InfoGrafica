@@ -8,15 +8,22 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/salva/InfoGrafica/Practica_IG/src/cubo.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/cubo.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/ejes.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/ejes.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/escena.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/escena.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/malla.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/malla.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/objply.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/objply.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/objrevolucion.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/ply_reader.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/practicas.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/practicas.cc.o"
-  "/home/salva/InfoGrafica/Practica_IG/src/tetraedro.cc" "/home/salva/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/cilindro.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/cilindro.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/cono.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/cono.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/cubo.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/cubo.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/ejes.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/ejes.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/escena.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/escena.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/esfera.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/esfera.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/luz.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/luz.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/luz_direccional.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/luz_direccional.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/luz_posicional.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/luz_posicional.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/malla.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/malla.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/material.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/material.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/objply.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/objply.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/objrevolucion.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/objrevolucion.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/ply_reader.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/ply_reader.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/practicas.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/practicas.cc.o"
+  "/home/pingo/InfoGrafica/Practica_IG/src/tetraedro.cc" "/home/pingo/InfoGrafica/Practica_IG/cmake-build-debug/CMakeFiles/Practica_IG.dir/src/tetraedro.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
