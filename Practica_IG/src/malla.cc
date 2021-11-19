@@ -20,72 +20,50 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
 // Visualización en modo inmediato con 'glDrawElements'
 
 void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion) {
-    glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
-    glNormalPointer(GL_FLOAT,0,nv.data());
     glPointSize(8);
     if (iluminacion != ModoLuz::NINGUNA){
         m.aplicar();
-//        glShadeModel(map_luz(iluminacion));
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT,0,nv.data());
     }else {
+        glEnableClientState(GL_COLOR_ARRAY);
         glColorPointer(3, GL_FLOAT, 0, color->data());
     }
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
 void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLuz iluminacion) {
-    //Creacion de VBOs
-    if (id_vbo_vertices == 0) {
-        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
-    }
-
-    if (id_vbo_tri == 0) {
-        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
-    }
-    if (id_vbo_normal == 0){
-        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
-    }
-    //VBOs de los vectores de colores
-    if (id_vbo_color_v == 0) {
-        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
-    }
-    if (id_vbo_color_a == 0) {
-        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
-    }
-    if (id_vbo_color_c == 0) {
-        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
-    }
-    if (id_vbo_color_aj == 0) {
-        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
-    }
+    inicializarVBOS();
 
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
-    glNormalPointer(GL_FLOAT, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
-    glEnableClientState(GL_COLOR_ARRAY);
 
 
     if (iluminacion != ModoLuz::NINGUNA){
+        glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
+        glNormalPointer(GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER,0);
+        glEnableClientState(GL_NORMAL_ARRAY);
         m.aplicar();
-        glShadeModel(map_luz(iluminacion));
     } else{
         glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
         glColorPointer(3, GL_FLOAT, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glEnableClientState(GL_COLOR_ARRAY);
+
     }
 
     glPolygonMode(GL_FRONT, map_modo(modo));
@@ -94,6 +72,7 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLu
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -128,31 +107,7 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, M
 
 void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion) {
     //Creacion de VBOs
-    if (id_vbo_vertices == 0)
-    {
-        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
-    }
-
-    if (id_vbo_tri == 0)
-    {
-        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
-    }
-    if (id_vbo_normal == 0){
-        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
-    }
-    //VBOs de los vectores de colores
-    if (id_vbo_color_v == 0) {
-        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
-    }
-    if (id_vbo_color_a == 0) {
-        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
-    }
-    if (id_vbo_color_c == 0) {
-        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
-    }
-    if (id_vbo_color_aj == 0) {
-        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
-    }
+    inicializarVBOS();
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -242,8 +197,8 @@ bool Malla3D::esObjRevolucion() const {
 
 Tupla3f Malla3D::calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c) {
     Tupla3f v1, v2, res;
-    v1 = a - b;
-    v2 = c - b;
+    v1 = b - a;
+    v2 = c - a;
     res = v1.cross(v2);
     res = res / sqrt(res.dot(res));
     return res;
@@ -252,7 +207,9 @@ Tupla3f Malla3D::calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c) {
 void Malla3D::calcularNormales() {
     int v0,v1,v2;
     nv.reserve(v.size());
-    for (auto e : nv) e = Tupla3f(0,0,0);
+    for (int i=0; i < nv.size(); i++){
+        nv[i] = Tupla3f(0,0,0);
+    }
     Tupla3f n;
     for (int i=0; i < f.size(); i++){
         v0 = f.at(i)(0);
@@ -264,7 +221,9 @@ void Malla3D::calcularNormales() {
         nv[v2] = nv[v2] + n;
     }
 
-    for (auto e : nv) e = e.normalized();
+    for (int i=0; i < nv.size(); i++){
+        nv[i] = nv[i].normalized();
+    }
 }
 GLuint Malla3D::map_modo(ModoVisualizacion v) const {
     switch (v){
@@ -290,4 +249,31 @@ GLuint Malla3D::map_luz(ModoLuz l) const{
 
 void Malla3D::setMaterial(Material m) {
     this -> m = m;
+}
+void Malla3D::inicializarVBOS() {
+    if (id_vbo_vertices == 0)
+    {
+        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
+    }
+
+    if (id_vbo_tri == 0)
+    {
+        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
+    }
+    if (id_vbo_normal == 0){
+        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
+    }
+    //VBOs de los vectores de colores
+    if (id_vbo_color_v == 0) {
+        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
+    }
+    if (id_vbo_color_a == 0) {
+        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
+    }
+    if (id_vbo_color_c == 0) {
+        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
+    }
+    if (id_vbo_color_aj == 0) {
+        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
+    }
 }

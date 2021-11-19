@@ -61,7 +61,7 @@ private:
     // Objetos de la escena
     Ejes ejes;
     std::vector<Malla3D*> objetos;
-    std::vector<Tupla3f> transformaciones;
+    std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
     std::vector<bool> se_dibuja;
     std::vector<Luz *> luces;
@@ -96,6 +96,7 @@ private:
 
 public:
     Escena();
+    ~Escena();
     void inicializar(int UI_window_width, int UI_window_height);
     void redimensionar(int newWidth, int newHeight);
 
@@ -105,6 +106,9 @@ public:
     // Interacción con la escena
     bool teclaPulsada(unsigned char Tecla1, int x, int y);
     void teclaEspecial(int Tecla1, int x, int y);
+
+    //wrapper de dibujado de objetos
+    void dibujaObjeto(Malla3D *obj, const Tupla3f &tr, const Tupla3f &esc, ModoVisualizacion modo);
 
 
 };

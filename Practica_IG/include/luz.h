@@ -18,6 +18,7 @@ public:
     void activar();
     void desactivar();
     bool getActivada() const;
+    void draw();
 
 };
 

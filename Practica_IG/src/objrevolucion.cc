@@ -267,26 +267,28 @@ void ObjRevolucion::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion m
 
 
 void ObjRevolucion::draw_ModoInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
-    glEnableClientState(GL_COLOR_ARRAY);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_FLOAT, 0, v.data());
-    glNormalPointer(GL_FLOAT,0,nv.data());
-    glPointSize(8);
-    if (iluminacion != ModoLuz::NINGUNA){
-        m.aplicar();
-        glShadeModel(map_luz(iluminacion));
-    }else {
-        glColorPointer(3, GL_FLOAT, 0, color->data());
-    }
 
     int tam = f.size() - (f.size() - offset_tapas);
     if (tapas) {
         tam = f.size();
     }
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glVertexPointer(3, GL_FLOAT, 0, v.data());
+    glPointSize(8);
+    if (iluminacion != ModoLuz::NINGUNA){
+        m.aplicar();
+        glEnableClientState(GL_NORMAL_ARRAY);
+        glNormalPointer(GL_FLOAT,0,nv.data());
+    }else {
+        glEnableClientState(GL_COLOR_ARRAY);
+        glColorPointer(3, GL_FLOAT, 0, color->data());
+    }
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, f.data());
-
+    glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void ObjRevolucion::draw_AjedrezInmediato(std::vector<Tupla3f> *color, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
@@ -322,48 +324,27 @@ void ObjRevolucion::draw_AjedrezInmediato(std::vector<Tupla3f> *color, bool tapa
 }
 void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     //Creacion de VBOs
-    if (id_vbo_vertices == 0) {
-        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
-    }
-
-    if (id_vbo_tri == 0) {
-        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
-    }
-    if (id_vbo_normal == 0){
-        id_vbo_normal = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * nv.size(), nv.data());
-    }
-    //VBOs de los vectores de colores
-    if (id_vbo_color_v == 0) {
-        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
-    }
-    if (id_vbo_color_a == 0) {
-        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
-    }
-    if (id_vbo_color_c == 0) {
-        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
-    }
-    if (id_vbo_color_aj == 0) {
-        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
-    }
+    inicializarVBOS();
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
     glPointSize(8);
-    glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
-    glNormalPointer(GL_FLOAT, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
-    glEnableClientState(GL_COLOR_ARRAY);
+
 
     if (iluminacion != ModoLuz::NINGUNA){
+        glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
+        glNormalPointer(GL_FLOAT, 0, 0);
+        //        glBindBuffer(GL_ARRAY_BUFFER,0);
+        glEnableClientState(GL_NORMAL_ARRAY);
         m.aplicar();
-//        glShadeModel(map_luz(iluminacion));
     } else{
         glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
         glColorPointer(3, GL_FLOAT, 0, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glEnableClientState(GL_COLOR_ARRAY);
+
     }
 
 
@@ -372,7 +353,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
     if (tapas) {
         tam = f.size();
     }
-
+//    glBindBuffer(GL_ARRAY_BUFFER,0);
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, (void *) 0);
 
@@ -386,26 +367,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
 }
 void ObjRevolucion::draw_AjedrezDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo, ModoLuz iluminacion) {
     //Creacion de VBOs
-    if (id_vbo_vertices == 0) {
-        id_vbo_vertices = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * v.size(), v.data());
-    }
-
-    if (id_vbo_tri == 0) {
-        id_vbo_tri = CrearVBO(GL_ELEMENT_ARRAY_BUFFER, sizeof(float) * 3 * f.size(), f.data());
-    }
-    //VBOs de los vectores de colores
-    if (id_vbo_color_v == 0) {
-        ids_colores[PUNTOS_c] = id_vbo_color_v = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_vert.size(), c_vert.data());
-    }
-    if (id_vbo_color_a == 0) {
-        ids_colores[ALAMBRE_c] = id_vbo_color_a = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_aris.size(), c_aris.data());
-    }
-    if (id_vbo_color_c == 0) {
-        ids_colores[SOLIDO_c] = id_vbo_color_c = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_cara.size(), c_cara.data());
-    }
-    if (id_vbo_color_aj == 0) {
-        ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
-    }
+    inicializarVBOS();
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

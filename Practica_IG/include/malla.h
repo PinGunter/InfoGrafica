@@ -56,7 +56,7 @@ public:
 
 protected:
     GLuint CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram) ;
-
+    void inicializarVBOS();
     GLuint map_modo(ModoVisualizacion v) const;
     GLuint map_luz(ModoLuz l) const;
 

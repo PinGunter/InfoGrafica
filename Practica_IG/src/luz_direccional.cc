@@ -8,5 +8,10 @@ LuzDireccional::LuzDireccional(const Tupla2f & direccion, GLenum idLuzOpenGL, Tu
     this -> colorAmbiente = colorAmbiente;
     this -> colorEspecular = colorEspecular;
     this -> colorDifuso = colorDifuso;
-    posicion = Tupla4f(direccion(0),direccion(1),0,0);
+    posicion(0) = 0;
+    posicion(1) = 0;
+    posicion(2) = 1;
+    posicion(3) = 0;
+    alpha = direccion(0);
+    beta = direccion(1);
 }
