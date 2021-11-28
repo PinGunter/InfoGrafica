@@ -104,7 +104,7 @@ void Escena::dibujar() {
         glEnable(GL_LIGHTING);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
         for (int j=0; j < luces.size(); j++){
-            luces[j]->draw();
+            luces[j]->activar();
         }
     }
 

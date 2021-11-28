@@ -7,6 +7,10 @@
 void Luz::activar() {
     std::cout << "Luz " << id << " activada" << std::endl;
     glEnable(id);
+    glLightfv(id,GL_DIFFUSE,colorDifuso);
+    glLightfv(id,GL_AMBIENT,colorAmbiente);
+    glLightfv(id,GL_SPECULAR,colorEspecular);
+    glLightfv(id,GL_POSITION,posicion);
     activada = true;
 }
 void Luz::desactivar() {
@@ -15,10 +19,4 @@ void Luz::desactivar() {
 }
 bool Luz::getActivada() const {
     return activada;
-}
-void Luz::draw() {
-    glLightfv(id,GL_DIFFUSE,colorDifuso);
-    glLightfv(id,GL_AMBIENT,colorAmbiente);
-    glLightfv(id,GL_SPECULAR,colorEspecular);
-    glLightfv(id,GL_POSITION,posicion);
 }
