@@ -420,7 +420,4 @@ Escena::~Escena() {
     for (int i=0; i < objetos.size(); i++){
         delete objetos[i];
     }
-    for (int i=0; i < luces.size(); i++){
-        delete luces[i];
-    }
 }
