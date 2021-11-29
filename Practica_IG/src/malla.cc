@@ -43,35 +43,27 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
 
 void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id) {
     inicializarVBOS();
+    m.aplicar();
+    glBindBuffer(GL_ARRAY_BUFFER,id_vbo_vertices);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,id_vbo_tri);
 
-    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
-    glVertexPointer(3, GL_FLOAT, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
-    glPointSize(8);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
+    glVertexPointer(3,GL_FLOAT,0,0);
+    glNormalPointer(GL_FLOAT,0,0);
 
-    if (glIsEnabled(GL_LIGHTING)){
-        glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
-        glNormalPointer(GL_FLOAT, 0, 0);
-        glBindBuffer(GL_ARRAY_BUFFER,0);
-        m.aplicar();
-        glEnableClientState(GL_NORMAL_ARRAY);
-    } else{
-        glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
-        glColorPointer(3, GL_FLOAT, 0, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glEnableClientState(GL_COLOR_ARRAY);
-    }
+    glEnableClientState(GL_COLOR_ARRAY);
+    glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
+    glColorPointer(3,GL_FLOAT,0,0);
 
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
