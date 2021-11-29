@@ -68,6 +68,12 @@ cassert
 iostream
 -
 
+/home/pingo/InfoGrafica/Practica_IG/src/malla.cc
+aux.h
+-
+malla.h
+-
+
 /home/pingo/InfoGrafica/Practica_IG/src/objrevolucion.cc
 algorithm
 -

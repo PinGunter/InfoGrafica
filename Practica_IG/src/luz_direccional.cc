@@ -28,3 +28,14 @@ void LuzDireccional::calcularPosicion(float a, float b){
     posicion(2) = cos(b);
     posicion(3) = 0;
 }
+
+void LuzDireccional::setAlpha(float a){
+    alpha = a;
+    calcularPosicion(alpha,beta);
+}
+
+void LuzDireccional::setBeta(float b){
+    beta = b;
+    calcularPosicion(alpha,beta);
+
+}

@@ -327,19 +327,23 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
+    glBindBuffer(GL_FLOAT,id_vbo_normal);
+    glNormalPointer(GL_FLOAT,0,0);
+
 
     glVertexPointer(3,GL_FLOAT,0,0);
-    glNormalPointer(GL_FLOAT,0,0);
 
     glEnableClientState(GL_COLOR_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
     glColorPointer(3,GL_FLOAT,0,0);
+
 
     int tam = f.size() - (f.size() - offset_tapas);
 
     if (tapas) {
         tam = f.size();
     }
+
 
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
@@ -348,6 +352,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
     glDisableClientState(GL_COLOR_ARRAY);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
     glBindBuffer(GL_ARRAY_BUFFER,0);
+
 
 }
 void ObjRevolucion::draw_AjedrezDiferido(GLuint color_id, bool tapas, ModoVisualizacion modo) {

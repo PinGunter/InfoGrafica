@@ -23,14 +23,11 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-//    if (iluminacion != ModoLuz::NINGUNA){
-        m.aplicar();
-        glEnableClientState(GL_NORMAL_ARRAY);
-        glNormalPointer(GL_FLOAT,0,nv.data());
-//    }else {
-        glEnableClientState(GL_COLOR_ARRAY);
-        glColorPointer(3, GL_FLOAT, 0, color->data());
-//    }
+    m.aplicar();
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glNormalPointer(GL_FLOAT,0,nv.data());
+    glEnableClientState(GL_COLOR_ARRAY);
+    glColorPointer(3, GL_FLOAT, 0, color->data());
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
@@ -49,9 +46,11 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id) {
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_NORMAL_ARRAY);
+    glBindBuffer(GL_FLOAT,id_vbo_normal);
+    glNormalPointer(GL_FLOAT,0,0);
+
 
     glVertexPointer(3,GL_FLOAT,0,0);
-    glNormalPointer(GL_FLOAT,0,0);
 
     glEnableClientState(GL_COLOR_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);

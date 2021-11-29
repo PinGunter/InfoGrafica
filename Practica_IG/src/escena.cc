@@ -100,13 +100,13 @@ void Escena::dibujar() {
     int j = 0;
     change_observer();
     ejes.draw();
+
     if (tipo_luz != ModoLuz::NINGUNA) {
         glEnable(GL_LIGHTING);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
         if (luz_d_act){
             luz_d->activar();
         }
-        change_observer();
         if (luz_p_act){
             luz_p->activar();
         }
@@ -365,7 +365,8 @@ void Escena::teclaEspecial(int Tecla1, int x, int y) {
             Observer_distance *= 1.2;
             break;
         case GLUT_KEY_PAGE_DOWN:
-            Observer_distance /= 1.2;
+            Observer_distance /= 1.2;        change_observer();
+
             break;
     }
 
