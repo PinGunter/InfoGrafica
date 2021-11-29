@@ -43,20 +43,20 @@ Escena::Escena() : se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), e
     objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(0,0,0,1),Tupla4f(1,1,1,1), 0));
     objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
     objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(0.2,0.2,0.2,1), 50));
-
-//    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
+    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
 //    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
 //    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
 
     traslaciones[(int)Objetos_Escena::CUBO] = Tupla3f(-50,50,-50);
     traslaciones[(int)Objetos_Escena::PEON_X] = Tupla3f(50,50,50);
     traslaciones[(int)Objetos_Escena::PEON_Z] = Tupla3f (-50,50,50);
+    traslaciones[(int)Objetos_Escena::ESFERA] = Tupla3f (50,50,-50);
     escalados[(int)Objetos_Escena::PEON_Z] = escalados[(int)Objetos_Escena::PEON_X] = Tupla3f(25,25,25);
+    escalados[(int)Objetos_Escena::ESFERA] = Tupla3f(5,5,5);
 
-
-    luces.reserve(2);
-    luces[0] = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    luces[1] = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));    dibuja_diferido = true;// por defecto dibuja en modo diferido
+    luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));    dibuja_diferido = true;// por defecto dibuja en modo diferido
+    luz_p_act = luz_d_act = false;
     dibuja_tapas = true;
     ajedrez = false;
 }
@@ -97,14 +97,18 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
 void Escena::dibujar() {
     glScalef(1.5, 1.5, 1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
-    change_observer();
     int j = 0;
+    change_observer();
     ejes.draw();
     if (tipo_luz != ModoLuz::NINGUNA) {
         glEnable(GL_LIGHTING);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
-        for (int j=0; j < luces.size(); j++){
-            luces[j]->activar();
+        if (luz_d_act){
+            luz_d->activar();
+        }
+        change_observer();
+        if (luz_p_act){
+            luz_p->activar();
         }
     }
 
@@ -137,26 +141,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
     bool salir = false;
     switch (toupper(tecla)) {
         case 'Q':
-            if (modoMenu == SELOBJETO) {
-                std::cout << "Saliendo del modo selección objeto" << std::endl;
+            if (modoMenu != NADA){
                 modoMenu = NADA;
+                std::cout << "Saliendo del modo actual" << std::endl;
             }
-
-            else if (modoMenu == SELVISUALIZACION) {
-                std::cout << "Saliendo del modo selección visualización" << std::endl;
-                modoMenu = NADA;
-            }
-
-            else if (modoMenu == SELDIBUJADO) {
-                std::cout << "Saliendo del modo selección de modo de dibujado" << std::endl;
-                modoMenu = NADA;
-            } else if (modoMenu == SELVISUALIZACION){
-                std::cout << "Saliendo del modo iluminación" << std::endl;
-                modoMenu = SELVISUALIZACION;
-            }
-
-            else if (modoMenu != NADA)
-                modoMenu = NADA;
             else {
                 salir = true;
             }
@@ -239,11 +227,15 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_ALFA;
+            } else if (modoMenu == VARIACION_ALFA){
+                modoMenu = SELILUMINACION;
             }
             break;
         case 'B':
             if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_BETA;
+            } else if (modoMenu == VARIACION_BETA){
+                modoMenu = SELILUMINACION;
             }
             break;
         case 'L':
@@ -304,18 +296,29 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             break;
         case '<':
-
+            if (modoMenu == VARIACION_ALFA){
+                luz_d->variarAnguloAlpha(M_PI / 30.0);
+            }
+            else if (modoMenu == VARIACION_BETA){
+                luz_d->variarAnguloBeta(M_PI / 30.0);
+            }
             break;
         case '>':
-
+            if (modoMenu == VARIACION_ALFA){
+                luz_d->variarAnguloAlpha(-M_PI / 30.0);
+            }
+            else if (modoMenu == VARIACION_BETA){
+                luz_d->variarAnguloBeta(-M_PI / 30.0);
+            }
             break;
         case '0':
             if (modoMenu == SELILUMINACION){
                 cout << "luz" << endl;
-                if (luces[0]->getActivada()){
-                    luces[0]->desactivar();
+                if (luz_p ->getActivada()){
+                    luz_p->desactivar();
+                    luz_p_act = false;
                 } else{
-                    luces[0]->activar();
+                    luz_p_act = true;
                 }
             }
             break;
@@ -325,10 +328,11 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 std::cout << "Dibujando en modo inmediato" << std::endl;
             }
             if (modoMenu == SELILUMINACION){
-                if (luces[1]->getActivada()){
-                    luces[1]->desactivar();
+                if (luz_d ->getActivada()){
+                    luz_d->desactivar();
+                    luz_d_act = false;
                 } else{
-                    luces[1]->activar();
+                    luz_d_act = true;
                 }
             }
             break;
@@ -410,9 +414,9 @@ void Escena::dibujaObjeto(Malla3D *obj, const Tupla3f &tr, const Tupla3f &esc, M
     glScalef(esc(0),esc(1),esc(2));
     ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(obj);
     if (obj_rev != nullptr)
-        obj_rev->draw(dibuja_diferido, ajedrez, modo, tipo_luz, dibuja_tapas);
+        obj_rev->draw(dibuja_diferido, ajedrez, modo, dibuja_tapas);
     else
-        obj->draw(dibuja_diferido,ajedrez,modo,tipo_luz);
+        obj->draw(dibuja_diferido, ajedrez, modo);
     glPopMatrix();
 
 }

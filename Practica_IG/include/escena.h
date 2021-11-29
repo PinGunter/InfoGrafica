@@ -64,7 +64,9 @@ private:
     std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
     std::vector<bool> se_dibuja;
-    std::vector<Luz *> luces;
+    bool luz_p_act, luz_d_act;
+    LuzPosicional * luz_p = nullptr;
+    LuzDireccional * luz_d = nullptr;
 //    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
 //    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
 //    ObjPLY *amogus = nullptr;

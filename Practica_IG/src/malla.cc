@@ -19,18 +19,18 @@ GLuint Malla3D::CrearVBO(GLuint tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion) {
+void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
-    if (iluminacion != ModoLuz::NINGUNA){
+//    if (iluminacion != ModoLuz::NINGUNA){
         m.aplicar();
         glEnableClientState(GL_NORMAL_ARRAY);
         glNormalPointer(GL_FLOAT,0,nv.data());
-    }else {
+//    }else {
         glEnableClientState(GL_COLOR_ARRAY);
         glColorPointer(3, GL_FLOAT, 0, color->data());
-    }
+//    }
     glPolygonMode(GL_FRONT, map_modo(modo));
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
@@ -41,7 +41,7 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLuz iluminacion) {
+void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id) {
     inicializarVBOS();
 
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
@@ -52,18 +52,17 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLu
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
 
 
-    if (iluminacion != ModoLuz::NINGUNA){
+    if (glIsEnabled(GL_LIGHTING)){
         glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
         glNormalPointer(GL_FLOAT, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER,0);
-        glEnableClientState(GL_NORMAL_ARRAY);
         m.aplicar();
+        glEnableClientState(GL_NORMAL_ARRAY);
     } else{
         glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
         glColorPointer(3, GL_FLOAT, 0, 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glEnableClientState(GL_COLOR_ARRAY);
-
     }
 
     glPolygonMode(GL_FRONT, map_modo(modo));
@@ -78,7 +77,7 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id , ModoLu
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion) {
+void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo) {
     switch (modo) {
         case ModoVisualizacion::PUNTOS:
             selector_color = &c_vert;
@@ -94,18 +93,18 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, M
             break;
     }
     if (dibuja_diferido) {
-        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo,iluminacion);
+        if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo);
         else
-            draw_ModoDiferido(modo, selector_color_vbo,iluminacion);
+            draw_ModoDiferido(modo, selector_color_vbo);
     } else {
-        if (ajedrez) draw_AjedrezInmediato(modo, selector_color,iluminacion);
+        if (ajedrez) draw_AjedrezInmediato(modo, selector_color);
         else
-            draw_ModoInmediato(modo, selector_color, iluminacion);
+            draw_ModoInmediato(modo, selector_color);
     }
 }
 
 
-void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion) {
+void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id) {
     //Creacion de VBOs
     inicializarVBOS();
     glBindBuffer(GL_ARRAY_BUFFER, id_vbo_vertices);
@@ -141,7 +140,7 @@ void Malla3D::draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, Modo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Malla3D::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion) {
+void Malla3D::draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color) {
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());

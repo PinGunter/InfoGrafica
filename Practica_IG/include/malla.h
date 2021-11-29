@@ -37,18 +37,18 @@ enum class ModoLuz{
 class Malla3D {
 public:
     // dibuja el objeto en modo inmediato
-    void draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion);
-    void draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color, ModoLuz iluminacion);
+    void draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color);
+    void draw_AjedrezInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *color);
 
     // dibuja el objeto en modo diferido (usando VBOs)
-    void draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion);
-    void draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id, ModoLuz iluminacion);
+    void draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id);
+    void draw_AjedrezDiferido(ModoVisualizacion modo, GLuint color_id);
 
 ;
     // función que redibuja el objeto
     // está función llama a 'draw_ModoInmediato' (modo inmediato)
     // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-    void draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo, ModoLuz iluminacion);
+    void draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo);
 
     void setMaterial (Material m);
 
