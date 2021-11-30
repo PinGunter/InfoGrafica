@@ -40,29 +40,32 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
 
 void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id) {
     inicializarVBOS();
-    m.aplicar();
+
     glBindBuffer(GL_ARRAY_BUFFER,id_vbo_vertices);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,id_vbo_tri);
-
     glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
-    glBindBuffer(GL_FLOAT,id_vbo_normal);
-    glNormalPointer(GL_FLOAT,0,0);
-
-
     glVertexPointer(3,GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+
+    glBindBuffer(GL_ARRAY_BUFFER,id_vbo_normal);
+    glEnableClientState(GL_NORMAL_ARRAY);
+    glNormalPointer(GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+
 
     glEnableClientState(GL_COLOR_ARRAY);
     glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
     glColorPointer(3,GL_FLOAT,0,0);
+    glBindBuffer(GL_ARRAY_BUFFER,0);
 
     glPolygonMode(GL_FRONT, map_modo(modo));
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,id_vbo_tri);
+    m.aplicar();
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
+//    glBindBuffer(GL_ARRAY_BUFFER,0);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -178,8 +181,10 @@ void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const
     id_vbo_tri = id_vbo_vertices = id_vbo_normal = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
     setMaterial(Material(ambiente,especular,difuso,brillo));
-    calcularNormales();
+    std::cout << "tam nv " << nv.size() << std::endl;
     mezclaVector();
+    calcularNormales();
+
 }
 bool Malla3D::esObjRevolucion() const {
     return false;
@@ -196,9 +201,8 @@ Tupla3f Malla3D::calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c) {
 
 void Malla3D::calcularNormales() {
     int v0,v1,v2;
-    nv.reserve(v.size());
-    for (int i=0; i < nv.size(); i++){
-        nv[i] = Tupla3f(0,0,0);
+    for (int i=0; i < v.size(); i++){
+        nv.push_back(Tupla3f(0,0,0));
     }
     Tupla3f n;
     for (int i=0; i < f.size(); i++){

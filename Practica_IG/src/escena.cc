@@ -36,13 +36,13 @@ Escena::Escena() : se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), e
     objetos.reserve(N_OBJ);
     objetos[(int)Objetos_Escena::CUBO] = new Cubo(50);
 //    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
-//    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
+    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
 //    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
 //    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
     objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(0,0,0,1),Tupla4f(1,1,1,1), 0));
+    objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(0,0,0,1),Tupla4f(1,1,1,1), 10));
     objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(0.2,0.2,0.2,1), 50));
+    objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(0.5,0.5,0.5,1), 50));
     objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
 //    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
 //    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
@@ -53,6 +53,8 @@ Escena::Escena() : se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), e
     traslaciones[(int)Objetos_Escena::ESFERA] = Tupla3f (50,50,-50);
     escalados[(int)Objetos_Escena::PEON_Z] = escalados[(int)Objetos_Escena::PEON_X] = Tupla3f(25,25,25);
     escalados[(int)Objetos_Escena::ESFERA] = Tupla3f(5,5,5);
+    escalados[(int) Objetos_Escena::OBJPLY] = Tupla3f(0.5,0.5,0.5);
+    objetos[(int)Objetos_Escena::OBJPLY]->setMaterial(Material(Tupla4f(0,0,1,1),Tupla4f(0.8,0.8,0.8,1),Tupla4f(0.2,0.2,0.2,1),100));
 
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));    dibuja_diferido = true;// por defecto dibuja en modo diferido
