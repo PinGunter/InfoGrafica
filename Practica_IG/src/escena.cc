@@ -3,13 +3,13 @@
 #include <aux.h>// includes de OpenGL/glut/glew, windows, y librería std de C++
 #include <escena.h>
 #include <malla.h>// objetos: Cubo y otros....
-#define N_OBJ 10
+#define N_OBJ (int)Objetos_Escena::NUM_OBJ
 #define LUZ(i) GL_LIGHTi
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
-Escena::Escena() : se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), escalados(N_OBJ,Tupla3f(1,1,1)){
+Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), escalados(N_OBJ,Tupla3f(1,1,1)){
     Front_plane = 50.0;
     Back_plane = 2000.0;
     Observer_distance = 4 * Front_plane;
@@ -27,39 +27,25 @@ Escena::Escena() : se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), e
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
     std::vector<Tupla3f> v_rev{
-            Tupla3f(5, 0, 0),
-            Tupla3f(5, 10, 0),
+            Tupla3f(1, -0.5, 0),
+            Tupla3f(1, 0.5, 0),
     };
 
     ejes.changeAxisSize(5000);
-
-    objetos.reserve(N_OBJ);
-    objetos[(int)Objetos_Escena::CUBO] = new Cubo(50);
-//    objetos[(int)Objetos_Escena::TETRAEDRO] = new Tetraedro(25);
-    objetos[(int)Objetos_Escena::OBJPLY] = new ObjPLY("plys/amogus");
-//    objetos[(int)Objetos_Escena::OBJPLY_REV] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-//    objetos[(int)Objetos_Escena::REV_VEC] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_X] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_X]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(0,0,0,1),Tupla4f(1,1,1,1), 10));
-    objetos[(int)Objetos_Escena::PEON_Z] = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
-    objetos[(int)Objetos_Escena::PEON_Z]->setMaterial(Material(Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(0.5,0.5,0.5,1), 50));
-    objetos[(int)Objetos_Escena::ESFERA]= new Esfera(20,20,10);
-//    objetos[(int)Objetos_Escena::CONO]= new Cono(20, 20, 20, 10, true);
-//    objetos[(int)Objetos_Escena::CILINDRO]= new Cilindro(3, 20, 20, 20, true, true);
-
-    traslaciones[(int)Objetos_Escena::CUBO] = Tupla3f(-50,50,-50);
-    traslaciones[(int)Objetos_Escena::PEON_X] = Tupla3f(50,50,50);
-    traslaciones[(int)Objetos_Escena::PEON_Z] = Tupla3f (-50,50,50);
-    traslaciones[(int)Objetos_Escena::ESFERA] = Tupla3f (50,50,-50);
-    escalados[(int)Objetos_Escena::PEON_Z] = escalados[(int)Objetos_Escena::PEON_X] = Tupla3f(25,25,25);
-    escalados[(int)Objetos_Escena::ESFERA] = Tupla3f(5,5,5);
-    escalados[(int) Objetos_Escena::OBJPLY] = Tupla3f(0.5,0.5,0.5);
-    objetos[(int)Objetos_Escena::OBJPLY]->setMaterial(Material(Tupla4f(0,0,1,1),Tupla4f(0.8,0.8,0.8,1),Tupla4f(0.2,0.2,0.2,1),100));
-
+    objetos[(int)Objetos_Escena::CILINDRO] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,25);
+    objetos[(int)Objetos_Escena::HUESO] = new ObjPLY("plys/hueso");
+    se_dibuja[(int)Objetos_Escena::CILINDRO] = true;
+    se_dibuja[(int)Objetos_Escena::HUESO] = true;
+    traslaciones[(int)Objetos_Escena::HUESO] = Tupla3f(0,50,0);
+    escalados[(int)Objetos_Escena::HUESO] = Tupla3f(0.33*50,0.3*50,0.33*50);
+    escalados[(int)Objetos_Escena::CILINDRO] = Tupla3f(50,110,50);
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));    dibuja_diferido = true;// por defecto dibuja en modo diferido
-    luz_p_act = luz_d_act = false;
+    luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    dibuja_diferido = false;// por defecto dibuja en modo diferido
+    luz_p_act = false;
+    luz_d_act = true;
     dibuja_tapas = true;
+    tipo_luz = ModoLuz::SUAVE;
     ajedrez = false;
 }
 
@@ -75,6 +61,7 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
     glEnable(GL_DEPTH_TEST);// se habilita el z-bufer
     glEnable(GL_CULL_FACE);
     glEnable(GL_NORMALIZE);
+    glEnable(GL_LIGHTING);
     glShadeModel(GL_SMOOTH);
 
 
@@ -190,13 +177,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
+//                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }
             break;
 
         case 'T':
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::TETRAEDRO] = !se_dibuja[(int) Objetos_Escena::TETRAEDRO];
+//                se_dibuja[(int)Objetos_Escena::TETRAEDRO] = !se_dibuja[(int) Objetos_Escena::TETRAEDRO];
             }
             if (modoMenu == SELVISUALIZACION) {
                 dibuja_tapas ^= 1;
@@ -205,7 +192,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
         case 'F':
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::OBJPLY] = !se_dibuja[(int) Objetos_Escena::OBJPLY];
+//                se_dibuja[(int)Objetos_Escena::OBJPLY] = !se_dibuja[(int) Objetos_Escena::OBJPLY];
             }
             break;
 
@@ -225,7 +212,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 ajedrez ^= 1;
             }
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::REV_VEC] = !se_dibuja[(int) Objetos_Escena::REV_VEC];
+//                se_dibuja[(int)Objetos_Escena::REV_VEC] = !se_dibuja[(int) Objetos_Escena::REV_VEC];
             }
             if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_ALFA;
@@ -262,23 +249,23 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 tipo_luz = ModoLuz::NINGUNA;
             }
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
+//                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
             }
             break;
         case 'X':
             if (modoMenu == SELOBJETO){
-                se_dibuja[(int)Objetos_Escena::PEON_X] = !se_dibuja[(int) Objetos_Escena::PEON_X];
+//                se_dibuja[(int)Objetos_Escena::PEON_X] = !se_dibuja[(int) Objetos_Escena::PEON_X];
             }
             break;
         case 'Z':
             if(modoMenu == SELOBJETO){
-                se_dibuja[(int)Objetos_Escena::PEON_Z] = !se_dibuja[(int) Objetos_Escena::PEON_Z];
+//                se_dibuja[(int)Objetos_Escena::PEON_Z] = !se_dibuja[(int) Objetos_Escena::PEON_Z];
             }
             break;
 
         case 'R':
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
+//                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
             }
             break;
         case 'I':

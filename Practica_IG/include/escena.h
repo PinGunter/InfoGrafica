@@ -25,16 +25,11 @@ typedef enum {
 } menu;
 
 enum class Objetos_Escena{
-    CUBO,
-    TETRAEDRO,
-    OBJPLY,
-    OBJPLY_REV,
-    ESFERA,
-    CONO,
     CILINDRO,
-    REV_VEC,
-    PEON_X,
-    PEON_Z
+    ESFERA,
+    SEMIESFERA,
+    HUESO,
+    NUM_OBJ
 };
 
 class Escena
