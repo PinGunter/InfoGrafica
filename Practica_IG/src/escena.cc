@@ -26,21 +26,9 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
-    std::vector<Tupla3f> v_rev{
-            Tupla3f(1, -0.5, 0),
-            Tupla3f(1, 0.5, 0),
-    };
 
     ejes.changeAxisSize(5000);
-    objetos[(int)Objetos_Escena::CILINDRO] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,25);
-    objetos[(int)Objetos_Escena::HUESO] = new ObjPLY("plys/hueso");
-    objetos[(int)Objetos_Escena::SEMIESFERA] = new Semiesfera(10,20,50,Eje_rotacion::EJE_Y);
-    se_dibuja[(int)Objetos_Escena::SEMIESFERA] = true;
-    se_dibuja[(int)Objetos_Escena::CILINDRO] = false;
-    se_dibuja[(int)Objetos_Escena::HUESO] = false;
-    traslaciones[(int)Objetos_Escena::HUESO] = Tupla3f(0,50,0);
-    escalados[(int)Objetos_Escena::HUESO] = Tupla3f(0.33*50,0.3*50,0.33*50);
-    escalados[(int)Objetos_Escena::CILINDRO] = Tupla3f(50,110,50);
+    pierna = new Pierna();
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = false;// por defecto dibuja en modo diferido
@@ -104,13 +92,12 @@ void Escena::dibujar() {
     }
 
     for (int i=0; i < N_MODOS; i++){
-        for (int j=0; j < N_OBJ; j++) {
             if (modo_activo[i]) {
-                if (se_dibuja[j]) {
-                    dibujaObjeto(objetos[j],traslaciones[j],escalados[j],modos[i]);
-                }
+                glPushMatrix();
+                glScalef(10,10,10);
+                pierna->draw(ajedrez,modos[i],0,30,0);
+                glPopMatrix();
             }
-        }
 
     }
 //
@@ -235,13 +222,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 tipo_luz = ModoLuz::NINGUNA;
             }
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::CILINDRO] = !se_dibuja[(int) Objetos_Escena::CILINDRO];
+//                se_dibuja[(int)Objetos_Escena::CILINDRO] = !se_dibuja[(int) Objetos_Escena::CILINDRO];
             }
             break;
 
         case 'E':
             if (modoMenu == SELOBJETO) {
-                se_dibuja[(int)Objetos_Escena::ESFERA] = !se_dibuja[(int) Objetos_Escena::ESFERA];
+//                se_dibuja[(int)Objetos_Escena::ESFERA] = !se_dibuja[(int) Objetos_Escena::ESFERA];
             }
             break;
 

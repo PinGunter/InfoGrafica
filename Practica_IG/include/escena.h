@@ -15,6 +15,9 @@
 #include <tetraedro.h>
 #include <semiesfera.h>
 
+
+#include <pierna.h>
+
 #define N_MODOS 3
 typedef enum {
     NADA,
@@ -27,10 +30,6 @@ typedef enum {
 } menu;
 
 enum class Objetos_Escena{
-    CILINDRO,
-    ESFERA,
-    SEMIESFERA,
-    HUESO,
     NUM_OBJ
 };
 
@@ -57,6 +56,10 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
+
+    //Among us
+    Pierna *pierna = nullptr;
+
     std::vector<Malla3D*> objetos;
     std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
@@ -64,27 +67,6 @@ private:
     bool luz_p_act, luz_d_act;
     LuzPosicional * luz_p = nullptr;
     LuzDireccional * luz_d = nullptr;
-//    Cubo *cubo = nullptr;          // es importante inicializarlo a 'nullptr'
-//    Tetraedro *tetraedro = nullptr;// es importante inicializarlo a 'nullptr'
-//    ObjPLY *amogus = nullptr;
-//    ObjRevolucion *obj_rev_ply = nullptr;
-//    ObjRevolucion *obj_rev_vec = nullptr;
-//    ObjRevolucion * peon_x = nullptr;
-//    ObjRevolucion * peon_z = nullptr;
-//    Esfera *esfera = nullptr;
-//    Cono *cono = nullptr;
-//    Cilindro *cilindro = nullptr;
-//    bool dibuja_cubo;
-//    bool dibuja_tetraedro;
-//    bool dibuja_ply;
-
-//    bool dibuja_rev_ply;
-//    bool dibuja_rev_vec;
-//    bool dibuja_esfera;
-//    bool dibuja_cono;
-//    bool dibuja_cilindro;
-//    bool dibuja_peon_x;
-//    bool dibuja_peon_z;
 
     bool ajedrez;
     bool dibuja_tapas;

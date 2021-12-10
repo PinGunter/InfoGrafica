@@ -181,7 +181,6 @@ void Malla3D::inicializar(const Tupla3f &vertices, const Tupla3f &aristas, const
     id_vbo_tri = id_vbo_vertices = id_vbo_normal = id_vbo_color_v = id_vbo_color_a = id_vbo_color_c = id_vbo_color_aj = 0;
     rellenaColores(vertices,aristas,solido,ajedrez);
     setMaterial(Material(ambiente,especular,difuso,brillo));
-    std::cout << "tam nv " << nv.size() << std::endl;
     mezclaVector();
     calcularNormales();
 
@@ -192,8 +191,8 @@ bool Malla3D::esObjRevolucion() const {
 
 Tupla3f Malla3D::calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c) {
     Tupla3f v1, v2, res;
-    v1 = b - a;
-    v2 = c - a;
+    v1 = a - b;
+    v2 = a - c;
     res = v1.cross(v2);
     res = res / sqrt(res.dot(res));
     return res;
