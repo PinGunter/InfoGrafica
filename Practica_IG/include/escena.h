@@ -13,6 +13,8 @@
 #include <objply.h>
 #include <objrevolucion.h>
 #include <tetraedro.h>
+#include <semiesfera.h>
+
 #define N_MODOS 3
 typedef enum {
     NADA,

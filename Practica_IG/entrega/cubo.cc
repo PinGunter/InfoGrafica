@@ -42,7 +42,7 @@ Cubo::Cubo(float lado)
     inicializar(Tupla3f(0, 1, 0),
                 Tupla3f(1, 0, 0),
                 Tupla3f(0, 0, 1),
-                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 120);
+                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 5);
 
     // (es importante en cada cara ordenar los vértices en sentido contrario
     //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)

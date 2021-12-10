@@ -34,8 +34,10 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     ejes.changeAxisSize(5000);
     objetos[(int)Objetos_Escena::CILINDRO] = new ObjRevolucion(v_rev,Eje_rotacion::EJE_Y,25);
     objetos[(int)Objetos_Escena::HUESO] = new ObjPLY("plys/hueso");
-    se_dibuja[(int)Objetos_Escena::CILINDRO] = true;
-    se_dibuja[(int)Objetos_Escena::HUESO] = true;
+    objetos[(int)Objetos_Escena::SEMIESFERA] = new Semiesfera(10,20,50,Eje_rotacion::EJE_Y);
+    se_dibuja[(int)Objetos_Escena::SEMIESFERA] = true;
+    se_dibuja[(int)Objetos_Escena::CILINDRO] = false;
+    se_dibuja[(int)Objetos_Escena::HUESO] = false;
     traslaciones[(int)Objetos_Escena::HUESO] = Tupla3f(0,50,0);
     escalados[(int)Objetos_Escena::HUESO] = Tupla3f(0.33*50,0.3*50,0.33*50);
     escalados[(int)Objetos_Escena::CILINDRO] = Tupla3f(50,110,50);

@@ -8,5 +8,34 @@ LuzDireccional::LuzDireccional(const Tupla2f & direccion, GLenum idLuzOpenGL, Tu
     this -> colorAmbiente = colorAmbiente;
     this -> colorEspecular = colorEspecular;
     this -> colorDifuso = colorDifuso;
-    posicion = Tupla4f(direccion(0),direccion(1),0,0);
+    alpha = direccion(0);
+    beta = direccion(1);
+    calcularPosicion(alpha,beta);
+
+}
+void LuzDireccional::variarAnguloAlpha(float incremento) {
+    alpha += incremento;
+    calcularPosicion(alpha,beta);
+}
+void LuzDireccional::variarAnguloBeta(float incremento) {
+    beta += incremento;
+    calcularPosicion(alpha,beta);
+}
+
+void LuzDireccional::calcularPosicion(float a, float b){
+    posicion(0) = sin(b)*cos(a);
+    posicion(1) = sin(b)*sin(a);
+    posicion(2) = cos(b);
+    posicion(3) = 0;
+}
+
+void LuzDireccional::setAlpha(float a){
+    alpha = a;
+    calcularPosicion(alpha,beta);
+}
+
+void LuzDireccional::setBeta(float b){
+    beta = b;
+    calcularPosicion(alpha,beta);
+
 }
