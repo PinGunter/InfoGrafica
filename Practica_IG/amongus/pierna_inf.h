@@ -7,13 +7,13 @@
 #define PRACTICA_IG_PIERNA_INF_H
 
 
-class Pierna_inf : public Malla3D{
+class Pierna_inf {
 private:
     ObjRevolucion * cilindro = nullptr;
     Semiesfera * semiesfera = nullptr;
 public:
     Pierna_inf();
-    void draw(bool ajedrez, ModoVisualizacion modo);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo);
 };
 
 

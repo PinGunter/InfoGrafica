@@ -5,7 +5,6 @@
 #include <luz.h>
 
 void Luz::activar() {
-    std::cout << "Luz " << id << " activada" << std::endl;
     glEnable(id);
     glLightfv(id,GL_DIFFUSE,colorDifuso);
     glLightfv(id,GL_AMBIENT,colorAmbiente);

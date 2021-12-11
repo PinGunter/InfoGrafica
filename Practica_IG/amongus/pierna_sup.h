@@ -6,13 +6,13 @@
 #define PRACTICA_IG_PIERNA_SUP_H
 #include <objrevolucion.h>
 
-class Pierna_sup : public Malla3D{
+class Pierna_sup {
     ObjRevolucion * cilindro = nullptr;
 
 public:
     Pierna_sup();
 
-    void draw(bool ajedrez, ModoVisualizacion modo);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo);
 };
 
 

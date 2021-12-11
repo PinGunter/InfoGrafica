@@ -16,6 +16,7 @@ public:
     void calcularPosicion(float a, float b);
     void setAlpha(float a);
     void setBeta(float b);
+    void activar();
 };
 
 

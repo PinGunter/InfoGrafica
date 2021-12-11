@@ -8,24 +8,24 @@ Pierna::Pierna() {
     p_sup = new Pierna_sup();
     esfera = new Esfera();
 }
-void Pierna::draw(bool ajedrez, ModoVisualizacion modo, float alpha, float beta, float gamma) {
+void Pierna::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, float alpha, float beta, float gamma) {
     glPushMatrix();
     glRotatef(gamma,0,0,1);
     glRotatef(alpha,0,1,0);
-    glScalef(2,1,2);
+    glScalef(2.3,1,2.3);
         glPushMatrix();
-        glRotatef(beta,1,0,0);
+        glRotatef(30,1,0,0);
         glTranslatef(0,-0.9,0);
-        p_inf->draw(ajedrez,modo);
+        p_inf->draw(diferido, ajedrez, modo);
         glPopMatrix();
 
         glPushMatrix();
         glTranslatef(0,0.9,0);
-        p_sup->draw(ajedrez,modo);
+        p_sup->draw(diferido, ajedrez, modo);
         glPopMatrix();
 
         glPushMatrix();
-        glScalef(2,0.6,2);
+        glScalef(0.9,0.9,0.9);
         esfera->draw(true,ajedrez,modo,true);
         glPopMatrix();
     glPopMatrix();

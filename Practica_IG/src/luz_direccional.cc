@@ -39,3 +39,7 @@ void LuzDireccional::setBeta(float b){
     calcularPosicion(alpha,beta);
 
 }
+void LuzDireccional::activar() {
+    Luz::activar();
+    std::cout << "alpha: " << alpha << " beta: " << beta << std::endl;
+}

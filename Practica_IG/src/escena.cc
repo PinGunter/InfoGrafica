@@ -19,7 +19,6 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     modos[(int) ModoVisualizacion::PUNTOS] = ModoVisualizacion::PUNTOS;
     modos[(int) ModoVisualizacion::ALAMBRE] = ModoVisualizacion::ALAMBRE;
     modos[(int) ModoVisualizacion::SOLIDO] = ModoVisualizacion::SOLIDO;
-    tipo_luz = ModoLuz::NINGUNA;
 
 
     modo_activo[(int) ModoVisualizacion::PUNTOS] = modo_activo[(int) ModoVisualizacion::ALAMBRE] = false;
@@ -28,14 +27,16 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
 
     ejes.changeAxisSize(5000);
-    pierna = new Pierna();
+    amongus = new Tripulante_mochila();
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    luz_d = new LuzDireccional(Tupla2f(1,1),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luz_d = new LuzDireccional(Tupla2f(-0.0471976,6.8643),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = false;// por defecto dibuja en modo diferido
     luz_p_act = false;
     luz_d_act = true;
     dibuja_tapas = true;
+    dibuja_cabeza = true;
     tipo_luz = ModoLuz::SUAVE;
+    modoMenu = SELILUMINACION;
     ajedrez = false;
 }
 
@@ -95,7 +96,7 @@ void Escena::dibujar() {
             if (modo_activo[i]) {
                 glPushMatrix();
                 glScalef(10,10,10);
-                pierna->draw(ajedrez,modos[i],0,30,0);
+                amongus->draw(dibuja_diferido,ajedrez,modos[i],dibuja_cabeza);
                 glPopMatrix();
             }
 
@@ -165,6 +166,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             break;
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
+            dibuja_cabeza ^= 1;
             if (modoMenu == SELOBJETO) {
 //                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }

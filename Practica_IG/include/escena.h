@@ -16,7 +16,7 @@
 #include <semiesfera.h>
 
 
-#include <pierna.h>
+#include <tripulante_mochila.h>
 
 #define N_MODOS 3
 typedef enum {
@@ -58,7 +58,7 @@ private:
     Ejes ejes;
 
     //Among us
-    Pierna *pierna = nullptr;
+    Tripulante_mochila *amongus = nullptr;
 
     std::vector<Malla3D*> objetos;
     std::vector<Tupla3f> traslaciones;
@@ -71,6 +71,7 @@ private:
     bool ajedrez;
     bool dibuja_tapas;
     bool dibuja_diferido;
+    bool dibuja_cabeza;
     bool modo_activo[N_MODOS];
     ModoVisualizacion modos [N_MODOS];
     ModoLuz  tipo_luz;
