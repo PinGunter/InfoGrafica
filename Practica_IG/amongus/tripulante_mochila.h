@@ -14,8 +14,13 @@ class Tripulante_mochila {
     float alturaMochila, giroRodillaDcha, giroRodillaIzda, giroYPiernaDcha, giroYPiernaIzda,
                         giroXPiernaDcha, giroXPiernaIzda;
     const float GiroMaximo = 30;
-    float sentidoGiroIzda, sentidoGiroDcha;
-    float velocidadGiroPierna, velocidadRodilla;
+    const float AlturaMaxima = 2;
+    const float AlturaMinima = 1;
+    const float velocidadBaseGiroPierna = 1;
+    const float velocidadBaseRodilla = 1;
+    const float velocidadBaseMochila = 0.02;
+    float sentidoGiroPiernaIzda, sentidoGiroPiernaDcha, sentidoGiroRodillaIzda, sentidoGiroRodillaDcha , sentidoMovimientoMochila;
+    float velocidadGiroPierna, velocidadRodilla, velocidadMochila, velocidadAnimacionGeneral;
 public:
     Tripulante_mochila();
 
@@ -26,6 +31,8 @@ public:
 
     void siguienteAnimacionRodillaIzda();
     void siguienteAnimacionRodillaDcha();
+
+    void siguienteAnimacionPiernas();
 
     void siguienteAnimacionMochila();
 

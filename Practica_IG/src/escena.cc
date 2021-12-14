@@ -100,8 +100,7 @@ void Escena::dibujar() {
             glPopMatrix();
         }
     }
-
-    amongus->siguienteAnimacionRodillaIzda();
+    amongus->setVelocidadAnimacion(1);
     glDisable(GL_LIGHTING);
 
 }
@@ -405,4 +404,7 @@ Escena::~Escena() {
     for (int i=0; i < objetos.size(); i++){
         delete objetos[i];
     }
+}
+void Escena::animarModeloJerarquico() {
+    amongus->animacionAutomatica();
 }

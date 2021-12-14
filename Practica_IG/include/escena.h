@@ -92,6 +92,7 @@ public:
     //wrapper de dibujado de objetos
     void dibujaObjeto(Malla3D *obj, const Tupla3f &tr, const Tupla3f &esc, ModoVisualizacion modo);
 
+    void animarModeloJerarquico();
 
 };
 #endif
