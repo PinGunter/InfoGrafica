@@ -41,5 +41,4 @@ void LuzDireccional::setBeta(float b){
 }
 void LuzDireccional::activar() {
     Luz::activar();
-    std::cout << "alpha: " << alpha << " beta: " << beta << std::endl;
 }

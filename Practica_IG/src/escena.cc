@@ -92,16 +92,16 @@ void Escena::dibujar() {
         }
     }
 
-    for (int i=0; i < N_MODOS; i++){
-            if (modo_activo[i]) {
-                glPushMatrix();
-                glScalef(10,10,10);
-                amongus->draw(dibuja_diferido,ajedrez,modos[i],dibuja_cabeza);
-                glPopMatrix();
-            }
-
+    for (int i=0; i < N_MODOS; i++) {
+        if (modo_activo[i]) {
+            glPushMatrix();
+            glScalef(10, 10, 10);
+            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
+            glPopMatrix();
+        }
     }
-//
+
+    amongus->siguienteAnimacionRodillaIzda();
     glDisable(GL_LIGHTING);
 
 }
