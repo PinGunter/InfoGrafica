@@ -26,7 +26,9 @@ typedef enum {
     SELDIBUJADO,
     SELILUMINACION,
     VARIACION_ALFA,
-    VARIACION_BETA
+    VARIACION_BETA,
+    ANIMACION_AUTOMATICA,
+    ANIMACION_MANUAL
 } menu;
 
 enum class Objetos_Escena{
@@ -59,7 +61,7 @@ private:
 
     //Among us
     Tripulante_mochila *amongus = nullptr;
-
+    float velocidad_animacion;
     std::vector<Malla3D*> objetos;
     std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
@@ -94,5 +96,6 @@ public:
 
     void animarModeloJerarquico();
 
+    std::string valorMenuActual();
 };
 #endif

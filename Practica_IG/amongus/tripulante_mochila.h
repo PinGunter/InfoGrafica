@@ -12,14 +12,15 @@ class Tripulante_mochila {
     Tripulante * tripulante = nullptr;
     Mochila * mochila = nullptr;
     float alturaMochila, giroRodillaDcha, giroRodillaIzda, giroYPiernaDcha, giroYPiernaIzda,
-                        giroXPiernaDcha, giroXPiernaIzda;
-    const float GiroMaximo = 30;
+                        giroXPiernaDcha, giroXPiernaIzda, giroZPiernaIzda, giroZPiernaDcha;
+    const float GiroMaximoX = 30;
+    const float GiroMaximoY = 45;
     const float AlturaMaxima = 2;
     const float AlturaMinima = 1;
-    const float velocidadBaseGiroPierna = 1;
+    const float velocidadBaseGiroPierna = 1.2;
     const float velocidadBaseRodilla = 1;
     const float velocidadBaseMochila = 0.02;
-    float sentidoGiroPiernaIzda, sentidoGiroPiernaDcha, sentidoGiroRodillaIzda, sentidoGiroRodillaDcha , sentidoMovimientoMochila;
+    float sentidoGiroPiernaIzda, sentidoGiroPiernaDcha, sentidoMovimientoMochila;
     float velocidadGiroPierna, velocidadRodilla, velocidadMochila, velocidadAnimacionGeneral;
 public:
     Tripulante_mochila();
@@ -38,7 +39,16 @@ public:
 
     void animacionAutomatica();
 
-    void setVelocidadAnimacion(float velocidad);
+    void setVelocidadAnimacionGeneral(float velocidad);
+    void setVelocidadAnimacionPierna(float velocidad);
+    void setVelocidadAnimacionRodilla(float velocidad);
+    void setVelocidadAnimacionMochila(float velocidad);
+
+    //Estas animaciones son manuales
+    void siguienteAnimacionEjeYPiernaIzda(float sentido);
+    void siguienteAnimacionEjeYPiernaDcha(float sentido);
+    void siguienteAnimacionEjeZPiernaIzda(float sentido);
+    void siguienteAnimacionEjeZPiernaDcha(float sentido);
 
 };
 

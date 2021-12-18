@@ -5,6 +5,8 @@
 #include <malla.h>// objetos: Cubo y otros....
 #define N_OBJ (int)Objetos_Escena::NUM_OBJ
 #define LUZ(i) GL_LIGHTi
+#define ALPHA_INICIAL -0.0471976
+#define BETA_INICIAL 6.8643
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
@@ -28,15 +30,16 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
     ejes.changeAxisSize(5000);
     amongus = new Tripulante_mochila();
+    velocidad_animacion = 1;
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    luz_d = new LuzDireccional(Tupla2f(-0.0471976,6.8643),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
-    dibuja_diferido = false;// por defecto dibuja en modo diferido
+    luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    dibuja_diferido = true;// por defecto dibuja en modo diferido
     luz_p_act = false;
     luz_d_act = true;
     dibuja_tapas = true;
     dibuja_cabeza = true;
     tipo_luz = ModoLuz::SUAVE;
-    modoMenu = SELILUMINACION;
+    modoMenu = NADA;
     ajedrez = false;
 }
 
@@ -100,7 +103,7 @@ void Escena::dibujar() {
             glPopMatrix();
         }
     }
-    amongus->setVelocidadAnimacion(1);
+    amongus->setVelocidadAnimacionGeneral(velocidad_animacion);
     glDisable(GL_LIGHTING);
 
 }
@@ -119,11 +122,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
     bool salir = false;
     switch (toupper(tecla)) {
         case 'Q':
-            if (modoMenu != NADA){
+            if (modoMenu != NADA) {
                 modoMenu = NADA;
-                std::cout << "Saliendo del modo actual" << std::endl;
-            }
-            else {
+                std::cout << "Saliendo del modo " << valorMenuActual() << std::endl;
+            } else {
                 salir = true;
             }
             break;
@@ -145,7 +147,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             break;
         case 'V':
             // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
-            std::cout << "Modo selección de objeto. Pulsa:" << std::endl;
+            std::cout << "Modo selección de visualizacion. Pulsa:" << std::endl;
             std::cout << "\"P\" para visualizar en modo puntos" << std::endl;
             std::cout << "\"L\" para visualizar en modo líneas" << std::endl;
             std::cout << "\"S\" para visualizar en modo sólido" << std::endl;
@@ -165,15 +167,14 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             break;
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
-            dibuja_cabeza ^= 1;
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
+                //                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }
             break;
 
         case 'T':
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::TETRAEDRO] = !se_dibuja[(int) Objetos_Escena::TETRAEDRO];
+                //                se_dibuja[(int)Objetos_Escena::TETRAEDRO] = !se_dibuja[(int) Objetos_Escena::TETRAEDRO];
             }
             if (modoMenu == SELVISUALIZACION) {
                 dibuja_tapas ^= 1;
@@ -182,7 +183,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
         case 'F':
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::OBJPLY] = !se_dibuja[(int) Objetos_Escena::OBJPLY];
+                //                se_dibuja[(int)Objetos_Escena::OBJPLY] = !se_dibuja[(int) Objetos_Escena::OBJPLY];
             }
             break;
 
@@ -191,24 +192,31 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modo_activo[(int) ModoVisualizacion::SOLIDO] ^= 1;
                 tipo_luz = ModoLuz::NINGUNA;
             }
-            if (modoMenu == SELILUMINACION){
-                modo_activo[(int)ModoVisualizacion::SOLIDO] = true;
+            if (modoMenu == SELILUMINACION) {
+                modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
                 tipo_luz = ModoLuz::SUAVE;
             }
             break;
 
         case 'A':
-            if (modoMenu == SELVISUALIZACION) {
-                ajedrez ^= 1;
-            }
-            if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::REV_VEC] = !se_dibuja[(int) Objetos_Escena::REV_VEC];
-            }
-            if (modoMenu == SELILUMINACION){
+            if (modoMenu == NADA) {
+                modoMenu = ANIMACION_AUTOMATICA;
+                std::cout << "Estamos en modo Animacion Automatica. Pulsa: " << std::endl;
+                std::cout << "\"+\+ para aumentar la velocidad de animación general" << std::endl;
+                std::cout << "\"-\" para disminuir la velocidad de animación general" << std::endl;
+            } else if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_ALFA;
+                std::cout << "cambia a variacion alfa" << std::endl;
             } else if (modoMenu == VARIACION_ALFA){
                 modoMenu = SELILUMINACION;
+                std::cout << "cambia a modo iluminacion" << std::endl;
             }
+            if (modoMenu == SELVISUALIZACION) {
+                tipo_luz = ModoLuz::NINGUNA;
+                ajedrez ^= 1;
+                std::cout << "cambia modo ajedrez" << std::endl;
+            }
+
             break;
         case 'B':
             if (modoMenu == SELILUMINACION){
@@ -288,6 +296,17 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             else if (modoMenu == VARIACION_BETA){
                 luz_d->variarAnguloBeta(-M_PI / 30.0);
+            }
+            break;
+
+        case '+':
+            if (modoMenu == ANIMACION_AUTOMATICA){
+                velocidad_animacion += 0.05;
+            }
+            break;
+        case '-':
+            if (modoMenu == ANIMACION_AUTOMATICA){
+                velocidad_animacion -= 0.05;
             }
             break;
         case '0':
@@ -406,5 +425,43 @@ Escena::~Escena() {
     }
 }
 void Escena::animarModeloJerarquico() {
-    amongus->animacionAutomatica();
+    if (modoMenu == ANIMACION_AUTOMATICA)
+        amongus->animacionAutomatica();
+}
+
+std::string Escena::valorMenuActual(){
+    std::string valor;
+    switch (modoMenu) {
+        case NADA:
+            valor = "NADA";
+            break;
+        case SELOBJETO:
+            valor = "SELECCION OBJETO";
+            break;
+        case SELVISUALIZACION:
+            valor = "SELECCICON VISUALIZACION";
+            break;
+        case SELDIBUJADO:
+            valor = "SELECCION DIBUJADO";
+            break;
+        case SELILUMINACION:
+            valor = "SELECCION ILUMINACION";
+            break;
+        case VARIACION_ALFA:
+            valor = "VARIACION ALFA";
+            break;
+        case VARIACION_BETA:
+            valor = "VARIACION BETA";
+            break;
+        case ANIMACION_AUTOMATICA:
+            valor = "ANIMACION AUTOMATICA";
+            break;
+        case ANIMACION_MANUAL:
+            valor = "ANIMACION MANUAL";
+            break;
+        default:
+            valor = "[]";
+            break;
+    }
+    return valor;
 }

@@ -15,7 +15,7 @@ class Tripulante {
 public:
     Tripulante();
 
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool cabeza, Tupla3f giroIzda, Tupla3f giroDcha);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool cabeza, Tupla4f giroIzda, Tupla4f giroDcha);
 };
 
 

@@ -15,7 +15,7 @@ class Pierna {
 
 public:
     Pierna();
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, float alpha, float beta, float gamma);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, float alpha, float beta, float gamma, float phi);
 };
 
 
