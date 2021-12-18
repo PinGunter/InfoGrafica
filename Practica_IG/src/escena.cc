@@ -219,7 +219,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case 'M':
-            if (modoMenu == ANIMACION_AUTOMATICA) {
+            if (modoMenu == ANIMACION_AUTOMATICA || modoMenu == NADA) {
                 modoMenu = ANIMACION_MANUAL;
                 std::cout << "Animación Manual activada" << std::endl;
                 std::cout << "Selecciona la parte a animar: " << std::endl;
