@@ -218,6 +218,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
 
             break;
+        case 'M':
+            if (modoMenu == ANIMACION_AUTOMATICA)
+                modoMenu = ANIMACION_MANUAL;
+            break;
         case 'B':
             if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_BETA;
