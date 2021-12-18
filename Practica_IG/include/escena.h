@@ -28,7 +28,12 @@ typedef enum {
     VARIACION_ALFA,
     VARIACION_BETA,
     ANIMACION_AUTOMATICA,
-    ANIMACION_MANUAL
+    ANIMACION_MANUAL,
+    ANIM_PIER_I,
+    ANIM_PIER_D,
+    ANIM_RODI_I,
+    ANIM_RODI_D,
+    ANIM_MOCH
 } menu;
 
 enum class Objetos_Escena{
