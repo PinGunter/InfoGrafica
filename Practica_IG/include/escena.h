@@ -15,7 +15,7 @@
 #include <tetraedro.h>
 #include <semiesfera.h>
 
-
+#include <piedra.h>
 #include <tripulante_mochila.h>
 
 #define N_MODOS 3
@@ -74,7 +74,7 @@ private:
     menu modoMenu = NADA;
     // Objetos de la escena
     Ejes ejes;
-
+    Piedras * piedras = nullptr;
     //Among us
     Tripulante_mochila *amongus = nullptr;
     float velocidad_animacion, velocidad_mochila, velocidad_rodilla, velocidad_pierna;

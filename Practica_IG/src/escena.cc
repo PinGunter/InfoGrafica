@@ -28,9 +28,6 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
-
-    ejes.changeAxisSize(5000);
-    amongus = new Tripulante_mochila();
     velocidad_animacion = velocidad_mochila = velocidad_pierna = velocidad_rodilla = 1;
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
@@ -44,6 +41,13 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     ajedrez = false;
     animacion_automatica = false;
     movimiento_natural = true;
+
+    ejes.changeAxisSize(5000);
+    //objetos
+    amongus = new Tripulante_mochila();
+    piedras = new Piedras();
+
+
 }
 
 //**************************************************************************
@@ -71,6 +75,10 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
     std::cout << "\"O\" para selección de objeto" << std::endl;
     std::cout << "\"V\" para selección de modo de visualización" << std::endl;
     std::cout << "\"D\" para selección de modo de dibujado" << std::endl;
+    std::cout << "\"A\" para activar/desactivar animacion automatica" << std::endl;
+    std::cout << "\"S\" para el menu de velocidades" << std::endl;
+    std::cout << "\"M\" para animacion manual" << std::endl;
+    std::cout << "\"Q\" para salir del modo actual" << std::endl;
 }
 
 // **************************************************************************
@@ -102,7 +110,11 @@ void Escena::dibujar() {
         if (modo_activo[i]) {
             glPushMatrix();
             glScalef(10, 10, 10);
-            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
+//            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
+            glPopMatrix();
+
+            glPushMatrix();
+            piedras->draw(dibuja_diferido,ajedrez,modos[i]);
             glPopMatrix();
         }
     }
