@@ -82,8 +82,7 @@ private:
     std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
     std::vector<bool> se_dibuja;
-    bool luz_p_act, luz_d_act;
-    LuzPosicional * luz_p = nullptr;
+    bool luz_d_act;
     LuzDireccional * luz_d = nullptr;
 
     bool ajedrez;

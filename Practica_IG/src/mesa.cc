@@ -10,7 +10,7 @@ Mesa::Mesa() {
     peon = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
     peonX = new ObjRevolucion("plys/peon_rotadoX",Eje_rotacion::EJE_X,20);
     peonZ = new ObjRevolucion("plys/peon_rotadoZ",Eje_rotacion::EJE_Z,20);
-    luz = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luz = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.64,0.2,1,1),Tupla4f(0.64,0.2,1,1),Tupla4f(0.64,0.2,1,1));
     Material m (Tupla4f(0.7,0.7,0.7,0.6), Tupla4f(0,0,0,0), Tupla4f(0.7,0.7,0.7,1), 20);
 
     Material m_peon(Tupla4f(0,1,0,1),Tupla4f(0,0.5,0,1),Tupla4f(0,1,0,1),40);

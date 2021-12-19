@@ -29,10 +29,8 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
     velocidad_animacion = velocidad_mochila = velocidad_pierna = velocidad_rodilla = 1;
-    luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = true;// por defecto dibuja en modo diferido
-    luz_p_act = false;
     luz_d_act = true;
     dibuja_tapas = true;
     dibuja_cabeza = true;
@@ -101,9 +99,6 @@ void Escena::dibujar() {
         if (luz_d_act){
             luz_d->activar();
         }
-        if (luz_p_act){
-            luz_p->activar();
-        }
     }
 
     for (int i=0; i < N_MODOS; i++) {
@@ -114,7 +109,7 @@ void Escena::dibujar() {
             glPopMatrix();
 
             glPushMatrix();
-            glTranslatef(100,-50,100);
+            glTranslatef(-100,-50,-100);
             mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
             glPopMatrix();
         }
@@ -522,15 +517,15 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case '0':
-            if (modoMenu == SELILUMINACION){
-                cout << "luz" << endl;
-                if (luz_p ->getActivada()){
-                    luz_p->desactivar();
-                    luz_p_act = false;
-                } else{
-                    luz_p_act = true;
-                }
-            }
+//            if (modoMenu == SELILUMINACION){
+//                cout << "luz" << endl;
+//                if (luz_p ->getActivada()){
+//                    luz_p->desactivar();
+//                    luz_p_act = false;
+//                } else{
+//                    luz_p_act = true;
+//                }
+//            }
 
             if (modoMenu == ANIM_PIERNA_D){
                 modoMenu = ANIM_PIERNA_D_X;
