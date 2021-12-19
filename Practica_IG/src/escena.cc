@@ -45,7 +45,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     ejes.changeAxisSize(5000);
     //objetos
     amongus = new Tripulante_mochila();
-    piedras = new Piedras();
+    mesa = new Mesa();
 
 
 }
@@ -110,11 +110,12 @@ void Escena::dibujar() {
         if (modo_activo[i]) {
             glPushMatrix();
             glScalef(10, 10, 10);
-//            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
+            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
             glPopMatrix();
 
             glPushMatrix();
-            piedras->draw(dibuja_diferido,ajedrez,modos[i]);
+            glTranslatef(100,-50,100);
+            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
             glPopMatrix();
         }
     }

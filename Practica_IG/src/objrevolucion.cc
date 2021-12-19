@@ -347,7 +347,7 @@ void ObjRevolucion::draw_ModoDiferido(GLuint color_id, bool tapas, ModoVisualiza
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,id_vbo_tri);
     m.aplicar();
     glPolygonMode(GL_FRONT, map_modo(modo));
-    glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, tam * 3, GL_UNSIGNED_INT, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);

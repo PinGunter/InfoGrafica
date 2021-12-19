@@ -19,11 +19,12 @@ class Mesa {
     ObjRevolucion * peonX = nullptr;
     ObjRevolucion * peonZ = nullptr;
     LuzPosicional * luz = nullptr;
+    Tetraedro * tetraedro = nullptr;
 
 public:
     Mesa();
 
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas);
 };
 
 
