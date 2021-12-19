@@ -7,6 +7,7 @@
 #define LUZ(i) GL_LIGHTi
 #define ALPHA_INICIAL -0.0471976
 #define BETA_INICIAL 6.8643
+#define AUMENTO_VELOCIDAD 0.05
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
@@ -30,7 +31,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
     ejes.changeAxisSize(5000);
     amongus = new Tripulante_mochila();
-    velocidad_animacion = 1;
+    velocidad_animacion = velocidad_mochila = velocidad_pierna = velocidad_rodilla = 1;
     luz_p = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.1,0.1,0.1,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
     dibuja_diferido = true;// por defecto dibuja en modo diferido
@@ -41,6 +42,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     tipo_luz = ModoLuz::SUAVE;
     modoMenu = NADA;
     ajedrez = false;
+    animacion_automatica = false;
 }
 
 //**************************************************************************
@@ -103,7 +105,12 @@ void Escena::dibujar() {
             glPopMatrix();
         }
     }
+
+    //velocidades de animacion
     amongus->setVelocidadAnimacionGeneral(velocidad_animacion);
+    amongus->setVelocidadAnimacionMochila(velocidad_mochila);
+    amongus->setVelocidadAnimacionPierna(velocidad_pierna);
+    amongus->setVelocidadAnimacionRodilla(velocidad_rodilla);
     glDisable(GL_LIGHTING);
 
 }
@@ -157,13 +164,21 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             modoMenu = SELVISUALIZACION;
             break;
         case 'D':
-            // ESTAMOS EN MODO SELECCION DE DIBUJADO
-            std::cout << "Modo selección de dibujado. Pulsa:" << std::endl;
-            std::cout << "\"1\" para visualizar en modo inmediato (glDrawElements)" << std::endl;
-            std::cout << "\"2\" para visualizar en modo diferido (VBO)" << std::endl;
-            std::cout << "\"Q\" para salir del modo selección de dibujado" << std::endl;
-
-            modoMenu = SELDIBUJADO;
+            if (modoMenu == NADA) {
+                // ESTAMOS EN MODO SELECCION DE DIBUJADO
+                std::cout << "Modo selección de dibujado. Pulsa:" << std::endl;
+                std::cout << "\"1\" para visualizar en modo inmediato (glDrawElements)" << std::endl;
+                std::cout << "\"2\" para visualizar en modo diferido (VBO)" << std::endl;
+                std::cout << "\"Q\" para salir del modo selección de dibujado" << std::endl;
+                modoMenu = SELDIBUJADO;
+            }
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_PIER_D;
+                std::cout << "Menú de animacion de la pierna derecha:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "1 para seleccionar la pierna completa" << std::endl;
+                std::cout << "2 para seleccionar la rodilla" << std::endl;
+            }
             break;
             // COMPLETAR con los diferentes opciones de teclado
         case 'C':
@@ -196,14 +211,25 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
                 tipo_luz = ModoLuz::SUAVE;
             }
+
+            if (modoMenu == NADA){
+                modoMenu = SELVELOCIDAD;
+                std::cout << "Menú de seleccion de velocidades de animación. Pulsa: " << std::endl;
+                std::cout << "Piernas : P" << std::endl;
+                std::cout << "Rodillas: R" << std::endl;
+                std::cout << "Mochila: B" << std::endl;
+            }
             break;
 
         case 'A':
             if (modoMenu == NADA) {
-                modoMenu = ANIMACION_AUTOMATICA;
-                std::cout << "Estamos en modo Animacion Automatica. Pulsa: " << std::endl;
-                std::cout << "\"+\"+ para aumentar la velocidad de animación general" << std::endl;
-                std::cout << "\"-\" para disminuir la velocidad de animación general" << std::endl;
+                animacion_automatica ^= 1;
+                modoMenu = (animacion_automatica) ? ANIMACION_AUTOMATICA : NADA;
+                if (animacion_automatica) {
+                    std::cout << "Estamos en modo Animacion Automatica. Pulsa: " << std::endl;
+                    std::cout << "\"+\"+ para aumentar la velocidad de animación general" << std::endl;
+                    std::cout << "\"-\" para disminuir la velocidad de animación general" << std::endl;
+                }
             } else if (modoMenu == SELILUMINACION){
                 modoMenu = VARIACION_ALFA;
                 std::cout << "cambia a variacion alfa" << std::endl;
@@ -221,6 +247,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
         case 'M':
             if (modoMenu == ANIMACION_AUTOMATICA || modoMenu == NADA) {
                 modoMenu = ANIMACION_MANUAL;
+                animacion_automatica = false;
                 std::cout << "Animación Manual activada" << std::endl;
                 std::cout << "Selecciona la parte a animar: " << std::endl;
                 std::cout << "Pierna Izquierda: I" << std::endl;
@@ -233,6 +260,17 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modoMenu = VARIACION_BETA;
             } else if (modoMenu == VARIACION_BETA){
                 modoMenu = SELILUMINACION;
+            }
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_MOCH;
+                std::cout << "Menú de animacion de la mochila:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "> para aumentar la velocidad de animación" << std::endl;
+                std::cout << "< para disminuir la velocidad de animación" << std::endl;
+            }
+            if (modoMenu == SELVELOCIDAD){
+                modoMenu = VEL_MOCHILA;
+                std::cout << "Pulsa - para disminuir la velocidad de la mochila o + para aumentarla" << std::endl;
             }
             break;
         case 'L':
@@ -259,6 +297,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == SELOBJETO) {
 //                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
             }
+            if (modoMenu == SELVELOCIDAD){
+                modoMenu = VEL_PIERNA;
+                std::cout << "Pulsa - para disminuir la velocidad de las piernas o + para aumentarla" << std::endl;
+            }
             break;
         case 'X':
             if (modoMenu == SELOBJETO){
@@ -274,6 +316,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
         case 'R':
             if (modoMenu == SELOBJETO) {
 //                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
+            }
+            if (modoMenu == SELVELOCIDAD){
+                modoMenu = VEL_RODILLA;
+                std::cout << "Pulsa - para disminuir la velocidad de las rodillas o + para aumentarla" << std::endl;
             }
             break;
         case 'I':
@@ -291,6 +337,14 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             } else{
                 tipo_luz = ModoLuz::NINGUNA;
             }
+
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_PIER_I;
+                std::cout << "Menú de animacion de la pierna izquierda:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "1 para seleccionar la pierna completa" << std::endl;
+                std::cout << "2 para seleccionar la rodilla" << std::endl;
+            }
             break;
         case '<':
             if (modoMenu == VARIACION_ALFA){
@@ -299,8 +353,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             else if (modoMenu == VARIACION_BETA){
                 luz_d->variarAnguloBeta(M_PI / 30.0);
             }
+
             break;
         case '>':
+
             if (modoMenu == VARIACION_ALFA){
                 luz_d->variarAnguloAlpha(-M_PI / 30.0);
             }
@@ -310,13 +366,33 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             break;
 
         case '+':
+            if (modoMenu == VEL_MOCHILA){
+                velocidad_mochila += AUMENTO_VELOCIDAD;
+            }
+            if (modoMenu == VEL_PIERNA){
+                velocidad_pierna += AUMENTO_VELOCIDAD;
+            }
+            if (modoMenu == VEL_RODILLA){
+                velocidad_pierna += AUMENTO_VELOCIDAD;
+            }
+
             if (modoMenu == ANIMACION_AUTOMATICA){
-                velocidad_animacion += 0.05;
+                velocidad_animacion += AUMENTO_VELOCIDAD;
             }
             break;
         case '-':
+            if (modoMenu == VEL_MOCHILA){
+                velocidad_mochila -= AUMENTO_VELOCIDAD;
+            }
+            if (modoMenu == VEL_PIERNA){
+                velocidad_pierna -= AUMENTO_VELOCIDAD;
+            }
+            if (modoMenu == VEL_RODILLA){
+                velocidad_pierna -= AUMENTO_VELOCIDAD;
+            }
+
             if (modoMenu == ANIMACION_AUTOMATICA){
-                velocidad_animacion -= 0.05;
+                velocidad_animacion -= AUMENTO_VELOCIDAD;
             }
             break;
         case '0':
@@ -435,7 +511,7 @@ Escena::~Escena() {
     }
 }
 void Escena::animarModeloJerarquico() {
-    if (modoMenu != ANIMACION_MANUAL)
+    if (animacion_automatica)
         amongus->animacionAutomatica();
 }
 
@@ -468,6 +544,23 @@ std::string Escena::valorMenuActual(){
             break;
         case ANIMACION_MANUAL:
             valor = "ANIMACION MANUAL";
+            break;
+        case ANIM_MOCH:
+            break;
+        case ANIM_PIER_D:
+            valor = "ANIMACION PIERNA DERECHA";
+            break;
+        case ANIM_PIER_I:
+            valor = "ANIMACION PIERNA IZQUIERDA";
+            break;
+        case ANIM_RODI_D:
+            valor = "ANIMACION RODILLA DERECHA";
+            break;
+        case ANIM_RODI_I:
+            valor = "ANIMACION RODILLA IZQUIERDA";
+            break;
+        case SELVELOCIDAD:
+            valor = "SELECCION DE VELOCIDAD";
             break;
         default:
             valor = "[]";

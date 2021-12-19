@@ -29,6 +29,10 @@ typedef enum {
     VARIACION_BETA,
     ANIMACION_AUTOMATICA,
     ANIMACION_MANUAL,
+    SELVELOCIDAD,
+    VEL_MOCHILA,
+    VEL_RODILLA,
+    VEL_PIERNA,
     ANIM_PIER_I,
     ANIM_PIER_D,
     ANIM_RODI_I,
@@ -66,7 +70,7 @@ private:
 
     //Among us
     Tripulante_mochila *amongus = nullptr;
-    float velocidad_animacion;
+    float velocidad_animacion, velocidad_mochila, velocidad_rodilla, velocidad_pierna;
     std::vector<Malla3D*> objetos;
     std::vector<Tupla3f> traslaciones;
     std::vector<Tupla3f> escalados;
@@ -79,6 +83,7 @@ private:
     bool dibuja_tapas;
     bool dibuja_diferido;
     bool dibuja_cabeza;
+    bool animacion_automatica;
     bool modo_activo[N_MODOS];
     ModoVisualizacion modos [N_MODOS];
     ModoLuz  tipo_luz;
