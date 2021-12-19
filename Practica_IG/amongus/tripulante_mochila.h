@@ -15,6 +15,7 @@ class Tripulante_mochila {
                         giroXPiernaDcha, giroXPiernaIzda, giroZPiernaIzda, giroZPiernaDcha;
     const float GiroMaximoX = 30;
     const float GiroMaximoY = 45;
+    const float GiroMaximoZ = 30;
     const float AlturaMaxima = 2;
     const float AlturaMinima = 1;
     const float velocidadBaseGiroPierna = 1.2;
@@ -22,11 +23,14 @@ class Tripulante_mochila {
     const float velocidadBaseMochila = 0.02;
     float sentidoGiroPiernaIzda, sentidoGiroPiernaDcha, sentidoMovimientoMochila;
     float velocidadGiroPierna, velocidadRodilla, velocidadMochila, velocidadAnimacionGeneral;
+
+    void init();
 public:
     Tripulante_mochila();
 
     void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool cabeza);
 
+    //Estas animaciones se usan para el modo automatico
     void siguienteAnimacionPiernaIzda();
     void siguienteAnimacionPiernaDcha();
 
@@ -37,7 +41,7 @@ public:
 
     void siguienteAnimacionMochila();
 
-    void animacionAutomatica();
+    void animacionAutomatica(bool natural);
 
     void setVelocidadAnimacionGeneral(float velocidad);
     void setVelocidadAnimacionPierna(float velocidad);
@@ -45,11 +49,18 @@ public:
     void setVelocidadAnimacionMochila(float velocidad);
 
     //Estas animaciones son manuales
+    void siguienteAnimacionEjeXPiernaIzda(float sentido);
+    void siguienteAnimacionEjeXPiernaDcha(float sentido);
     void siguienteAnimacionEjeYPiernaIzda(float sentido);
     void siguienteAnimacionEjeYPiernaDcha(float sentido);
     void siguienteAnimacionEjeZPiernaIzda(float sentido);
     void siguienteAnimacionEjeZPiernaDcha(float sentido);
+    void siguienteAnimacionRodillaIzda(float sentido);
+    void siguienteAnimacionRodillaDcha(float sentido);
+    void siguienteAnimacionMochila(float sentido);
 
+
+    void resetearPosicion();
 };
 
 

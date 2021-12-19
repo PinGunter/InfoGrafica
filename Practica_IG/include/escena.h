@@ -33,10 +33,17 @@ typedef enum {
     VEL_MOCHILA,
     VEL_RODILLA,
     VEL_PIERNA,
-    ANIM_PIER_I,
-    ANIM_PIER_D,
-    ANIM_RODI_I,
-    ANIM_RODI_D,
+    ANIM_2_PIERNAS,
+    ANIM_PIERNA_I,
+    ANIM_PIERNA_D,
+    ANIM_PIERNA_I_X,
+    ANIM_PIERNA_I_Y,
+    ANIM_PIERNA_I_Z,
+    ANIM_PIERNA_D_X,
+    ANIM_PIERNA_D_Y,
+    ANIM_PIERNA_D_Z,
+    ANIM_RODILLA_I,
+    ANIM_RODILLA_D,
     ANIM_MOCH
 } menu;
 
@@ -85,6 +92,7 @@ private:
     bool dibuja_cabeza;
     bool animacion_automatica;
     bool modo_activo[N_MODOS];
+    bool movimiento_natural;
     ModoVisualizacion modos [N_MODOS];
     ModoLuz  tipo_luz;
 

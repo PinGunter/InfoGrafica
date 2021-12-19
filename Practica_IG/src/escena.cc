@@ -43,6 +43,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     modoMenu = NADA;
     ajedrez = false;
     animacion_automatica = false;
+    movimiento_natural = true;
 }
 
 //**************************************************************************
@@ -173,11 +174,12 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modoMenu = SELDIBUJADO;
             }
             if (modoMenu == ANIMACION_MANUAL){
-                modoMenu = ANIM_PIER_D;
+                modoMenu = ANIM_PIERNA_D;
                 std::cout << "Menú de animacion de la pierna derecha:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
-                std::cout << "1 para seleccionar la pierna completa" << std::endl;
-                std::cout << "2 para seleccionar la rodilla" << std::endl;
+                std::cout << "0 para rotar la pierna en el eje X" << std::endl;
+                std::cout << "1 para rotar la pierna en el eje Y" << std::endl;
+                std::cout << "2 para rotar la pierna en el eje Z" << std::endl;
             }
             break;
             // COMPLETAR con los diferentes opciones de teclado
@@ -185,6 +187,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == SELOBJETO) {
                 //                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }
+            dibuja_cabeza ^=1;
             break;
 
         case 'T':
@@ -244,6 +247,12 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
 
             break;
+        case 'N':
+            if (modoMenu == ANIMACION_AUTOMATICA){
+                movimiento_natural ^=1;
+                amongus->resetearPosicion();
+            }
+            break;
         case 'M':
             if (modoMenu == ANIMACION_AUTOMATICA || modoMenu == NADA) {
                 modoMenu = ANIMACION_MANUAL;
@@ -252,7 +261,29 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 std::cout << "Selecciona la parte a animar: " << std::endl;
                 std::cout << "Pierna Izquierda: I" << std::endl;
                 std::cout << "Pierna Derecha: D" << std::endl;
+                std::cout << "Rodilla Izquierda: H" << std::endl;
+                std::cout << "Rodilla Derecha: K" << std::endl;
+                std::cout << "Ambas piernas (animación de andar): P" << std::endl;
                 std::cout << "Mochila: B" << std::endl;
+            }
+            break;
+        case 'H':
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_RODILLA_I;
+                std::cout << "Menú de animacion de la rodilla izquierda:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "+ para estirar la rodilla" << std::endl;
+                std::cout << "- para contraer la rodilla" << std::endl;
+
+            }
+            break;
+        case 'K':
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_RODILLA_D;
+                std::cout << "Menú de animacion de la rodilla derecha:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "+ para estirar la rodilla" << std::endl;
+                std::cout << "- para contraer la rodilla" << std::endl;
             }
             break;
         case 'B':
@@ -265,8 +296,8 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modoMenu = ANIM_MOCH;
                 std::cout << "Menú de animacion de la mochila:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
-                std::cout << "> para aumentar la velocidad de animación" << std::endl;
-                std::cout << "< para disminuir la velocidad de animación" << std::endl;
+                std::cout << "+ para subir la mochila" << std::endl;
+                std::cout << "- para bajar la mochila" << std::endl;
             }
             if (modoMenu == SELVELOCIDAD){
                 modoMenu = VEL_MOCHILA;
@@ -301,6 +332,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modoMenu = VEL_PIERNA;
                 std::cout << "Pulsa - para disminuir la velocidad de las piernas o + para aumentarla" << std::endl;
             }
+
+            if (modoMenu == ANIMACION_MANUAL){
+                modoMenu = ANIM_2_PIERNAS;
+                std::cout << "Menú de animacion de las piernas:" << std::endl;
+                std::cout << "Pulsa: " << std::endl;
+                std::cout << "+ para avanzar la animación" << std::endl;
+            }
             break;
         case 'X':
             if (modoMenu == SELOBJETO){
@@ -331,22 +369,26 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 modoMenu = SELVISUALIZACION;
             }
 
-            if (tipo_luz == ModoLuz::NINGUNA){
-                tipo_luz = ModoLuz::SUAVE;
-                modo_activo[(int)ModoVisualizacion::ALAMBRE] = modo_activo[(int)ModoVisualizacion::PUNTOS] = false;
-            } else{
-                tipo_luz = ModoLuz::NINGUNA;
+            if (modoMenu != ANIMACION_MANUAL) {
+                if (tipo_luz == ModoLuz::NINGUNA) {
+                    tipo_luz = ModoLuz::SUAVE;
+                    modo_activo[(int) ModoVisualizacion::ALAMBRE] = modo_activo[(int) ModoVisualizacion::PUNTOS] = false;
+                } else {
+                    tipo_luz = ModoLuz::NINGUNA;
+                }
             }
-
             if (modoMenu == ANIMACION_MANUAL){
-                modoMenu = ANIM_PIER_I;
+                modoMenu = ANIM_PIERNA_I;
                 std::cout << "Menú de animacion de la pierna izquierda:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
-                std::cout << "1 para seleccionar la pierna completa" << std::endl;
-                std::cout << "2 para seleccionar la rodilla" << std::endl;
+                std::cout << "0 para rotar la pierna en el eje X" << std::endl;
+                std::cout << "1 para rotar la pierna en el eje Y" << std::endl;
+                std::cout << "2 para rotar la pierna en el eje Z" << std::endl;
             }
+
             break;
         case '<':
+
             if (modoMenu == VARIACION_ALFA){
                 luz_d->variarAnguloAlpha(M_PI / 30.0);
             }
@@ -379,8 +421,46 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == ANIMACION_AUTOMATICA){
                 velocidad_animacion += AUMENTO_VELOCIDAD;
             }
+
+            if (modoMenu == ANIM_MOCH){
+                amongus->siguienteAnimacionMochila(1);
+            }
+
+            if (modoMenu == ANIM_2_PIERNAS){
+                amongus->siguienteAnimacionPiernas();
+            }
+
+            if (modoMenu == ANIM_PIERNA_I_X){
+                amongus->siguienteAnimacionEjeXPiernaIzda(1);
+            }
+            if (modoMenu == ANIM_PIERNA_I_Y){
+                amongus->siguienteAnimacionEjeYPiernaIzda(1);
+            }
+            if (modoMenu == ANIM_PIERNA_I_Z){
+                amongus->siguienteAnimacionEjeZPiernaIzda(1);
+            }
+
+            if (modoMenu == ANIM_PIERNA_D_X){
+                amongus->siguienteAnimacionEjeXPiernaDcha(1);
+            }
+            if (modoMenu == ANIM_PIERNA_D_Y){
+                amongus->siguienteAnimacionEjeYPiernaDcha(1);
+            }
+            if (modoMenu == ANIM_PIERNA_D_Z){
+                amongus->siguienteAnimacionEjeZPiernaDcha(1);
+            }
+
+            if (modoMenu == ANIM_RODILLA_D){
+                amongus->siguienteAnimacionRodillaDcha(1);
+            }
+
+            if (modoMenu == ANIM_RODILLA_I){
+                amongus->siguienteAnimacionRodillaIzda(1);
+            }
+
             break;
         case '-':
+
             if (modoMenu == VEL_MOCHILA){
                 velocidad_mochila -= AUMENTO_VELOCIDAD;
             }
@@ -394,6 +474,39 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == ANIMACION_AUTOMATICA){
                 velocidad_animacion -= AUMENTO_VELOCIDAD;
             }
+
+            if (modoMenu == ANIM_MOCH){
+                amongus->siguienteAnimacionMochila(-1);
+            }
+
+            if (modoMenu == ANIM_PIERNA_I_X){
+                amongus->siguienteAnimacionEjeXPiernaIzda(-1);
+            }
+            if (modoMenu == ANIM_PIERNA_I_Y){
+                amongus->siguienteAnimacionEjeYPiernaIzda(-1);
+            }
+            if (modoMenu == ANIM_PIERNA_I_Z){
+                amongus->siguienteAnimacionEjeZPiernaIzda(-1);
+            }
+
+            if (modoMenu == ANIM_PIERNA_D_X){
+                amongus->siguienteAnimacionEjeXPiernaDcha(-1);
+            }
+            if (modoMenu == ANIM_PIERNA_D_Y){
+                amongus->siguienteAnimacionEjeYPiernaDcha(-1);
+            }
+            if (modoMenu == ANIM_PIERNA_D_Z){
+                amongus->siguienteAnimacionEjeZPiernaDcha(-1);
+            }
+
+            if (modoMenu == ANIM_RODILLA_D){
+                amongus->siguienteAnimacionRodillaDcha(-1);
+            }
+
+            if (modoMenu == ANIM_RODILLA_I){
+                amongus->siguienteAnimacionRodillaIzda(-1);
+            }
+
             break;
         case '0':
             if (modoMenu == SELILUMINACION){
@@ -405,6 +518,21 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                     luz_p_act = true;
                 }
             }
+
+            if (modoMenu == ANIM_PIERNA_D){
+                modoMenu = ANIM_PIERNA_D_X;
+                std::cout << "Rotacion Pierna Derecha EJE X" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje X" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje X" << std::endl;
+            }
+
+            if (modoMenu == ANIM_PIERNA_I){
+                modoMenu = ANIM_PIERNA_I_X;
+                std::cout << "Rotacion Pierna Izquierda EJE X" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje X" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje X" << std::endl;
+            }
+
             break;
         case '1':
             if (modoMenu == SELDIBUJADO) {
@@ -419,11 +547,40 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                     luz_d_act = true;
                 }
             }
+
+            if (modoMenu == ANIM_PIERNA_D){
+                modoMenu = ANIM_PIERNA_D_Y;
+                std::cout << "Rotacion Pierna Derecha EJE Y" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje Y" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje Y" << std::endl;
+            }
+
+            if (modoMenu == ANIM_PIERNA_I){
+                modoMenu = ANIM_PIERNA_I_Y;
+                std::cout << "Rotacion Pierna Izquierda EJE Y" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje Y" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje Y" << std::endl;
+            }
+
             break;
         case '2':
             if (modoMenu == SELDIBUJADO) {
                 std::cout << "Dibujando en modo diferido" << std::endl;
                 dibuja_diferido = true;
+            }
+
+            if (modoMenu == ANIM_PIERNA_D){
+                modoMenu = ANIM_PIERNA_D_Z;
+                std::cout << "Rotacion Pierna Derecha EJE Z" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje Z" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje Z" << std::endl;
+            }
+
+            if (modoMenu == ANIM_PIERNA_I){
+                modoMenu = ANIM_PIERNA_I_Z;
+                std::cout << "Rotacion Pierna Izquierda EJE Z" << std::endl;
+                std::cout << "+ para aumentar grado de rotación eje Z" << std::endl;
+                std::cout << "- para disminuir grado de rotación eje Z" << std::endl;
             }
             break;
     }
@@ -512,7 +669,7 @@ Escena::~Escena() {
 }
 void Escena::animarModeloJerarquico() {
     if (animacion_automatica)
-        amongus->animacionAutomatica();
+        amongus->animacionAutomatica(movimiento_natural);
 }
 
 std::string Escena::valorMenuActual(){
@@ -546,19 +703,9 @@ std::string Escena::valorMenuActual(){
             valor = "ANIMACION MANUAL";
             break;
         case ANIM_MOCH:
+            valor = "ANIMACION MOCHILA";
             break;
-        case ANIM_PIER_D:
-            valor = "ANIMACION PIERNA DERECHA";
-            break;
-        case ANIM_PIER_I:
-            valor = "ANIMACION PIERNA IZQUIERDA";
-            break;
-        case ANIM_RODI_D:
-            valor = "ANIMACION RODILLA DERECHA";
-            break;
-        case ANIM_RODI_I:
-            valor = "ANIMACION RODILLA IZQUIERDA";
-            break;
+
         case SELVELOCIDAD:
             valor = "SELECCION DE VELOCIDAD";
             break;
