@@ -30,7 +30,9 @@ En esta entrega se encuentran todos los elementos de la rúbrica evaluables hast
 
 Puesto que el menu ya se complica, para esta sección hay una pequeña guía de como usarlo para el control de animaciones y velocidades:
 
-* A:  activa/desactiva la animación automática. Cuando está activada se puede cambiar la velocidad de animación general con +/-.  Puede pulsar la tecla N en este modo para reiniciar la posición del personaje.
+* A:  activa/desactiva la animación automática. Cuando está activada se puede cambiar la velocidad de animación general con +/-.
+
+* N: dentro del menu de animación automática, puede activar una animación más alocada que muestre los grados de libertad completos. Puede pulsarla otra vez para resetear la posición de las piernas y continuar con una animación más normal.
 
 * S: entra al menu de velocidad, aquí se le guía para escoger mochila, pierna o rodilla para cambiar su velocidad individual.
 
