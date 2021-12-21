@@ -12,6 +12,7 @@
 
 #include <material.h>
 #include <aux.h>
+#include <textura.h>
 #define PUNTOS_c 0
 #define ALAMBRE_c 1
 #define SOLIDO_c 2
@@ -64,6 +65,8 @@ protected:
     std::vector<Tupla3i> f;// una terna de 3 enteros por cada cara o triángulo
     std::vector<Tupla3f> nv; // vector de normales de los vertices
     std::vector<Tupla3f> nf; // vector de normales de las caras
+    Textura * textura = nullptr;
+    std::vector<Tupla2f> ct;
     Material m;
     // necesitamos varios vectores de colores para
     // poder diferencias los modos de visualizacion
