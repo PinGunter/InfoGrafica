@@ -17,6 +17,8 @@
 
 #include <mesa.h>
 #include <tripulante_mochila.h>
+#include <luzAnimada.h>
+
 
 #define N_MODOS 3
 typedef enum {
@@ -84,6 +86,7 @@ private:
     std::vector<bool> se_dibuja;
     bool luz_d_act;
     LuzDireccional * luz_d = nullptr;
+    LuzAnimada * luz_a = nullptr;
 
     bool ajedrez;
     bool dibuja_tapas;

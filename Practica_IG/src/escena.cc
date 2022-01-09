@@ -30,6 +30,8 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
 
     velocidad_animacion = velocidad_mochila = velocidad_pierna = velocidad_rodilla = 1;
     luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luz_a = new LuzAnimada();
+
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     luz_d_act = true;
     dibuja_tapas = true;
@@ -89,6 +91,7 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
 void Escena::dibujar() {
     glScalef(1.5, 1.5, 1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
+    glClearColor(0,0,0,0);
     int j = 0;
     change_observer();
     ejes.draw();
@@ -112,8 +115,13 @@ void Escena::dibujar() {
             glTranslatef(-100,-50,-100);
             mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
             glPopMatrix();
+
+            luz_a->draw(dibuja_diferido, ajedrez, modos[i]);
+
         }
     }
+
+    luz_a -> animar();
 
     //velocidades de animacion
     amongus->setVelocidadAnimacionGeneral(velocidad_animacion);
