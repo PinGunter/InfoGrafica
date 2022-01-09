@@ -18,14 +18,14 @@ class Mesa {
     ObjRevolucion * peon = nullptr;
     ObjRevolucion * peonX = nullptr;
     ObjRevolucion * peonZ = nullptr;
-    LuzPosicional * luz = nullptr;
     Tetraedro * tetraedro = nullptr;
     ObjPLY * bombilla = nullptr;
 
 public:
+    LuzPosicional * luz = nullptr;
     Mesa();
 
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas, bool luz_act);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas);
 };
 
 

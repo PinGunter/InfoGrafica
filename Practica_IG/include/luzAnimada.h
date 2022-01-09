@@ -9,14 +9,14 @@
 #include <esfera.h>
 class LuzAnimada {
     Esfera * esfera = nullptr;
-    LuzPosicional * luz = nullptr;
     float angulo;
     float velocidad;
     Tupla3f posicion;
 public:
+    LuzPosicional * luz = nullptr;
     LuzAnimada();
 
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool luz_act);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo);
 
     void animar();
 };

@@ -1,9 +1,7 @@
-
-
 #include <aux.h>// includes de OpenGL/glut/glew, windows, y librería std de C++
 #include <escena.h>
 #include <malla.h>// objetos: Cubo y otros....
-#define N_OBJ (int)Objetos_Escena::NUM_OBJ
+#define N_OBJ (int) Objetos_Escena::NUM_OBJ
 #define LUZ(i) GL_LIGHTi
 #define ALPHA_INICIAL 12.5
 #define BETA_INICIAL 9.27
@@ -12,7 +10,7 @@
 // constructor de la escena (no puede usar ordenes de OpenGL)
 //**************************************************************************
 
-Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones(N_OBJ,Tupla3f(0,0,0)), escalados(N_OBJ,Tupla3f(1,1,1)){
+Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ, false), traslaciones(N_OBJ, Tupla3f(0, 0, 0)), escalados(N_OBJ, Tupla3f(1, 1, 1)) {
     Front_plane = 50.0;
     Back_plane = 2000.0;
     Observer_distance = 4 * Front_plane;
@@ -29,7 +27,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     modo_activo[(int) ModoVisualizacion::SOLIDO] = true;// por defecto se dibuja en modo solido
 
     velocidad_animacion = velocidad_mochila = velocidad_pierna = velocidad_rodilla = 1;
-    luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL),GL_LIGHT1,Tupla4f(0,0,0,1),Tupla4f(1,1,1,1),Tupla4f(1,1,1,1));
+    luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL), GL_LIGHT1, Tupla4f(0, 0, 0, 1), Tupla4f(1, 1, 1, 1), Tupla4f(1, 1, 1, 1));
     luz_a = new LuzAnimada();
 
     dibuja_diferido = true;// por defecto dibuja en modo diferido
@@ -48,7 +46,6 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     mesa = new Mesa();
     luz_animada_act = true;
     luz_mesa_act = true;
-
 }
 
 //**************************************************************************
@@ -92,7 +89,7 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
 void Escena::dibujar() {
     glScalef(1.5, 1.5, 1.5);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);// Limpiar la pantalla
-    glClearColor(0,0,0,0);
+    glClearColor(0, 0, 0, 0);
     int j = 0;
     change_observer();
     ejes.draw();
@@ -100,12 +97,10 @@ void Escena::dibujar() {
     if (tipo_luz != ModoLuz::NINGUNA) {
         glEnable(GL_LIGHTING);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
-        if (luz_d_act){
-            luz_d->activar();
-        }
     }
 
-    for (int i=0; i < N_MODOS; i++) {
+
+    for (int i = 0; i < N_MODOS; i++) {
         if (modo_activo[i]) {
             glPushMatrix();
             glScalef(10, 10, 10);
@@ -113,16 +108,26 @@ void Escena::dibujar() {
             glPopMatrix();
 
             glPushMatrix();
-            glTranslatef(-100,-50,-100);
-            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas, luz_mesa_act);
+            glTranslatef(-100, -50, -100);
+            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
             glPopMatrix();
 
-            luz_a->draw(dibuja_diferido, ajedrez, modos[i], luz_animada_act);
+            luz_a->draw(dibuja_diferido, ajedrez, modos[i]);
 
+            if (luz_d_act) {
+                luz_d->activar();
+            } else luz_d->desactivar();
+            if (luz_animada_act) {
+                luz_a->luz->activar();
+            } else luz_a->luz->desactivar();
+
+            if (luz_mesa_act){
+                mesa->luz->activar();
+            } else mesa->luz->desactivar();
         }
     }
 
-    luz_a -> animar();
+    luz_a->animar();
 
     //velocidades de animacion
     amongus->setVelocidadAnimacionGeneral(velocidad_animacion);
@@ -130,7 +135,6 @@ void Escena::dibujar() {
     amongus->setVelocidadAnimacionPierna(velocidad_pierna);
     amongus->setVelocidadAnimacionRodilla(velocidad_rodilla);
     glDisable(GL_LIGHTING);
-
 }
 
 //**************************************************************************
@@ -190,7 +194,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 std::cout << "\"Q\" para salir del modo selección de dibujado" << std::endl;
                 modoMenu = SELDIBUJADO;
             }
-            if (modoMenu == ANIMACION_MANUAL){
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_PIERNA_D;
                 std::cout << "Menú de animacion de la pierna derecha:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
@@ -204,7 +208,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             if (modoMenu == SELOBJETO) {
                 //                se_dibuja[(int)Objetos_Escena::CUBO] = !se_dibuja[(int) Objetos_Escena::CUBO];
             }
-            dibuja_cabeza ^=1;
+            dibuja_cabeza ^= 1;
             break;
 
         case 'T':
@@ -232,7 +236,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 tipo_luz = ModoLuz::SUAVE;
             }
 
-            if (modoMenu == NADA){
+            if (modoMenu == NADA) {
                 modoMenu = SELVELOCIDAD;
                 std::cout << "Menú de seleccion de velocidades de animación. Pulsa: " << std::endl;
                 std::cout << "Piernas : P" << std::endl;
@@ -250,10 +254,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                     std::cout << "\"+\"+ para aumentar la velocidad de animación general" << std::endl;
                     std::cout << "\"-\" para disminuir la velocidad de animación general" << std::endl;
                 }
-            } else if (modoMenu == SELILUMINACION){
+            } else if (modoMenu == SELILUMINACION) {
                 modoMenu = VARIACION_ALFA;
                 std::cout << "cambia a variacion alfa" << std::endl;
-            } else if (modoMenu == VARIACION_ALFA){
+            } else if (modoMenu == VARIACION_ALFA) {
                 modoMenu = SELILUMINACION;
                 std::cout << "cambia a modo iluminacion" << std::endl;
             }
@@ -265,8 +269,8 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case 'N':
-            if (modoMenu == ANIMACION_AUTOMATICA){
-                movimiento_natural ^=1;
+            if (modoMenu == ANIMACION_AUTOMATICA) {
+                movimiento_natural ^= 1;
                 amongus->resetearPosicion();
             }
             break;
@@ -285,17 +289,16 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             break;
         case 'H':
-            if (modoMenu == ANIMACION_MANUAL){
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_RODILLA_I;
                 std::cout << "Menú de animacion de la rodilla izquierda:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
                 std::cout << "+ para estirar la rodilla" << std::endl;
                 std::cout << "- para contraer la rodilla" << std::endl;
-
             }
             break;
         case 'K':
-            if (modoMenu == ANIMACION_MANUAL){
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_RODILLA_D;
                 std::cout << "Menú de animacion de la rodilla derecha:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
@@ -304,19 +307,19 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             break;
         case 'B':
-            if (modoMenu == SELILUMINACION){
+            if (modoMenu == SELILUMINACION) {
                 modoMenu = VARIACION_BETA;
-            } else if (modoMenu == VARIACION_BETA){
+            } else if (modoMenu == VARIACION_BETA) {
                 modoMenu = SELILUMINACION;
             }
-            if (modoMenu == ANIMACION_MANUAL){
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_MOCH;
                 std::cout << "Menú de animacion de la mochila:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
                 std::cout << "+ para subir la mochila" << std::endl;
                 std::cout << "- para bajar la mochila" << std::endl;
             }
-            if (modoMenu == SELVELOCIDAD){
+            if (modoMenu == SELVELOCIDAD) {
                 modoMenu = VEL_MOCHILA;
                 std::cout << "Pulsa - para disminuir la velocidad de la mochila o + para aumentarla" << std::endl;
             }
@@ -327,13 +330,13 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 tipo_luz = ModoLuz::NINGUNA;
             }
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::CILINDRO] = !se_dibuja[(int) Objetos_Escena::CILINDRO];
+                //                se_dibuja[(int)Objetos_Escena::CILINDRO] = !se_dibuja[(int) Objetos_Escena::CILINDRO];
             }
             break;
 
         case 'E':
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::ESFERA] = !se_dibuja[(int) Objetos_Escena::ESFERA];
+                //                se_dibuja[(int)Objetos_Escena::ESFERA] = !se_dibuja[(int) Objetos_Escena::ESFERA];
             }
             break;
 
@@ -343,14 +346,14 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 tipo_luz = ModoLuz::NINGUNA;
             }
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
+                //                se_dibuja[(int)Objetos_Escena::CONO] = !se_dibuja[(int) Objetos_Escena::CONO];
             }
-            if (modoMenu == SELVELOCIDAD){
+            if (modoMenu == SELVELOCIDAD) {
                 modoMenu = VEL_PIERNA;
                 std::cout << "Pulsa - para disminuir la velocidad de las piernas o + para aumentarla" << std::endl;
             }
 
-            if (modoMenu == ANIMACION_MANUAL){
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_2_PIERNAS;
                 std::cout << "Menú de animacion de las piernas:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
@@ -358,35 +361,29 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             }
             break;
         case 'X':
-            if (modoMenu == SELOBJETO){
-//                se_dibuja[(int)Objetos_Escena::PEON_X] = !se_dibuja[(int) Objetos_Escena::PEON_X];
+            if (modoMenu == SELOBJETO) {
+                //                se_dibuja[(int)Objetos_Escena::PEON_X] = !se_dibuja[(int) Objetos_Escena::PEON_X];
             }
             break;
         case 'Z':
-            if(modoMenu == SELOBJETO){
-//                se_dibuja[(int)Objetos_Escena::PEON_Z] = !se_dibuja[(int) Objetos_Escena::PEON_Z];
+            if (modoMenu == SELOBJETO) {
+                //                se_dibuja[(int)Objetos_Escena::PEON_Z] = !se_dibuja[(int) Objetos_Escena::PEON_Z];
             }
             break;
 
         case 'R':
             if (modoMenu == SELOBJETO) {
-//                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
+                //                se_dibuja[(int)Objetos_Escena::OBJPLY_REV] = !se_dibuja[(int) Objetos_Escena::OBJPLY_REV];
             }
-            if (modoMenu == SELVELOCIDAD){
+            if (modoMenu == SELVELOCIDAD) {
                 modoMenu = VEL_RODILLA;
                 std::cout << "Pulsa - para disminuir la velocidad de las rodillas o + para aumentarla" << std::endl;
             }
             break;
         case 'I':
-            if (modoMenu == SELVISUALIZACION){
+            if (modoMenu == SELVISUALIZACION) {
                 modoMenu = SELILUMINACION;
                 std::cout << "Modo iluminacion" << std::endl;
-            }
-            else if (modoMenu == SELILUMINACION){
-                modoMenu = SELVISUALIZACION;
-            }
-
-            if (modoMenu != ANIMACION_MANUAL) {
                 if (tipo_luz == ModoLuz::NINGUNA) {
                     tipo_luz = ModoLuz::SUAVE;
                     modo_activo[(int) ModoVisualizacion::ALAMBRE] = modo_activo[(int) ModoVisualizacion::PUNTOS] = false;
@@ -394,7 +391,8 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                     tipo_luz = ModoLuz::NINGUNA;
                 }
             }
-            if (modoMenu == ANIMACION_MANUAL){
+
+            if (modoMenu == ANIMACION_MANUAL) {
                 modoMenu = ANIM_PIERNA_I;
                 std::cout << "Menú de animacion de la pierna izquierda:" << std::endl;
                 std::cout << "Pulsa: " << std::endl;
@@ -406,138 +404,136 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
             break;
         case '<':
 
-            if (modoMenu == VARIACION_ALFA){
+            if (modoMenu == VARIACION_ALFA) {
                 luz_d->variarAnguloAlpha(M_PI / 30.0);
-            }
-            else if (modoMenu == VARIACION_BETA){
+            } else if (modoMenu == VARIACION_BETA) {
                 luz_d->variarAnguloBeta(M_PI / 30.0);
             }
 
             break;
         case '>':
 
-            if (modoMenu == VARIACION_ALFA){
+            if (modoMenu == VARIACION_ALFA) {
                 luz_d->variarAnguloAlpha(-M_PI / 30.0);
-            }
-            else if (modoMenu == VARIACION_BETA){
+            } else if (modoMenu == VARIACION_BETA) {
                 luz_d->variarAnguloBeta(-M_PI / 30.0);
             }
             break;
 
         case '+':
-            if (modoMenu == VEL_MOCHILA){
+            if (modoMenu == VEL_MOCHILA) {
                 velocidad_mochila += AUMENTO_VELOCIDAD;
             }
-            if (modoMenu == VEL_PIERNA){
+            if (modoMenu == VEL_PIERNA) {
                 velocidad_pierna += AUMENTO_VELOCIDAD;
             }
-            if (modoMenu == VEL_RODILLA){
+            if (modoMenu == VEL_RODILLA) {
                 velocidad_pierna += AUMENTO_VELOCIDAD;
             }
 
-            if (modoMenu == ANIMACION_AUTOMATICA){
+            if (modoMenu == ANIMACION_AUTOMATICA) {
                 velocidad_animacion += AUMENTO_VELOCIDAD;
             }
 
-            if (modoMenu == ANIM_MOCH){
+            if (modoMenu == ANIM_MOCH) {
                 amongus->siguienteAnimacionMochila(1);
             }
 
-            if (modoMenu == ANIM_2_PIERNAS){
+            if (modoMenu == ANIM_2_PIERNAS) {
                 amongus->siguienteAnimacionPiernas();
             }
 
-            if (modoMenu == ANIM_PIERNA_I_X){
+            if (modoMenu == ANIM_PIERNA_I_X) {
                 amongus->siguienteAnimacionEjeXPiernaIzda(1);
             }
-            if (modoMenu == ANIM_PIERNA_I_Y){
+            if (modoMenu == ANIM_PIERNA_I_Y) {
                 amongus->siguienteAnimacionEjeYPiernaIzda(1);
             }
-            if (modoMenu == ANIM_PIERNA_I_Z){
+            if (modoMenu == ANIM_PIERNA_I_Z) {
                 amongus->siguienteAnimacionEjeZPiernaIzda(1);
             }
 
-            if (modoMenu == ANIM_PIERNA_D_X){
+            if (modoMenu == ANIM_PIERNA_D_X) {
                 amongus->siguienteAnimacionEjeXPiernaDcha(1);
             }
-            if (modoMenu == ANIM_PIERNA_D_Y){
+            if (modoMenu == ANIM_PIERNA_D_Y) {
                 amongus->siguienteAnimacionEjeYPiernaDcha(1);
             }
-            if (modoMenu == ANIM_PIERNA_D_Z){
+            if (modoMenu == ANIM_PIERNA_D_Z) {
                 amongus->siguienteAnimacionEjeZPiernaDcha(1);
             }
 
-            if (modoMenu == ANIM_RODILLA_D){
+            if (modoMenu == ANIM_RODILLA_D) {
                 amongus->siguienteAnimacionRodillaDcha(1);
             }
 
-            if (modoMenu == ANIM_RODILLA_I){
+            if (modoMenu == ANIM_RODILLA_I) {
                 amongus->siguienteAnimacionRodillaIzda(1);
             }
 
             break;
         case '-':
 
-            if (modoMenu == VEL_MOCHILA){
+            if (modoMenu == VEL_MOCHILA) {
                 velocidad_mochila -= AUMENTO_VELOCIDAD;
             }
-            if (modoMenu == VEL_PIERNA){
+            if (modoMenu == VEL_PIERNA) {
                 velocidad_pierna -= AUMENTO_VELOCIDAD;
             }
-            if (modoMenu == VEL_RODILLA){
+            if (modoMenu == VEL_RODILLA) {
                 velocidad_pierna -= AUMENTO_VELOCIDAD;
             }
 
-            if (modoMenu == ANIMACION_AUTOMATICA){
+            if (modoMenu == ANIMACION_AUTOMATICA) {
                 velocidad_animacion -= AUMENTO_VELOCIDAD;
             }
 
-            if (modoMenu == ANIM_MOCH){
+            if (modoMenu == ANIM_MOCH) {
                 amongus->siguienteAnimacionMochila(-1);
             }
 
-            if (modoMenu == ANIM_PIERNA_I_X){
+            if (modoMenu == ANIM_PIERNA_I_X) {
                 amongus->siguienteAnimacionEjeXPiernaIzda(-1);
             }
-            if (modoMenu == ANIM_PIERNA_I_Y){
+            if (modoMenu == ANIM_PIERNA_I_Y) {
                 amongus->siguienteAnimacionEjeYPiernaIzda(-1);
             }
-            if (modoMenu == ANIM_PIERNA_I_Z){
+            if (modoMenu == ANIM_PIERNA_I_Z) {
                 amongus->siguienteAnimacionEjeZPiernaIzda(-1);
             }
 
-            if (modoMenu == ANIM_PIERNA_D_X){
+            if (modoMenu == ANIM_PIERNA_D_X) {
                 amongus->siguienteAnimacionEjeXPiernaDcha(-1);
             }
-            if (modoMenu == ANIM_PIERNA_D_Y){
+            if (modoMenu == ANIM_PIERNA_D_Y) {
                 amongus->siguienteAnimacionEjeYPiernaDcha(-1);
             }
-            if (modoMenu == ANIM_PIERNA_D_Z){
+            if (modoMenu == ANIM_PIERNA_D_Z) {
                 amongus->siguienteAnimacionEjeZPiernaDcha(-1);
             }
 
-            if (modoMenu == ANIM_RODILLA_D){
+            if (modoMenu == ANIM_RODILLA_D) {
                 amongus->siguienteAnimacionRodillaDcha(-1);
             }
 
-            if (modoMenu == ANIM_RODILLA_I){
+            if (modoMenu == ANIM_RODILLA_I) {
                 amongus->siguienteAnimacionRodillaIzda(-1);
             }
 
             break;
         case '0':
-            if (modoMenu == SELILUMINACION){
+            if (modoMenu == SELILUMINACION) {
                 luz_mesa_act ^= 1;
             }
 
-            if (modoMenu == ANIM_PIERNA_D){
+            if (modoMenu == ANIM_PIERNA_D) {
                 modoMenu = ANIM_PIERNA_D_X;
                 std::cout << "Rotacion Pierna Derecha EJE X" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje X" << std::endl;
                 std::cout << "- para disminuir grado de rotación eje X" << std::endl;
             }
 
-            if (modoMenu == ANIM_PIERNA_I){
+            if (modoMenu == ANIM_PIERNA_I) {
                 modoMenu = ANIM_PIERNA_I_X;
                 std::cout << "Rotacion Pierna Izquierda EJE X" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje X" << std::endl;
@@ -550,18 +546,18 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 dibuja_diferido = false;
                 std::cout << "Dibujando en modo inmediato" << std::endl;
             }
-            if (modoMenu == SELILUMINACION){
+            if (modoMenu == SELILUMINACION) {
                 luz_d_act ^= 1;
             }
 
-            if (modoMenu == ANIM_PIERNA_D){
+            if (modoMenu == ANIM_PIERNA_D) {
                 modoMenu = ANIM_PIERNA_D_Y;
                 std::cout << "Rotacion Pierna Derecha EJE Y" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje Y" << std::endl;
                 std::cout << "- para disminuir grado de rotación eje Y" << std::endl;
             }
 
-            if (modoMenu == ANIM_PIERNA_I){
+            if (modoMenu == ANIM_PIERNA_I) {
                 modoMenu = ANIM_PIERNA_I_Y;
                 std::cout << "Rotacion Pierna Izquierda EJE Y" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje Y" << std::endl;
@@ -570,7 +566,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case '2':
-            if (modoMenu == SELILUMINACION){
+            if (modoMenu == SELILUMINACION) {
                 luz_animada_act ^= 1;
             }
 
@@ -579,14 +575,14 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 dibuja_diferido = true;
             }
 
-            if (modoMenu == ANIM_PIERNA_D){
+            if (modoMenu == ANIM_PIERNA_D) {
                 modoMenu = ANIM_PIERNA_D_Z;
                 std::cout << "Rotacion Pierna Derecha EJE Z" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje Z" << std::endl;
                 std::cout << "- para disminuir grado de rotación eje Z" << std::endl;
             }
 
-            if (modoMenu == ANIM_PIERNA_I){
+            if (modoMenu == ANIM_PIERNA_I) {
                 modoMenu = ANIM_PIERNA_I_Z;
                 std::cout << "Rotacion Pierna Izquierda EJE Z" << std::endl;
                 std::cout << "+ para aumentar grado de rotación eje Z" << std::endl;
@@ -616,7 +612,8 @@ void Escena::teclaEspecial(int Tecla1, int x, int y) {
             Observer_distance *= 1.2;
             break;
         case GLUT_KEY_PAGE_DOWN:
-            Observer_distance /= 1.2;        change_observer();
+            Observer_distance /= 1.2;
+            change_observer();
 
             break;
     }
@@ -662,18 +659,17 @@ void Escena::change_observer() {
 }
 void Escena::dibujaObjeto(Malla3D *obj, const Tupla3f &tr, const Tupla3f &esc, ModoVisualizacion modo) {
     glPushMatrix();
-    glTranslatef(tr(0),tr(1),tr(2));
-    glScalef(esc(0),esc(1),esc(2));
-    ObjRevolucion * obj_rev = dynamic_cast <ObjRevolucion*>(obj);
+    glTranslatef(tr(0), tr(1), tr(2));
+    glScalef(esc(0), esc(1), esc(2));
+    ObjRevolucion *obj_rev = dynamic_cast<ObjRevolucion *>(obj);
     if (obj_rev != nullptr)
         obj_rev->draw(dibuja_diferido, ajedrez, modo, dibuja_tapas);
     else
         obj->draw(dibuja_diferido, ajedrez, modo);
     glPopMatrix();
-
 }
 Escena::~Escena() {
-    for (int i=0; i < objetos.size(); i++){
+    for (int i = 0; i < objetos.size(); i++) {
         delete objetos[i];
     }
 }
@@ -682,7 +678,7 @@ void Escena::animarModeloJerarquico() {
         amongus->animacionAutomatica(movimiento_natural);
 }
 
-std::string Escena::valorMenuActual(){
+std::string Escena::valorMenuActual() {
     std::string valor;
     switch (modoMenu) {
         case NADA:

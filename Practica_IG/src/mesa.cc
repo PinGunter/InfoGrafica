@@ -33,7 +33,7 @@ Mesa::Mesa() {
     peonZ->setMaterial(m_peon3);
     tetraedro->setMaterial(m_tetra);
 }
-void Mesa::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas, bool luz_act) {
+void Mesa::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas) {
     glPushMatrix();
        glScalef(10,10,10);
 
@@ -44,8 +44,8 @@ void Mesa::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas,
                 glScalef(20,20,20);
                     bombilla->draw(diferido,ajedrez,modo);
                 glPopMatrix();
-        if (luz_act)
-            luz->activar();
+            if (luz->getActivada())
+                luz->activar();
         glPopMatrix();
 
         glPushMatrix();
