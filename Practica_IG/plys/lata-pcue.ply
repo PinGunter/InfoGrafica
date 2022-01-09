@@ -2,7 +2,7 @@ ply
 format ascii 1.0
 comment --------------------------------------------------
 comment Prácticas IG (16-17)
-comment perfil del cuerpo de la lata
+comment perfil del Cuerpo de la lata
 comment --------------------------------------------------
 element vertex 20
 property float32 x

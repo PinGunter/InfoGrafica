@@ -16,7 +16,7 @@ public:
     LuzPosicional * luz = nullptr;
     LuzAnimada();
 
-    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo);
+    void draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool luz_act);
 
     void animar();
 };

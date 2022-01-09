@@ -112,15 +112,11 @@ void Escena::dibujar() {
             mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
             glPopMatrix();
 
-            luz_a->draw(dibuja_diferido, ajedrez, modos[i]);
+            luz_a->draw(dibuja_diferido, ajedrez, modos[i], luz_animada_act);
 
             if (luz_d_act) {
                 luz_d->activar();
             } else luz_d->desactivar();
-            if (luz_animada_act) {
-                luz_a->luz->activar();
-            } else luz_a->luz->desactivar();
-
             if (luz_mesa_act){
                 mesa->luz->activar();
             } else mesa->luz->desactivar();
