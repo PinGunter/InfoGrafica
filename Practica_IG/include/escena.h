@@ -98,6 +98,8 @@ private:
     ModoVisualizacion modos [N_MODOS];
     ModoLuz  tipo_luz;
 
+    bool luz_mesa_act, luz_animada_act;
+
 public:
     Escena();
     ~Escena();

@@ -10,7 +10,15 @@ Mesa::Mesa() {
     peon = new ObjRevolucion("plys/peon",Eje_rotacion::EJE_Y,20);
     peonX = new ObjRevolucion("plys/peon_rotadoX",Eje_rotacion::EJE_X,20);
     peonZ = new ObjRevolucion("plys/peon_rotadoZ",Eje_rotacion::EJE_Z,20);
-    luz = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,Tupla4f(0.64,0.2,1,1),Tupla4f(0.64,0.2,1,1),Tupla4f(0.64,0.2,1,1));
+    Tupla4f ambiente(0.64,0.2,1,1);
+    Tupla4f especular(0.64,0.2,1,1);
+    Tupla4f difuso(0.64,0.2,1,1);
+
+
+    bombilla = new ObjPLY("plys/bombilla");
+    bombilla->setMaterial(Material(ambiente,especular,difuso,128));
+
+    luz = new LuzPosicional(Tupla3f(0,0,0),GL_LIGHT0,ambiente,especular,difuso);
     Material m (Tupla4f(0.7,0.7,0.7,0.6), Tupla4f(0,0,0,0), Tupla4f(0.7,0.7,0.7,1), 20);
 
     Material m_peon(Tupla4f(0,1,0,1),Tupla4f(0,0.5,0,1),Tupla4f(0,1,0,1),40);
@@ -25,12 +33,18 @@ Mesa::Mesa() {
     peonZ->setMaterial(m_peon3);
     tetraedro->setMaterial(m_tetra);
 }
-void Mesa::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas) {
+void Mesa::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool tapas, bool luz_act) {
     glPushMatrix();
        glScalef(10,10,10);
 
         glPushMatrix();
             glTranslatef(0,7,0);
+            glPushMatrix();
+                glRotatef(180,1,0,0);
+                glScalef(20,20,20);
+                    bombilla->draw(diferido,ajedrez,modo);
+                glPopMatrix();
+        if (luz_act)
             luz->activar();
         glPopMatrix();
 

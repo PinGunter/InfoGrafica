@@ -15,11 +15,12 @@ LuzAnimada::LuzAnimada() {
     velocidad = 0.7;
 }
 
-void LuzAnimada::draw(bool diferido, bool ajedrez, ModoVisualizacion modo) {
+void LuzAnimada::draw(bool diferido, bool ajedrez, ModoVisualizacion modo, bool luz_act) {
     glPushMatrix();
         glRotatef(angulo,0,1,0);
         glTranslatef(100,100,100);
-        luz->activar();
+        if (luz_act)
+            luz->activar();
         esfera->draw(diferido,ajedrez,modo,true);
     glPopMatrix();
 }

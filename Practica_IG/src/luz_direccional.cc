@@ -27,6 +27,9 @@ void LuzDireccional::calcularPosicion(float a, float b){
     posicion(1) = sin(b)*sin(a);
     posicion(2) = cos(b);
     posicion(3) = 0;
+    std::cout << "alpha " << a << std::endl;    std::cout << "beta  " << b << std::endl;
+
+
 }
 
 void LuzDireccional::setAlpha(float a){

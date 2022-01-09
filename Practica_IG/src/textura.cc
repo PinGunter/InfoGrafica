@@ -14,4 +14,7 @@ Textura::Textura(std::string archivo) {
         data.push_back(temp[i]);
     }
     delete temp;
+
+    glGenTextures(1,&textura_id);
+    glBindTexture(GL_TEXTURE_2D,textura_id);
 }

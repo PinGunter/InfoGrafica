@@ -5,8 +5,8 @@
 #include <malla.h>// objetos: Cubo y otros....
 #define N_OBJ (int)Objetos_Escena::NUM_OBJ
 #define LUZ(i) GL_LIGHTi
-#define ALPHA_INICIAL -0.0471976
-#define BETA_INICIAL 6.8643
+#define ALPHA_INICIAL 12.5
+#define BETA_INICIAL 9.27
 #define AUMENTO_VELOCIDAD 0.05
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -46,7 +46,8 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ,false), traslaciones
     //objetos
     amongus = new Tripulante_mochila();
     mesa = new Mesa();
-
+    luz_animada_act = true;
+    luz_mesa_act = true;
 
 }
 
@@ -113,10 +114,10 @@ void Escena::dibujar() {
 
             glPushMatrix();
             glTranslatef(-100,-50,-100);
-            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
+            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas, luz_mesa_act);
             glPopMatrix();
 
-            luz_a->draw(dibuja_diferido, ajedrez, modos[i]);
+            luz_a->draw(dibuja_diferido, ajedrez, modos[i], luz_animada_act);
 
         }
     }
@@ -525,15 +526,9 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case '0':
-//            if (modoMenu == SELILUMINACION){
-//                cout << "luz" << endl;
-//                if (luz_p ->getActivada()){
-//                    luz_p->desactivar();
-//                    luz_p_act = false;
-//                } else{
-//                    luz_p_act = true;
-//                }
-//            }
+            if (modoMenu == SELILUMINACION){
+                luz_mesa_act ^= 1;
+            }
 
             if (modoMenu == ANIM_PIERNA_D){
                 modoMenu = ANIM_PIERNA_D_X;
@@ -556,12 +551,7 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
                 std::cout << "Dibujando en modo inmediato" << std::endl;
             }
             if (modoMenu == SELILUMINACION){
-                if (luz_d ->getActivada()){
-                    luz_d->desactivar();
-                    luz_d_act = false;
-                } else{
-                    luz_d_act = true;
-                }
+                luz_d_act ^= 1;
             }
 
             if (modoMenu == ANIM_PIERNA_D){
@@ -580,6 +570,10 @@ bool Escena::teclaPulsada(unsigned char tecla, int x, int y) {
 
             break;
         case '2':
+            if (modoMenu == SELILUMINACION){
+                luz_animada_act ^= 1;
+            }
+
             if (modoMenu == SELDIBUJADO) {
                 std::cout << "Dibujando en modo diferido" << std::endl;
                 dibuja_diferido = true;
