@@ -88,6 +88,10 @@ protected:
 
     Tupla3f calcularNormal(Tupla3f a, Tupla3f b, Tupla3f c);
     void calcularNormales() ;
+
+    void setTextura(Textura * t);
+    void setTexCoord(const std::vector<Tupla2f> & coords);
+
     void rellenaColores(const Tupla3f &vertices,
                         const Tupla3f &aristas,
                         const Tupla3f &solido,

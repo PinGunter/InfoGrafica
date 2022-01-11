@@ -18,7 +18,7 @@
 #include <mesa.h>
 #include <tripulante_mochila.h>
 #include <luzAnimada.h>
-
+#include <cuadro_textura.h>
 
 #define N_MODOS 3
 typedef enum {
@@ -77,6 +77,7 @@ private:
     // Objetos de la escena
     Ejes ejes;
     Mesa *mesa = nullptr;
+    Cuadro_textura * cuadro = nullptr;
     //Among us
     Tripulante_mochila *amongus = nullptr;
     float velocidad_animacion, velocidad_mochila, velocidad_rodilla, velocidad_pierna;

@@ -24,11 +24,22 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glPointSize(8);
     m.aplicar();
+
+    //texturas
+    if (textura != nullptr) {
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
+        textura->activar();
+
+    }
+
     glEnableClientState(GL_NORMAL_ARRAY);
     glNormalPointer(GL_FLOAT,0,nv.data());
     glEnableClientState(GL_COLOR_ARRAY);
+
     glColorPointer(3, GL_FLOAT, 0, color->data());
     glPolygonMode(GL_FRONT, map_modo(modo));
+
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -269,4 +280,10 @@ void Malla3D::inicializarVBOS() {
     if (id_vbo_color_aj == 0) {
         ids_colores[AJEDREZ_c] = id_vbo_color_aj = CrearVBO(GL_ARRAY_BUFFER, sizeof(float) * 3 * c_ajedrez.size(), c_ajedrez.data());
     }
+}
+void Malla3D::setTextura(Textura * t) {
+    this->textura = t;
+}
+void Malla3D::setTexCoord(const std::vector<Tupla2f> & coords) {
+    this->ct = coords;
 }
