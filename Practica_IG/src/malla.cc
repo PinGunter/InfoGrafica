@@ -29,22 +29,22 @@ void Malla3D::draw_ModoInmediato(ModoVisualizacion modo, std::vector<Tupla3f> *c
     if (textura != nullptr) {
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
-        textura->activar();
-
+        glDisableClientState(GL_COLOR_ARRAY);
+    } else{
+        glEnableClientState(GL_COLOR_ARRAY);
+        glColorPointer(3, GL_FLOAT, 0, color->data());
     }
 
     glEnableClientState(GL_NORMAL_ARRAY);
     glNormalPointer(GL_FLOAT,0,nv.data());
-    glEnableClientState(GL_COLOR_ARRAY);
 
-    glColorPointer(3, GL_FLOAT, 0, color->data());
     glPolygonMode(GL_FRONT, map_modo(modo));
-
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, f.data());
     glLineWidth(1);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
@@ -62,15 +62,22 @@ void Malla3D::draw_ModoDiferido(ModoVisualizacion modo, GLuint color_id) {
     glNormalPointer(GL_FLOAT,0,0);
     glBindBuffer(GL_ARRAY_BUFFER,0);
 
-
-    glEnableClientState(GL_COLOR_ARRAY);
-    glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
-    glColorPointer(3,GL_FLOAT,0,0);
-    glBindBuffer(GL_ARRAY_BUFFER,0);
-
     glPolygonMode(GL_FRONT, map_modo(modo));
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,id_vbo_tri);
     m.aplicar();
+
+    if (textura != nullptr){
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
+        glDisableClientState(GL_COLOR_ARRAY);
+    }else{
+        glEnableClientState(GL_COLOR_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER, ids_colores[color_id]);
+        glColorPointer(3,GL_FLOAT,0,0);
+        glBindBuffer(GL_ARRAY_BUFFER,0);
+
+    }
+
     glDrawElements(GL_TRIANGLES, f.size() * 3, GL_UNSIGNED_INT, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
@@ -97,6 +104,11 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo) {
             selector_color_vbo = SOLIDO_c;
             break;
     }
+
+    if (textura != nullptr){
+        textura->activar();
+    }
+
     if (dibuja_diferido) {
         if (ajedrez) draw_AjedrezDiferido(modo, selector_color_vbo);
         else
@@ -105,6 +117,10 @@ void Malla3D::draw(bool dibuja_diferido, bool ajedrez, ModoVisualizacion modo) {
         if (ajedrez) draw_AjedrezInmediato(modo, selector_color);
         else
             draw_ModoInmediato(modo, selector_color);
+    }
+
+    if (textura != nullptr){
+        glDisable(GL_TEXTURE_2D);
     }
 }
 

@@ -22,16 +22,16 @@ Cuadro_textura::Cuadro_textura(std::string tex, int w, int h) {
 
 
     //textura
-    ct.push_back(Tupla2f(0,0));
-    ct.push_back(Tupla2f(1,0));
-    ct.push_back(Tupla2f(1,1));
     ct.push_back(Tupla2f(0,1));
+    ct.push_back(Tupla2f(1,1));
+    ct.push_back(Tupla2f(1,0));
+    ct.push_back(Tupla2f(0,0));
 
-    Tupla4f ambiente (0.01,0.01,0.01,0.01);
-    Tupla4f especular (0.01,0.01,0.01,0.01);
-    Tupla4f difuso (0.01,0.01,0.01,0.01);
-    inicializar(Tupla3f(0, 1, 0),
-                Tupla3f(1, 0, 0),
-                Tupla3f(0, 0, 1),
-                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 5);
+    Tupla4f ambiente (1,1,1,1);
+    Tupla4f especular (1,1,1,1);
+    Tupla4f difuso (1, 1,1,1);
+    inicializar(Tupla3f(1, 1,1),
+                Tupla3f(1, 1,1),
+                Tupla3f(1, 1,1),
+                Tupla3f(1, 0.24, 0.71), ambiente, especular, difuso, 128);
 }

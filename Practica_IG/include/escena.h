@@ -78,6 +78,7 @@ private:
     Ejes ejes;
     Mesa *mesa = nullptr;
     Cuadro_textura * cuadro = nullptr;
+    Cuadro_textura * suelo = nullptr;
     //Among us
     Tripulante_mochila *amongus = nullptr;
     float velocidad_animacion, velocidad_mochila, velocidad_rodilla, velocidad_pierna;

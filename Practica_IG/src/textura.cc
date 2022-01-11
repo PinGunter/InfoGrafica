@@ -11,18 +11,23 @@ Textura::Textura(std::string archivo) {
     height = pimg->tamY();
     unsigned char * temp = pimg->leerPixels();
     for (int i=0; i < width*height*3; i++){
-        data.push_back(temp[i]);
+        data1.push_back(temp[i]);
     }
+    data = pimg->leerPixels();
 
-    glGenTextures(1,&textura_id);
+    textura_id = -1;
 }
 
 void Textura::activar() {
+    glEnable(GL_TEXTURE_2D);
+    if (textura_id == -1){
+        glGenTextures(1,&textura_id);
+    }
     glBindTexture(GL_TEXTURE_2D, textura_id);
-
-    glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
+//    gluBuild2DMipmaps(GL_TEXTURE_2D,GL_RGB,width,height,GL_RGB,GL_UNSIGNED_BYTE,data);
+    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,width,height,0,GL_RGB,GL_UNSIGNED_BYTE,data);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 }

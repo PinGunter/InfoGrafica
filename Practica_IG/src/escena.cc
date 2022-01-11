@@ -30,9 +30,9 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ, false), traslacione
     luz_d = new LuzDireccional(Tupla2f(ALPHA_INICIAL, BETA_INICIAL), GL_LIGHT1, Tupla4f(0, 0, 0, 1), Tupla4f(1, 1, 1, 1), Tupla4f(1, 1, 1, 1));
     luz_a = new LuzAnimada();
 
-    cuadro = new Cuadro_textura("textures/text-madera.jpg",100,100);
-
-    dibuja_diferido = false;// por defecto dibuja en modo diferido
+    cuadro = new Cuadro_textura("textures/cuadro.jpg",100,100);
+    suelo = new Cuadro_textura("textures/suelo.jpg",1000,1000);
+    dibuja_diferido = true;// por defecto dibuja en modo diferido
     luz_d_act = true;
     dibuja_tapas = true;
     dibuja_cabeza = true;
@@ -99,32 +99,42 @@ void Escena::dibujar() {
         glEnable(GL_LIGHTING);
         modo_activo[(int) ModoVisualizacion::SOLIDO] = true;
     }
-    glEnable(GL_TEXTURE_2D);
 
 
-//    for (int i = 0; i < N_MODOS; i++) {
-//        if (modo_activo[i]) {
-//            glPushMatrix();
-//            glScalef(10, 10, 10);
-//            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
-//            glPopMatrix();
-//
-//            glPushMatrix();
-//            glTranslatef(-100, -50, -100);
-//            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
-//            glPopMatrix();
-//
-//            luz_a->draw(dibuja_diferido, ajedrez, modos[i], luz_animada_act);
-//
-//            if (luz_d_act) {
-//                luz_d->activar();
-//            } else luz_d->desactivar();
-//            if (luz_mesa_act){
-//                mesa->luz->activar();
-//            } else mesa->luz->desactivar();
-//        }
-//    }
-    cuadro->draw(false,false,ModoVisualizacion::SOLIDO);
+    for (int i = 0; i < N_MODOS; i++) {
+        if (modo_activo[i]) {
+            glPushMatrix();
+            glScalef(10, 10, 10);
+            amongus->draw(dibuja_diferido, ajedrez, modos[i], dibuja_cabeza);
+            glPopMatrix();
+
+            glPushMatrix();
+            glTranslatef(-100, -50, -100);
+            mesa->draw(dibuja_diferido, ajedrez, modos[i], dibuja_tapas);
+            glPopMatrix();
+
+            luz_a->draw(dibuja_diferido, ajedrez, modos[i], luz_animada_act);
+
+
+            glPushMatrix();
+            glTranslatef(150,70,-50);
+            cuadro->draw(dibuja_diferido,ajedrez,modos[i]);
+            glPopMatrix();
+
+            glPushMatrix();
+            glTranslatef(0,-90,-100);
+            glRotatef(-90,1,0,0);
+            suelo->draw(dibuja_diferido,ajedrez,modos[i]);
+            glPopMatrix();
+
+            if (luz_d_act) {
+                luz_d->activar();
+            } else luz_d->desactivar();
+            if (luz_mesa_act){
+                mesa->luz->activar();
+            } else mesa->luz->desactivar();
+        }
+    }
     luz_a->animar();
 
     //velocidades de animacion

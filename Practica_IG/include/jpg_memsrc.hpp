@@ -7,8 +7,8 @@
  * This file is part of the Independent JPEG Group's software.
  * For conditions of distribution and use, see the accompanying README file.
  *
- * This file contains decompression data source routines for the case of
- * reading JPEG data from a memory buffer that is preloaded with the entire
+ * This file contains decompression data1 source routines for the case of
+ * reading JPEG data1 from a memory buffer that is preloaded with the entire
  * JPEG file.  This would not seem especially useful at first sight, but
  * a number of people have asked for it.
  * This is really just a stripped-down version of jdatasrc.c.  Comparison

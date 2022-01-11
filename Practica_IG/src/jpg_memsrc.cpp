@@ -5,8 +5,8 @@
 * This file is part of the Independent JPEG Group's software.
 * For conditions of distribution and use, see the accompanying README file.
 *
-* This file contains decompression data source routines for the case of
-* reading JPEG data from a memory buffer that is preloaded with the entire
+* This file contains decompression data1 source routines for the case of
+* reading JPEG data1 from a memory buffer that is preloaded with the entire
 * JPEG file.  This would not seem especially useful at first sight, but
 * a number of people have asked for it.
 * This is really just a stripped-down version of jdatasrc.c.  Comparison
@@ -22,7 +22,7 @@
 namespace jpg
 {
 
-    /* Expanded data source object for memory input */
+    /* Expanded data1 source object for memory input */
 
     typedef struct {
         struct jpeg_source_mgr pub;	/* public fields */
@@ -35,7 +35,7 @@ namespace jpg
 
     /*
 * Initialize source --- called by jpeg_read_header
-* before any data is actually read.
+* before any data1 is actually read.
 */
 
     METHODDEF(void)
@@ -79,8 +79,8 @@ namespace jpg
 
 
     /*
-* Skip data --- used to skip over a potentially large amount of
-* uninteresting data (such as an APPn marker).
+* Skip data1 --- used to skip over a potentially large amount of
+* uninteresting data1 (such as an APPn marker).
 *
 * If we overrun the end of the buffer, we let fill_input_buffer deal with
 * it.  An extremely large skip could cause some time-wasting here, but
@@ -108,7 +108,7 @@ namespace jpg
 
 
     /*
-* An additional method that can be provided by data source modules is the
+* An additional method that can be provided by data1 source modules is the
 * resync_to_restart method for error recovery in the presence of RST markers.
 * For the moment, this source module just uses the default resync method
 * provided by the JPEG library.  That method assumes that no backtracking
@@ -118,7 +118,7 @@ namespace jpg
 
     /*
 * Terminate source --- called by jpeg_finish_decompress
-* after all data has been read.  Often a no-op.
+* after all data1 has been read.  Often a no-op.
 *
 * NB: *not* called by jpeg_abort or jpeg_destroy; surrounding
 * application must deal with any cleanup that should happen even

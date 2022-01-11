@@ -9,7 +9,8 @@
 #include <jpg_imagen.hpp>
 class Textura {
     GLuint textura_id = 0;
-    std::vector<unsigned char> data;
+    std::vector<unsigned char> data1;
+    unsigned char *data;
     int width, height;
 
 public:

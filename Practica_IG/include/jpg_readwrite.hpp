@@ -92,7 +92,7 @@
 	// Writing Usage
 
 
-	// this assumes your data is stored as a 24-bit RGB DIB.
+	// this assumes your data1 is stored as a 24-bit RGB DIB.
 	// if you have a 1,4,8,15/16 or 32 bit DIB, you'll have to
 	// do some work to get it into a 24-bit RGB state.
 
@@ -193,7 +193,7 @@ namespace jpg
         //
 
         ////////////////////////////////////////////////////////////////
-        // allocates a JPG_DWORD-aligned buffer, copies data buffer
+        // allocates a JPG_DWORD-aligned buffer, copies data1 buffer
         // caller is responsible for delete []'ing the buffer
 
         static unsigned char * MakeJPG_DWORDAlignedBuf(unsigned char *dataBuf,			// input buf
@@ -224,7 +224,7 @@ namespace jpg
 
         // NOTE :
         // the following routines do their magic on buffers with a whole number
-        // of pixels per data row! these are assumed to be non JPG_DWORD-aligned buffers.
+        // of pixels per data1 row! these are assumed to be non JPG_DWORD-aligned buffers.
 
         ////////////////////////////////////////////////////////////////
         // convert RGB to grayscale	using luminance calculation

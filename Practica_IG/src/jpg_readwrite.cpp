@@ -124,7 +124,7 @@ namespace jpg
         longjmp(myerr->setjmp_buffer, 1);
     }
 
-    // store a scanline to our data buffer
+    // store a scanline to our data1 buffer
     void j_putRGBScanline(unsigned char *jpegline,
                           int widthPix,
                           unsigned char *outBuf,
@@ -217,7 +217,7 @@ namespace jpg
         /* Now we can initialize the JPEG decompression object. */
         jpeg_create_decompress(&cinfo);
 
-        /* Step 2: specify data source (eg, a file) */
+        /* Step 2: specify data1 source (eg, a file) */
 
         if ( false )
         {
@@ -239,7 +239,7 @@ namespace jpg
 
         (void) jpeg_read_header(&cinfo, TRUE);
         /* We can ignore the return value from jpeg_read_header since
-	*   (a) suspension is not possible with the stdio data source, and
+	*   (a) suspension is not possible with the stdio data1 source, and
 	*   (b) we passed TRUE to reject a tables-only JPEG file as an error.
 	* See libjpeg.doc for more info.
 	*/
@@ -254,17 +254,17 @@ namespace jpg
 
         (void) jpeg_start_decompress(&cinfo);
         /* We can ignore the return value since suspension is not possible
-	* with the stdio data source.
+	* with the stdio data1 source.
 	*/
 
         /* We may need to do some setup of our own at this point before reading
-	* the data.  After jpeg_start_decompress() we have the correct scaled
+	* the data1.  After jpeg_start_decompress() we have the correct scaled
 	* output image dimensions available, as well as the output colormap
 	* if we asked for color quantization.
 	* In this example, we need to make an output work buffer of the right size.
 	*/
 
-        // get our buffer set to hold data
+        // get our buffer set to hold data1
         unsigned char *dataBuf;
 
         ////////////////////////////////////////////////////////////
@@ -332,7 +332,7 @@ namespace jpg
 
         (void) jpeg_finish_decompress(&cinfo);
         /* We can ignore the return value since suspension is not possible
-	* with the stdio data source.
+	* with the stdio data1 source.
 	*/
 
         /* Step 8: Release JPEG decompression object */
@@ -348,7 +348,7 @@ namespace jpg
         if ( infile != NULL )
             fclose(infile);
 
-        /* At this point you may want to check to see whether any corrupt-data
+        /* At this point you may want to check to see whether any corrupt-data1
 	* warnings occurred (test whether jerr.pub.num_warnings is nonzero).
 	*/
 
@@ -409,7 +409,7 @@ namespace jpg
         /* Now we can initialize the JPEG decompression object. */
         jpeg_create_decompress(&cinfo);
 
-        /* Step 2: specify data source (eg, a file) */
+        /* Step 2: specify data1 source (eg, a file) */
 
         jpeg_stdio_src(&cinfo, infile);
 
@@ -417,7 +417,7 @@ namespace jpg
 
         (void) jpeg_read_header(&cinfo, TRUE);
         /* We can ignore the return value from jpeg_read_header since
-	*   (a) suspension is not possible with the stdio data source, and
+	*   (a) suspension is not possible with the stdio data1 source, and
 	*   (b) we passed TRUE to reject a tables-only JPEG file as an error.
 	* See libjpeg.doc for more info.
 	*/
@@ -439,7 +439,7 @@ namespace jpg
 	*/
         fclose(infile);
 
-        /* At this point you may want to check to see whether any corrupt-data
+        /* At this point you may want to check to see whether any corrupt-data1
 	* warnings occurred (test whether jerr.pub.num_warnings is nonzero).
 	*/
 
@@ -549,7 +549,7 @@ namespace jpg
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        /* Step 2: specify data destination (eg, a file) */
+        /* Step 2: specify data1 destination (eg, a file) */
         /* Note: steps 2 and 3 can be done in either order. */
 
         if ((outfile = fopen(fileName, "wb")) == NULL) {
@@ -789,7 +789,7 @@ namespace jpg
     //	swap Rs and Bs
     //
     //	Note! this does its stuff on buffers with a whole number of pixels
-    //	per data row!!
+    //	per data1 row!!
     //
 
 
@@ -819,7 +819,7 @@ namespace jpg
 
     //
     //	Note! this does its stuff on buffers with a whole number of pixels
-    //	per data row!!
+    //	per data1 row!!
     //
 
     JPG_BOOL JpegFile::MakeGrayScale(unsigned char *buf, JPG_UINT widthPix, JPG_UINT height)
