@@ -7,21 +7,22 @@ Cubo_textura::Cubo_textura(std::string archivo_tex, float l) {
     textura = new Textura(archivo_tex);
     angulo = 0;
     velocidad = 0.3;
+    float arista = l/2;
     //tabla de vertices (con vertices duplicados para las texturas)
-    v.push_back(Tupla3f(0,l,0)); //0
-    v.push_back(Tupla3f(0,0,0)); // 1
-    v.push_back(Tupla3f(l,l,0)); // 2
-    v.push_back(Tupla3f(l,0,0)); // 3
-    v.push_back(Tupla3f(0,0,l)); // 4
-    v.push_back(Tupla3f(l,0,l)); // 5
-    v.push_back(Tupla3f(0,l,l)); // 6
-    v.push_back(Tupla3f(l,l,l)); // 7
-    v.push_back(Tupla3f(0,l,0)); // 8
-    v.push_back(Tupla3f(l,l,0)); // 9
-    v.push_back(Tupla3f(0,l,0)); // 10
-    v.push_back(Tupla3f(0,l,l)); // 11
-    v.push_back(Tupla3f(l,l,0)); // 12
-    v.push_back(Tupla3f(l,l,l)); // 13
+    v.push_back(Tupla3f(-arista,arista,-arista)); //0
+    v.push_back(Tupla3f(-arista,-arista,-arista)); // 1
+    v.push_back(Tupla3f(arista,arista,-arista)); // 2
+    v.push_back(Tupla3f(arista,-arista,-arista)); // 3
+    v.push_back(Tupla3f(-arista,-arista,arista)); // 4
+    v.push_back(Tupla3f(arista,-arista,arista)); // 5
+    v.push_back(Tupla3f(-arista,arista,arista)); // 6
+    v.push_back(Tupla3f(arista,arista,arista)); // 7
+    v.push_back(Tupla3f(-arista,arista,-arista)); // 8
+    v.push_back(Tupla3f(arista,arista,-arista)); // 9
+    v.push_back(Tupla3f(-arista,arista,-arista)); // 1-arista
+    v.push_back(Tupla3f(-arista,arista,arista)); // 11
+    v.push_back(Tupla3f(arista,arista,-arista)); // 12
+    v.push_back(Tupla3f(arista,arista,arista)); // 13
 
     //tabla de caras
     f.push_back(Tupla3i(0,2,1));

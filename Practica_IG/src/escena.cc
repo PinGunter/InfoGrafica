@@ -32,7 +32,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ, false), traslacione
 
     cuadro = new Cuadro_textura("textures/cuadro.jpg",100,100);
     suelo = new Cuadro_textura("textures/suelo.jpg",1000,1000);
-    dado = new Cubo_textura("textures/tierra.jpg", 100);
+    dado = new Cubo_textura("textures/dice.jpg", 100);
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     luz_d_act = true;
     dibuja_tapas = true;
