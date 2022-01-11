@@ -32,6 +32,7 @@ Escena::Escena() : objetos(N_OBJ, nullptr), se_dibuja(N_OBJ, false), traslacione
 
     cuadro = new Cuadro_textura("textures/cuadro.jpg",100,100);
     suelo = new Cuadro_textura("textures/suelo.jpg",1000,1000);
+    dado = new Cubo_textura("textures/tierra.jpg", 100);
     dibuja_diferido = true;// por defecto dibuja en modo diferido
     luz_d_act = true;
     dibuja_tapas = true;
@@ -78,7 +79,7 @@ void Escena::inicializar(int UI_window_width, int UI_window_height) {
     std::cout << "\"A\" para activar/desactivar animacion automatica" << std::endl;
     std::cout << "\"S\" para el menu de velocidades" << std::endl;
     std::cout << "\"M\" para animacion manual" << std::endl;
-    std::cout << "\"Q\" para salir del modo actual" << std::endl;
+    std::cout << "\"Q\" para salir del modo angulo" << std::endl;
 }
 
 // **************************************************************************
@@ -127,6 +128,12 @@ void Escena::dibujar() {
             suelo->draw(dibuja_diferido,ajedrez,modos[i]);
             glPopMatrix();
 
+            glPushMatrix();
+            glScalef(0.34,0.34,0.34);
+            glTranslatef(-300,-90,250);
+            dado->draw(dibuja_diferido,ajedrez,modos[i]);
+            glPopMatrix();
+
             if (luz_d_act) {
                 luz_d->activar();
             } else luz_d->desactivar();
@@ -136,7 +143,7 @@ void Escena::dibujar() {
         }
     }
     luz_a->animar();
-
+    dado->animar();
     //velocidades de animacion
     amongus->setVelocidadAnimacionGeneral(velocidad_animacion);
     amongus->setVelocidadAnimacionMochila(velocidad_mochila);

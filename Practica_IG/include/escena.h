@@ -19,6 +19,7 @@
 #include <tripulante_mochila.h>
 #include <luzAnimada.h>
 #include <cuadro_textura.h>
+#include <cubo_textura.h>
 
 #define N_MODOS 3
 typedef enum {
@@ -79,6 +80,7 @@ private:
     Mesa *mesa = nullptr;
     Cuadro_textura * cuadro = nullptr;
     Cuadro_textura * suelo = nullptr;
+    Cubo_textura * dado = nullptr;
     //Among us
     Tripulante_mochila *amongus = nullptr;
     float velocidad_animacion, velocidad_mochila, velocidad_rodilla, velocidad_pierna;
